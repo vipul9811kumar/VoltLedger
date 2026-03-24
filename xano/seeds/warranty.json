@@ -1,0 +1,188 @@
+{
+  "app": "xano",
+  "version": "1.03",
+  "type": "content",
+  "payload": [
+    {
+      "id": 1,
+      "created_at": 1771334806215,
+      "battery_id": 0,
+      "provider": "honeydew kanzi",
+      "start_date": "2025-05-30",
+      "end_date": "2025-12-25",
+      "coverage_details": "litchi pitaya"
+    },
+    {
+      "id": 2,
+      "created_at": 1771334806315,
+      "battery_id": 0,
+      "provider": "potato quandong",
+      "start_date": "2025-12-28",
+      "end_date": "2026-02-11",
+      "coverage_details": "honeydew gooseberry"
+    },
+    {
+      "id": 3,
+      "created_at": 1771334806325,
+      "battery_id": 0,
+      "provider": "brusselsprout saskatoon",
+      "start_date": "2026-01-09",
+      "end_date": "2026-01-03",
+      "coverage_details": "horehound olallieberry"
+    },
+    {
+      "id": 4,
+      "created_at": 1771334806416,
+      "battery_id": 0,
+      "provider": "currant mayapple",
+      "start_date": "2025-10-21",
+      "end_date": "2025-08-21",
+      "coverage_details": "strawberry endive"
+    },
+    {
+      "id": 5,
+      "created_at": 1771334806422,
+      "battery_id": 0,
+      "provider": "nance butterfruit",
+      "start_date": "2026-02-16",
+      "end_date": "2025-11-27",
+      "coverage_details": "boysenberry yumberry"
+    },
+    {
+      "id": 6,
+      "created_at": 1771334806513,
+      "battery_id": 0,
+      "provider": "boysenberry serviceberry",
+      "start_date": "2025-12-15",
+      "end_date": "2025-07-17",
+      "coverage_details": "spinach lemon"
+    },
+    {
+      "id": 7,
+      "created_at": 1771334806523,
+      "battery_id": 0,
+      "provider": "durian naranjilla",
+      "start_date": "2025-10-22",
+      "end_date": "2025-06-14",
+      "coverage_details": "salak jostaberry"
+    },
+    {
+      "id": 8,
+      "created_at": 1771334806528,
+      "battery_id": 0,
+      "provider": "basil tatsoi",
+      "start_date": "2026-01-23",
+      "end_date": "2025-06-15",
+      "coverage_details": "pomegranate leek"
+    },
+    {
+      "id": 9,
+      "created_at": 1771334806615,
+      "battery_id": 0,
+      "provider": "durio bignay",
+      "start_date": "2025-02-22",
+      "end_date": "2025-09-20",
+      "coverage_details": "shallot fingerlime"
+    },
+    {
+      "id": 10,
+      "created_at": 1771334806622,
+      "battery_id": 0,
+      "provider": "sapote clary",
+      "start_date": "2025-11-10",
+      "end_date": "2025-10-16",
+      "coverage_details": "miraclefruit naranjilla"
+    },
+    {
+      "id": 11,
+      "created_at": 1771334806630,
+      "battery_id": 0,
+      "provider": "jacote feijoa",
+      "start_date": "2025-04-25",
+      "end_date": "2026-01-05",
+      "coverage_details": "mombin mint"
+    },
+    {
+      "id": 12,
+      "created_at": 1771334806711,
+      "battery_id": 0,
+      "provider": "persimmon charichuelo",
+      "start_date": "2025-09-07",
+      "end_date": "2025-03-24",
+      "coverage_details": "santol voavanga"
+    },
+    {
+      "id": 13,
+      "created_at": 1771334806729,
+      "battery_id": 0,
+      "provider": "araza ugli",
+      "start_date": "2025-11-19",
+      "end_date": "2025-06-21",
+      "coverage_details": "yumberry passionfruit"
+    },
+    {
+      "id": 14,
+      "created_at": 1771334806812,
+      "battery_id": 0,
+      "provider": "cashewapple daikon",
+      "start_date": "2025-05-04",
+      "end_date": "2026-01-09",
+      "coverage_details": "durio tatsoi"
+    },
+    {
+      "id": 15,
+      "created_at": 1771334806823,
+      "battery_id": 0,
+      "provider": "fennel lanzones",
+      "start_date": "2025-09-14",
+      "end_date": "2025-09-17",
+      "coverage_details": "parsley pomelo"
+    },
+    {
+      "id": 16,
+      "created_at": 1771334806833,
+      "battery_id": 0,
+      "provider": "blueberry kabosu",
+      "start_date": "2025-10-21",
+      "end_date": "2026-02-17",
+      "coverage_details": "tomato quince"
+    },
+    {
+      "id": 17,
+      "created_at": 1771334806918,
+      "battery_id": 0,
+      "provider": "kinnow orange",
+      "start_date": "2025-06-08",
+      "end_date": "2025-09-07",
+      "coverage_details": "tangerine honeydew"
+    },
+    {
+      "id": 18,
+      "created_at": 1771334806926,
+      "battery_id": 0,
+      "provider": "durian coconut",
+      "start_date": "2025-10-18",
+      "end_date": "2025-10-16",
+      "coverage_details": "araza vanilla"
+    },
+    {
+      "id": 19,
+      "created_at": 1771334806932,
+      "battery_id": 0,
+      "provider": "cacau banana",
+      "start_date": "2025-03-02",
+      "end_date": "2025-11-08",
+      "coverage_details": "papaya balsamapple"
+    },
+    {
+      "id": 20,
+      "created_at": 1771334807013,
+      "battery_id": 0,
+      "provider": "boysenberry blackcurrant",
+      "start_date": "2025-10-05",
+      "end_date": "2026-02-06",
+      "coverage_details": "sapote quince"
+    }
+  ],
+  "sig": "t1nJ5OXpfTWV2NWhja597PSltIs."
+}

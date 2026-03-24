@@ -1,0 +1,168 @@
+{
+  "app": "xano",
+  "version": "1.03",
+  "type": "content",
+  "payload": [
+    {
+      "id": 1,
+      "created_at": 1771334805699,
+      "battery_id": 0,
+      "raw_material_origin": "dewberry carambola",
+      "manufacturing_facility": "ackee starfruit",
+      "assembly_location": "watermelon satsuma"
+    },
+    {
+      "id": 2,
+      "created_at": 1771334805708,
+      "battery_id": 0,
+      "raw_material_origin": "mangostan dewberry",
+      "manufacturing_facility": "pepper langsat",
+      "assembly_location": "waxgourd anise"
+    },
+    {
+      "id": 3,
+      "created_at": 1771334805714,
+      "battery_id": 0,
+      "raw_material_origin": "damson durian",
+      "manufacturing_facility": "elderberry redberry",
+      "assembly_location": "zucchini tayberry"
+    },
+    {
+      "id": 4,
+      "created_at": 1771334805799,
+      "battery_id": 0,
+      "raw_material_origin": "sapote mamey",
+      "manufacturing_facility": "cempedak celery",
+      "assembly_location": "chicory turnip"
+    },
+    {
+      "id": 5,
+      "created_at": 1771334805807,
+      "battery_id": 0,
+      "raw_material_origin": "plantain mulberry",
+      "manufacturing_facility": "naranjilla fennel",
+      "assembly_location": "blackcurrant yarrow"
+    },
+    {
+      "id": 6,
+      "created_at": 1771334805814,
+      "battery_id": 0,
+      "raw_material_origin": "tamarillo watercress",
+      "manufacturing_facility": "osageorange tomato",
+      "assembly_location": "clementine redcurrant"
+    },
+    {
+      "id": 7,
+      "created_at": 1771334805900,
+      "battery_id": 0,
+      "raw_material_origin": "hyssop kohlrabi",
+      "manufacturing_facility": "jackfruit cauliflower",
+      "assembly_location": "lavender soybean"
+    },
+    {
+      "id": 8,
+      "created_at": 1771334805906,
+      "battery_id": 0,
+      "raw_material_origin": "pistachio cashewapple",
+      "manufacturing_facility": "bergamot chicory",
+      "assembly_location": "sloe opuntia"
+    },
+    {
+      "id": 9,
+      "created_at": 1771334805913,
+      "battery_id": 0,
+      "raw_material_origin": "cupuacu kiwi",
+      "manufacturing_facility": "goumi pitomba",
+      "assembly_location": "carrot jabuticaba"
+    },
+    {
+      "id": 10,
+      "created_at": 1771334806002,
+      "battery_id": 0,
+      "raw_material_origin": "cherry mustard",
+      "manufacturing_facility": "currant brazil",
+      "assembly_location": "loquat quandong"
+    },
+    {
+      "id": 11,
+      "created_at": 1771334806009,
+      "battery_id": 0,
+      "raw_material_origin": "blackberry lavender",
+      "manufacturing_facility": "sloe uva",
+      "assembly_location": "breadfruit sapodilla"
+    },
+    {
+      "id": 12,
+      "created_at": 1771334806015,
+      "battery_id": 0,
+      "raw_material_origin": "plum mulberry",
+      "manufacturing_facility": "hickory gardenrocket",
+      "assembly_location": "orange prune"
+    },
+    {
+      "id": 13,
+      "created_at": 1771334806098,
+      "battery_id": 0,
+      "raw_material_origin": "bay verbena",
+      "manufacturing_facility": "gooseberry pomegranate",
+      "assembly_location": "hawaiianpapaya redberry"
+    },
+    {
+      "id": 14,
+      "created_at": 1771334806103,
+      "battery_id": 0,
+      "raw_material_origin": "pomelo snowpea",
+      "manufacturing_facility": "voavanga opuntia",
+      "assembly_location": "yunnanhackberry lanseh"
+    },
+    {
+      "id": 15,
+      "created_at": 1771334806110,
+      "battery_id": 0,
+      "raw_material_origin": "mangaba vegetablepearl",
+      "manufacturing_facility": "elderberry olive",
+      "assembly_location": "almond waxgourd"
+    },
+    {
+      "id": 16,
+      "created_at": 1771334806199,
+      "battery_id": 0,
+      "raw_material_origin": "miraclefruit mulberry",
+      "manufacturing_facility": "brusselsprout celery",
+      "assembly_location": "snowpea yumberry"
+    },
+    {
+      "id": 17,
+      "created_at": 1771334806206,
+      "battery_id": 0,
+      "raw_material_origin": "kohlrabi fingerlime",
+      "manufacturing_facility": "pequi vanilla",
+      "assembly_location": "tomato blueberry"
+    },
+    {
+      "id": 18,
+      "created_at": 1771334806213,
+      "battery_id": 0,
+      "raw_material_origin": "avocado avocado",
+      "manufacturing_facility": "carambola cupuacu",
+      "assembly_location": "coriander kale"
+    },
+    {
+      "id": 19,
+      "created_at": 1771334806305,
+      "battery_id": 0,
+      "raw_material_origin": "nance jocote",
+      "manufacturing_facility": "fenugreek surinamcherry",
+      "assembly_location": "a\u00c3\u00a7a\u00c3\u00ad pitaya"
+    },
+    {
+      "id": 20,
+      "created_at": 1771334806314,
+      "battery_id": 0,
+      "raw_material_origin": "pequi santol",
+      "manufacturing_facility": "artichoke nectarine",
+      "assembly_location": "hawthorn brazilnut"
+    }
+  ],
+  "sig": "e7DO6ZL8sdbIDYEvs75JOyvnK-w."
+}

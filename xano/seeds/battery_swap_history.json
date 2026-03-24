@@ -1,0 +1,188 @@
+{
+  "app": "xano",
+  "version": "1.03",
+  "type": "content",
+  "payload": [
+    {
+      "id": 1,
+      "created_at": 1771334806016,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-11-02",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 2,
+      "created_at": 1771334806123,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-05-27",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 3,
+      "created_at": 1771334806223,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-12-03",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 4,
+      "created_at": 1771334806412,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-02-22",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 5,
+      "created_at": 1771334806428,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-06-02",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 6,
+      "created_at": 1771334806516,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-08-08",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 7,
+      "created_at": 1771334806616,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-05-24",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 8,
+      "created_at": 1771334806722,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-11-28",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 9,
+      "created_at": 1771334806811,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-08-14",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 10,
+      "created_at": 1771334806828,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2026-02-01",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 11,
+      "created_at": 1771334806921,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-06-22",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 12,
+      "created_at": 1771334807009,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-10-29",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 13,
+      "created_at": 1771334807023,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-03-03",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 14,
+      "created_at": 1771334807117,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-06-14",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 15,
+      "created_at": 1771334807127,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-09-30",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 16,
+      "created_at": 1771334807135,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-12-28",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 17,
+      "created_at": 1771334807217,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-09-22",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 18,
+      "created_at": 1771334807226,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-10-25",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 19,
+      "created_at": 1771334807236,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-08-04",
+      "performed_by_user_id": 0
+    },
+    {
+      "id": 20,
+      "created_at": 1771334807311,
+      "battery_id": 0,
+      "old_vehicle_id": 0,
+      "new_vehicle_id": 0,
+      "swap_date": "2025-06-27",
+      "performed_by_user_id": 0
+    }
+  ],
+  "sig": "Dlkcoc8tv6csR36Q_E2rnVuAwN0."
+}

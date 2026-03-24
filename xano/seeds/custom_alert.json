@@ -1,0 +1,208 @@
+{
+  "app": "xano",
+  "version": "1.03",
+  "type": "content",
+  "payload": [
+    {
+      "id": 1,
+      "created_at": 1771334805805,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "elderberry watermelon",
+      "threshold_value": 99.01,
+      "notification_frequency": "coconut fingerlime",
+      "is_active": false
+    },
+    {
+      "id": 2,
+      "created_at": 1771334805899,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "sapote plum",
+      "threshold_value": 98.66,
+      "notification_frequency": "catnip charichuelo",
+      "is_active": true
+    },
+    {
+      "id": 3,
+      "created_at": 1771334805909,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "hawaiianpapaya alfalfa",
+      "threshold_value": 74.78,
+      "notification_frequency": "uva longan",
+      "is_active": true
+    },
+    {
+      "id": 4,
+      "created_at": 1771334806000,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "lime sheanut",
+      "threshold_value": 87.12,
+      "notification_frequency": "tarragon wurtz",
+      "is_active": true
+    },
+    {
+      "id": 5,
+      "created_at": 1771334806014,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "coastalmilkwood gooseberry",
+      "threshold_value": 11.62,
+      "notification_frequency": "surinamcherry amaranth",
+      "is_active": true
+    },
+    {
+      "id": 6,
+      "created_at": 1771334806104,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "raspberry wasabi",
+      "threshold_value": 7.05,
+      "notification_frequency": "blackcurrant mustard",
+      "is_active": true
+    },
+    {
+      "id": 7,
+      "created_at": 1771334806198,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "cantaloupe guava",
+      "threshold_value": 65.2,
+      "notification_frequency": "watermelon lanzones",
+      "is_active": false
+    },
+    {
+      "id": 8,
+      "created_at": 1771334806211,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "satsuma lemon",
+      "threshold_value": 97.28,
+      "notification_frequency": "hackberry mizuna",
+      "is_active": false
+    },
+    {
+      "id": 9,
+      "created_at": 1771334806309,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "coriander quandong",
+      "threshold_value": 71.61,
+      "notification_frequency": "ackee marionberry",
+      "is_active": true
+    },
+    {
+      "id": 10,
+      "created_at": 1771334806401,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "blackapple mamey",
+      "threshold_value": 60.07,
+      "notification_frequency": "mustard camu",
+      "is_active": false
+    },
+    {
+      "id": 11,
+      "created_at": 1771334806413,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "physalis tayberry",
+      "threshold_value": 42.85,
+      "notification_frequency": "artichoke fig",
+      "is_active": false
+    },
+    {
+      "id": 12,
+      "created_at": 1771334806502,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "grape babaco",
+      "threshold_value": 71.41,
+      "notification_frequency": "rambutan earthstar",
+      "is_active": true
+    },
+    {
+      "id": 13,
+      "created_at": 1771334806516,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "sweetlime ugli",
+      "threshold_value": 41.38,
+      "notification_frequency": "lemon pitomba",
+      "is_active": true
+    },
+    {
+      "id": 14,
+      "created_at": 1771334806600,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "spinach redcurrant",
+      "threshold_value": 57.31,
+      "notification_frequency": "raspberry mombin",
+      "is_active": true
+    },
+    {
+      "id": 15,
+      "created_at": 1771334806608,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "quandong taro",
+      "threshold_value": 85.34,
+      "notification_frequency": "quince watermelon",
+      "is_active": false
+    },
+    {
+      "id": 16,
+      "created_at": 1771334806616,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "escarole basil",
+      "threshold_value": 76.56,
+      "notification_frequency": "quince thyme",
+      "is_active": true
+    },
+    {
+      "id": 17,
+      "created_at": 1771334806704,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "papaya mammeeapple",
+      "threshold_value": 24.79,
+      "notification_frequency": "wampi zabala",
+      "is_active": true
+    },
+    {
+      "id": 18,
+      "created_at": 1771334806713,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "acerola hackberry",
+      "threshold_value": 35.62,
+      "notification_frequency": "broadleafbramble parsnip",
+      "is_active": true
+    },
+    {
+      "id": 19,
+      "created_at": 1771334806719,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "terongbelanda dragonfruit",
+      "threshold_value": 14.52,
+      "notification_frequency": "sprout grape",
+      "is_active": false
+    },
+    {
+      "id": 20,
+      "created_at": 1771334806724,
+      "user_id": 0,
+      "battery_id": 0,
+      "alert_type": "camu noni",
+      "threshold_value": 96.7,
+      "notification_frequency": "wintersquash melon",
+      "is_active": true
+    }
+  ],
+  "sig": "slP-UrZH2Y7Gm-tl_GiTo3HQBTM."
+}

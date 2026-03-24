@@ -1,0 +1,188 @@
+{
+  "app": "xano",
+  "version": "1.03",
+  "type": "content",
+  "payload": [
+    {
+      "id": 1,
+      "created_at": 1771334806178,
+      "battery_id": 0,
+      "component_type": "coconut cherry",
+      "serial_number": "(947) 561-4398",
+      "manufacturing_date": "2025-08-19",
+      "chemistry": "cabbage olive"
+    },
+    {
+      "id": 2,
+      "created_at": 1771334806194,
+      "battery_id": 0,
+      "component_type": "cress mombin",
+      "serial_number": "(922) 464-4514",
+      "manufacturing_date": "2025-06-26",
+      "chemistry": "mangosteen rhubarb"
+    },
+    {
+      "id": 3,
+      "created_at": 1771334806274,
+      "battery_id": 0,
+      "component_type": "curry calabash",
+      "serial_number": "(402) 397-7397",
+      "manufacturing_date": "2025-06-08",
+      "chemistry": "rose olallieberry"
+    },
+    {
+      "id": 4,
+      "created_at": 1771334806284,
+      "battery_id": 0,
+      "component_type": "cacau fig",
+      "serial_number": "(675) 746-2702",
+      "manufacturing_date": "2025-03-23",
+      "chemistry": "crowberry acerola"
+    },
+    {
+      "id": 5,
+      "created_at": 1771334806290,
+      "battery_id": 0,
+      "component_type": "mayapple gooseberry",
+      "serial_number": "(555) 935-7099",
+      "manufacturing_date": "2025-11-20",
+      "chemistry": "tayberry jabuticaba"
+    },
+    {
+      "id": 6,
+      "created_at": 1771334806373,
+      "battery_id": 0,
+      "component_type": "asparagus okra",
+      "serial_number": "(411) 760-6184",
+      "manufacturing_date": "2025-07-21",
+      "chemistry": "cashewapple mulberry"
+    },
+    {
+      "id": 7,
+      "created_at": 1771334806382,
+      "battery_id": 0,
+      "component_type": "medlar lingonberry",
+      "serial_number": "(814) 723-9474",
+      "manufacturing_date": "2025-05-10",
+      "chemistry": "pandanus spinach"
+    },
+    {
+      "id": 8,
+      "created_at": 1771334806390,
+      "battery_id": 0,
+      "component_type": "sorrel zapote",
+      "serial_number": "(505) 643-9962",
+      "manufacturing_date": "2025-11-17",
+      "chemistry": "biriba cacau"
+    },
+    {
+      "id": 9,
+      "created_at": 1771334806471,
+      "battery_id": 0,
+      "component_type": "clary jambul",
+      "serial_number": "(468) 427-6037",
+      "manufacturing_date": "2026-01-15",
+      "chemistry": "rambutan coriander"
+    },
+    {
+      "id": 10,
+      "created_at": 1771334806479,
+      "battery_id": 0,
+      "component_type": "cress cauliflower",
+      "serial_number": "(463) 294-9167",
+      "manufacturing_date": "2025-11-13",
+      "chemistry": "eggnut alfalfa"
+    },
+    {
+      "id": 11,
+      "created_at": 1771334806485,
+      "battery_id": 0,
+      "component_type": "chestnut anise",
+      "serial_number": "(710) 860-9088",
+      "manufacturing_date": "2026-01-12",
+      "chemistry": "bay brusselsprout"
+    },
+    {
+      "id": 12,
+      "created_at": 1771334806572,
+      "battery_id": 0,
+      "component_type": "starfruit spinach",
+      "serial_number": "(697) 241-4598",
+      "manufacturing_date": "2025-06-11",
+      "chemistry": "passionfruit radicchio"
+    },
+    {
+      "id": 13,
+      "created_at": 1771334806582,
+      "battery_id": 0,
+      "component_type": "ugli santol",
+      "serial_number": "(493) 331-8193",
+      "manufacturing_date": "2025-06-15",
+      "chemistry": "plum gooseberry"
+    },
+    {
+      "id": 14,
+      "created_at": 1771334806593,
+      "battery_id": 0,
+      "component_type": "apricot hickory",
+      "serial_number": "(262) 887-7934",
+      "manufacturing_date": "2026-02-06",
+      "chemistry": "avocado woodruff"
+    },
+    {
+      "id": 15,
+      "created_at": 1771334806676,
+      "battery_id": 0,
+      "component_type": "kola plum",
+      "serial_number": "(369) 527-6161",
+      "manufacturing_date": "2025-03-27",
+      "chemistry": "guavaberry mangaba"
+    },
+    {
+      "id": 16,
+      "created_at": 1771334806685,
+      "battery_id": 0,
+      "component_type": "cloudberry hickory",
+      "serial_number": "(769) 272-9407",
+      "manufacturing_date": "2025-05-13",
+      "chemistry": "galangal dewberry"
+    },
+    {
+      "id": 17,
+      "created_at": 1771334806693,
+      "battery_id": 0,
+      "component_type": "sapote pomelo",
+      "serial_number": "(742) 878-4639",
+      "manufacturing_date": "2025-10-01",
+      "chemistry": "pitomba plantain"
+    },
+    {
+      "id": 18,
+      "created_at": 1771334806778,
+      "battery_id": 0,
+      "component_type": "pepper waxapple",
+      "serial_number": "(970) 264-6865",
+      "manufacturing_date": "2025-11-12",
+      "chemistry": "blueberry shallot"
+    },
+    {
+      "id": 19,
+      "created_at": 1771334806786,
+      "battery_id": 0,
+      "component_type": "alfalfa sloe",
+      "serial_number": "(790) 657-5112",
+      "manufacturing_date": "2025-12-28",
+      "chemistry": "elephantapple honeydew"
+    },
+    {
+      "id": 20,
+      "created_at": 1771334806873,
+      "battery_id": 0,
+      "component_type": "gardenrocket mulberry",
+      "serial_number": "(561) 744-4394",
+      "manufacturing_date": "2025-08-29",
+      "chemistry": "bignay juneberry"
+    }
+  ],
+  "sig": "p6ZnPi5mCGdCVJLns-psi5SUKOA."
+}

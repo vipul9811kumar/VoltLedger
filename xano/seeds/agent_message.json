@@ -1,0 +1,268 @@
+{
+  "app": "xano",
+  "version": "1.03",
+  "type": "content",
+  "payload": [
+    {
+      "id": 2,
+      "created_at": 1771334806011,
+      "conversation": 0,
+      "role": "assistant",
+      "content": {
+        "data": {
+          "lat": 53.760772,
+          "lng": 71.363422
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 3,
+      "created_at": 1771334806028,
+      "conversation": 0,
+      "role": "tool",
+      "content": {
+        "data": {
+          "lat": 71.126942,
+          "lng": -170.67248
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 4,
+      "created_at": 1771334806109,
+      "conversation": 0,
+      "role": "assistant",
+      "content": {
+        "data": {
+          "lat": -54.780244,
+          "lng": 76.994389
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 5,
+      "created_at": 1771334806115,
+      "conversation": 0,
+      "role": "system",
+      "content": {
+        "data": {
+          "lat": -31.773553,
+          "lng": 88.708317
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 6,
+      "created_at": 1771334806121,
+      "conversation": 0,
+      "role": "user",
+      "content": {
+        "data": {
+          "lat": 61.070403,
+          "lng": 56.815334
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 7,
+      "created_at": 1771334806210,
+      "conversation": 0,
+      "role": "user",
+      "content": {
+        "data": {
+          "lat": 46.328221,
+          "lng": 99.421202
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 8,
+      "created_at": 1771334806217,
+      "conversation": 0,
+      "role": "tool",
+      "content": {
+        "data": {
+          "lat": 8.829227,
+          "lng": -54.349623
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 9,
+      "created_at": 1771334806225,
+      "conversation": 0,
+      "role": "user",
+      "content": {
+        "data": {
+          "lat": 43.129344,
+          "lng": -106.026209
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 10,
+      "created_at": 1771334806315,
+      "conversation": 0,
+      "role": "assistant",
+      "content": {
+        "data": {
+          "lat": 48.211412,
+          "lng": 156.543399
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 11,
+      "created_at": 1771334806324,
+      "conversation": 0,
+      "role": "assistant",
+      "content": {
+        "data": {
+          "lat": 65.628982,
+          "lng": -157.893876
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 12,
+      "created_at": 1771334806417,
+      "conversation": 0,
+      "role": "system",
+      "content": {
+        "data": {
+          "lat": 22.655373,
+          "lng": -58.176708
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 13,
+      "created_at": 1771334806424,
+      "conversation": 0,
+      "role": "tool",
+      "content": {
+        "data": {
+          "lat": 42.421032,
+          "lng": 54.385894
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 14,
+      "created_at": 1771334806512,
+      "conversation": 0,
+      "role": "system",
+      "content": {
+        "data": {
+          "lat": -48.449709,
+          "lng": -166.469159
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 15,
+      "created_at": 1771334806520,
+      "conversation": 0,
+      "role": "tool",
+      "content": {
+        "data": {
+          "lat": 52.120243,
+          "lng": -178.083151
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 16,
+      "created_at": 1771334806526,
+      "conversation": 0,
+      "role": "user",
+      "content": {
+        "data": {
+          "lat": 63.489372,
+          "lng": 41.362918
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 17,
+      "created_at": 1771334806614,
+      "conversation": 0,
+      "role": "assistant",
+      "content": {
+        "data": {
+          "lat": 68.24773,
+          "lng": 4.925957
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 18,
+      "created_at": 1771334806622,
+      "conversation": 0,
+      "role": "user",
+      "content": {
+        "data": {
+          "lat": 40.025857,
+          "lng": 82.876762
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 19,
+      "created_at": 1771334806714,
+      "conversation": 0,
+      "role": "tool",
+      "content": {
+        "data": {
+          "lat": -30.981053,
+          "lng": 125.968557
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 20,
+      "created_at": 1771334806731,
+      "conversation": 0,
+      "role": "system",
+      "content": {
+        "data": {
+          "lat": -24.162202,
+          "lng": -92.316287
+        },
+        "type": "point"
+      }
+    },
+    {
+      "id": 21,
+      "created_at": 1771334806746,
+      "conversation": 0,
+      "role": "tool",
+      "content": {
+        "data": {
+          "lat": -42.695925,
+          "lng": 147.041246
+        },
+        "type": "point"
+      }
+    }
+  ],
+  "sig": "rGEyVkMY0zQK9TWtziDS_JYcv54."
+}

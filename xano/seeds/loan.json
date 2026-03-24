@@ -1,0 +1,208 @@
+{
+  "app": "xano",
+  "version": "1.03",
+  "type": "content",
+  "payload": [
+    {
+      "id": 1,
+      "created_at": 1771334806020,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 62.39,
+      "start_date": "2025-02-17",
+      "end_date": "2025-09-21",
+      "status": "butterfruit starfruit"
+    },
+    {
+      "id": 2,
+      "created_at": 1771334806114,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 35.69,
+      "start_date": "2025-07-22",
+      "end_date": "2026-01-29",
+      "status": "honeydew macadamia"
+    },
+    {
+      "id": 3,
+      "created_at": 1771334806126,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 29.84,
+      "start_date": "2025-09-27",
+      "end_date": "2025-11-05",
+      "status": "anise mango"
+    },
+    {
+      "id": 4,
+      "created_at": 1771334806219,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 16.9,
+      "start_date": "2026-01-20",
+      "end_date": "2025-09-19",
+      "status": "charichuelo broadbean"
+    },
+    {
+      "id": 5,
+      "created_at": 1771334806228,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 61.33,
+      "start_date": "2025-10-04",
+      "end_date": "2025-11-12",
+      "status": "raspberry sesame"
+    },
+    {
+      "id": 6,
+      "created_at": 1771334806319,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 57.63,
+      "start_date": "2026-01-25",
+      "end_date": "2025-04-01",
+      "status": "durio jocote"
+    },
+    {
+      "id": 7,
+      "created_at": 1771334806414,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 68.85,
+      "start_date": "2025-08-09",
+      "end_date": "2026-01-08",
+      "status": "waxgourd thimbleberry"
+    },
+    {
+      "id": 8,
+      "created_at": 1771334806425,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 4.49,
+      "start_date": "2025-10-08",
+      "end_date": "2026-02-14",
+      "status": "spanishlime surinamcherry"
+    },
+    {
+      "id": 9,
+      "created_at": 1771334806517,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 65.27,
+      "start_date": "2026-02-14",
+      "end_date": "2025-08-12",
+      "status": "cantaloupe elephantapple"
+    },
+    {
+      "id": 10,
+      "created_at": 1771334806524,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 13.92,
+      "start_date": "2025-08-28",
+      "end_date": "2025-03-25",
+      "status": "papaya potato"
+    },
+    {
+      "id": 11,
+      "created_at": 1771334806612,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 98.45,
+      "start_date": "2025-10-22",
+      "end_date": "2026-01-03",
+      "status": "shaddock galangal"
+    },
+    {
+      "id": 12,
+      "created_at": 1771334806624,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 57.03,
+      "start_date": "2025-06-20",
+      "end_date": "2025-08-04",
+      "status": "woodruff grumichama"
+    },
+    {
+      "id": 13,
+      "created_at": 1771334806718,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 33.87,
+      "start_date": "2025-04-17",
+      "end_date": "2025-08-23",
+      "status": "elderberry sesame"
+    },
+    {
+      "id": 14,
+      "created_at": 1771334806812,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 75.95,
+      "start_date": "2025-05-10",
+      "end_date": "2025-06-28",
+      "status": "garlic starfruit"
+    },
+    {
+      "id": 15,
+      "created_at": 1771334806824,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 34.29,
+      "start_date": "2025-04-10",
+      "end_date": "2025-06-28",
+      "status": "cashewapple satsuma"
+    },
+    {
+      "id": 16,
+      "created_at": 1771334806912,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 93.87,
+      "start_date": "2025-05-10",
+      "end_date": "2025-09-29",
+      "status": "bacaba soursop"
+    },
+    {
+      "id": 17,
+      "created_at": 1771334806923,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 23.83,
+      "start_date": "2025-09-22",
+      "end_date": "2025-04-08",
+      "status": "grumichama redcurrant"
+    },
+    {
+      "id": 18,
+      "created_at": 1771334806935,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 30.82,
+      "start_date": "2026-01-31",
+      "end_date": "2026-01-18",
+      "status": "eggnut blueberry"
+    },
+    {
+      "id": 19,
+      "created_at": 1771334807017,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 29.65,
+      "start_date": "2025-02-23",
+      "end_date": "2025-03-08",
+      "status": "hawaiianpapaya lemato"
+    },
+    {
+      "id": 20,
+      "created_at": 1771334807027,
+      "battery_id": 0,
+      "lender_user_id": 0,
+      "amount": 58.62,
+      "start_date": "2025-03-04",
+      "end_date": "2025-06-11",
+      "status": "watercress sesame"
+    }
+  ],
+  "sig": "AbjY7FGsvmaFgNRwJw40elxhB-M."
+}

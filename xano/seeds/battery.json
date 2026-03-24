@@ -1,0 +1,228 @@
+{
+  "app": "xano",
+  "version": "1.03",
+  "type": "content",
+  "payload": [
+    {
+      "id": 1,
+      "created_at": 1771334806309,
+      "serial_number": "PACK-FL-CA-001",
+      "chemistry": "pili sweetpotato",
+      "manufacturing_batch": "naseberry screwpine",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "grumichama mangaba",
+      "battery_model_id": 0,
+      "expiration_date": 2064832006000
+    },
+    {
+      "id": 2,
+      "created_at": 1771334806412,
+      "serial_number": "(316) 615-7553",
+      "chemistry": "cacau brazilnut",
+      "manufacturing_batch": "fenugreek tamarind",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "nectarine pequi",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 3,
+      "created_at": 1771334806424,
+      "serial_number": "(672) 250-5762",
+      "chemistry": "pineapple oregano",
+      "manufacturing_batch": "a\u00c3\u00a7a\u00c3\u00ad bergamot",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "pitaya zucchini",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 4,
+      "created_at": 1771334806514,
+      "serial_number": "(697) 467-1762",
+      "chemistry": "kabosu kabosu",
+      "manufacturing_batch": "salmonberry chervil",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "chestnut wildcherry",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 5,
+      "created_at": 1771334806526,
+      "serial_number": "(506) 890-3051",
+      "chemistry": "tomatillo currant",
+      "manufacturing_batch": "spanishlime olallieberry",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "noni soursop",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 6,
+      "created_at": 1771334806619,
+      "serial_number": "(486) 854-9230",
+      "chemistry": "gooseberry cucumber",
+      "manufacturing_batch": "brazil chervil",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "blackcurrant chestnut",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 7,
+      "created_at": 1771334806626,
+      "serial_number": "(236) 975-4622",
+      "chemistry": "lovage salmonberry",
+      "manufacturing_batch": "carambola jostaberry",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "marjoram wintersquash",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 8,
+      "created_at": 1771334806712,
+      "serial_number": "(468) 240-3528",
+      "chemistry": "sapote mammeeapple",
+      "manufacturing_batch": "jaboticaba barberry",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "crowberry orange",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 9,
+      "created_at": 1771334806726,
+      "serial_number": "(553) 870-7054",
+      "chemistry": "mango taro",
+      "manufacturing_batch": "fingerlime pitanga",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "sapote tamarind",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 10,
+      "created_at": 1771334806811,
+      "serial_number": "(650) 957-6086",
+      "chemistry": "mizuna papaya",
+      "manufacturing_batch": "wildcherry kangkong",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "butterfruit prune",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 11,
+      "created_at": 1771334806824,
+      "serial_number": "(249) 995-6703",
+      "chemistry": "salsify lentil",
+      "manufacturing_batch": "papaya kiwi",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "santol honeyberry",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 12,
+      "created_at": 1771334806911,
+      "serial_number": "(303) 666-6130",
+      "chemistry": "mayapple kola",
+      "manufacturing_batch": "soursop uva",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "garlic pomegranate",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 13,
+      "created_at": 1771334806927,
+      "serial_number": "(925) 987-8232",
+      "chemistry": "mint falsepear",
+      "manufacturing_batch": "endive celery",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "yucca mangosteen",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 14,
+      "created_at": 1771334807009,
+      "serial_number": "(277) 793-5365",
+      "chemistry": "monstera blackcurrant",
+      "manufacturing_batch": "starfruit sapote",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "pili licorice",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 15,
+      "created_at": 1771334807019,
+      "serial_number": "(244) 960-1457",
+      "chemistry": "sloe fleshymistletoe",
+      "manufacturing_batch": "mustard terongbelanda",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "caraway corn",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 16,
+      "created_at": 1771334807026,
+      "serial_number": "(578) 830-1141",
+      "chemistry": "whitecurrant malabaralmond",
+      "manufacturing_batch": "corneliancherry sweetlime",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "chayote soursop",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 17,
+      "created_at": 1771334807115,
+      "serial_number": "(409) 343-4771",
+      "chemistry": "snowpea dragonfruit",
+      "manufacturing_batch": "araza bilberry",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "yellowfruit horseradish",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 18,
+      "created_at": 1771334807122,
+      "serial_number": "(897) 345-3519",
+      "chemistry": "rambutan galangal",
+      "manufacturing_batch": "lime leek",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "zucchini araza",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 19,
+      "created_at": 1771334807129,
+      "serial_number": "(202) 265-9063",
+      "chemistry": "mint pitomba",
+      "manufacturing_batch": "thimbleberry walnut",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "corn lanzones",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    },
+    {
+      "id": 20,
+      "created_at": 1771334807210,
+      "serial_number": "(401) 623-5169",
+      "chemistry": "pear biriba",
+      "manufacturing_batch": "mango watermelon",
+      "vehicle_id": 0,
+      "current_lifecycle_stage": "pequi guava",
+      "battery_model_id": 0,
+      "expiration_date": 0
+    }
+  ],
+  "sig": "0vOtmBT0hKUvvNhPqcSlGhJeQxA."
+}

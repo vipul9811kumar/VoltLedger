@@ -1,0 +1,168 @@
+{
+  "app": "xano",
+  "version": "1.03",
+  "type": "content",
+  "payload": [
+    {
+      "id": 1,
+      "created_at": 1771334805701,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2026-02-10",
+      "status": "mango ackee"
+    },
+    {
+      "id": 2,
+      "created_at": 1771334805718,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2025-03-10",
+      "status": "currant pomelo"
+    },
+    {
+      "id": 3,
+      "created_at": 1771334805804,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2025-12-29",
+      "status": "mushroom pulasan"
+    },
+    {
+      "id": 4,
+      "created_at": 1771334805813,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2025-03-08",
+      "status": "boysenberry bay"
+    },
+    {
+      "id": 5,
+      "created_at": 1771334805903,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2025-06-02",
+      "status": "saskatoon dragonfruit"
+    },
+    {
+      "id": 6,
+      "created_at": 1771334805912,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2025-04-02",
+      "status": "biriba fennel"
+    },
+    {
+      "id": 7,
+      "created_at": 1771334806003,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2025-03-11",
+      "status": "grape yambean"
+    },
+    {
+      "id": 8,
+      "created_at": 1771334806011,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2025-08-14",
+      "status": "woodruff persimmon"
+    },
+    {
+      "id": 9,
+      "created_at": 1771334806103,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2026-01-29",
+      "status": "plantain sugarapple"
+    },
+    {
+      "id": 10,
+      "created_at": 1771334806114,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2025-12-16",
+      "status": "hawthorn date"
+    },
+    {
+      "id": 11,
+      "created_at": 1771334806204,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2025-04-06",
+      "status": "persimmon noni"
+    },
+    {
+      "id": 12,
+      "created_at": 1771334806213,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2025-03-03",
+      "status": "bilimbi potato"
+    },
+    {
+      "id": 13,
+      "created_at": 1771334806307,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2025-09-01",
+      "status": "corn guava"
+    },
+    {
+      "id": 14,
+      "created_at": 1771334806321,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2025-07-10",
+      "status": "cranberry clary"
+    },
+    {
+      "id": 15,
+      "created_at": 1771334806407,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2025-05-12",
+      "status": "wurtz melon"
+    },
+    {
+      "id": 16,
+      "created_at": 1771334806419,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2026-01-26",
+      "status": "acerola wildberry"
+    },
+    {
+      "id": 17,
+      "created_at": 1771334806508,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2025-03-04",
+      "status": "langsat amaranth"
+    },
+    {
+      "id": 18,
+      "created_at": 1771334806519,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2025-07-28",
+      "status": "vanilla mustard"
+    },
+    {
+      "id": 19,
+      "created_at": 1771334806604,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2026-02-07",
+      "status": "anise calamondin"
+    },
+    {
+      "id": 20,
+      "created_at": 1771334806613,
+      "battery_id": 0,
+      "recycler_organization_id": 0,
+      "contract_date": "2026-02-03",
+      "status": "sheanut bergamot"
+    }
+  ],
+  "sig": "JmsWKK7b7uT7MdGln6ms0VOcUmM."
+}

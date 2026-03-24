@@ -24,6 +24,8 @@
     "db:studio": "dotenv -e .env --override -- prisma studio --schema packages/db/prisma/schema.prisma",
     "infra:up": "docker compose -f infra/docker-compose.yml up -d",
     "infra:down": "docker compose -f infra/docker-compose.yml down",
+    "ingestion:dev": "dotenv -e .env --override -- tsx apps/ingestion/src/index.ts",
+    "ingestion:load": "dotenv -e .env --override -- tsx apps/ingestion/src/loaders/ndjson.loader.ts",
     "generate:synthetic": "dotenv -e .env --override -- tsx tools/synthetic-generator/src/index.ts",
     "generate:synthetic:small": "dotenv -e .env --override -- tsx tools/synthetic-generator/src/index.ts --batteries 10 --weeks 52",
     "generate:synthetic:fleet": "dotenv -e .env --override -- tsx tools/synthetic-generator/src/index.ts --batteries 100 --weeks 260",

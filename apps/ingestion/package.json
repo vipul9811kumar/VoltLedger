@@ -1,0 +1,26 @@
+{
+  "name": "@voltledger/ingestion",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Battery telemetry ingestion pipeline — BullMQ consumer + NDJSON loader",
+  "main": "./src/index.ts",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "load:ndjson": "dotenv -e ../../.env --override -- tsx src/loaders/ndjson.loader.ts"
+  },
+  "dependencies": {
+    "@voltledger/db": "workspace:*",
+    "bullmq": "^5.12.0",
+    "ioredis": "^5.4.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "tsx": "^4.11.0",
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0",
+    "dotenv-cli": "^7.4.2"
+  }
+}

@@ -108,6 +108,17 @@ export async function runIntelligenceEngine(
       },
     });
 
+    // Map internal use-case names to DB enum values
+    const USE_CASE_MAP: Record<string, string> = {
+      EV_FLEET:               'EV_FLEET_LOWER_DEMAND',
+      STATIONARY_GRID:        'STATIONARY_STORAGE_GRID',
+      STATIONARY_COMMERCIAL:  'STATIONARY_STORAGE_COMMERCIAL',
+      STATIONARY_RESIDENTIAL: 'STATIONARY_STORAGE_RESIDENTIAL',
+      REFURBISHMENT:          'REFURBISHMENT_RESALE',
+      RECYCLING_ONLY:         'RECYCLING_ONLY',
+    };
+    const dbUseCase = USE_CASE_MAP[secondLife.recommendedUseCase] ?? 'RECYCLING_ONLY';
+
     // SecondLifeAssessment — map to schema field names
     const isViable = secondLife.recommendedUseCase !== 'RECYCLING_ONLY';
     const recyclerValueUsd = Math.max(0, residualValue.currentBatteryValueUsd * 0.15);
@@ -121,7 +132,7 @@ export async function runIntelligenceEngine(
         currentSoH:                   secondLife.currentSoH,
         isViable,
         viabilityScore:               secondLife.suitabilityScore,
-        recommendedUseCase:           secondLife.recommendedUseCase as any,
+        recommendedUseCase:           dbUseCase as any,
         estimatedRemainingLifeYears:  secondLife.estimatedRemainingLifeYears,
         estimatedSecondLifeValueUsd:  Math.round(secondLifeValueUsd * 100) / 100,
         recyclerValueUsd:             Math.round(recyclerValueUsd * 100) / 100,

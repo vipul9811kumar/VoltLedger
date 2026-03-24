@@ -29,7 +29,8 @@
     "generate:synthetic": "dotenv -e .env --override -- tsx tools/synthetic-generator/src/index.ts",
     "generate:synthetic:small": "dotenv -e .env --override -- tsx tools/synthetic-generator/src/index.ts --batteries 10 --weeks 52",
     "generate:synthetic:fleet": "dotenv -e .env --override -- tsx tools/synthetic-generator/src/index.ts --batteries 100 --weeks 260",
-    "generate:synthetic:seed": "dotenv -e .env --override -- tsx tools/synthetic-generator/src/index.ts --batteries 50 --weeks 260 --seed-db"
+    "generate:synthetic:seed": "dotenv -e .env --override -- tsx tools/synthetic-generator/src/index.ts --batteries 50 --weeks 260 --seed-db",
+    "api:dev": "dotenv -e .env --override -- tsx apps/api/src/index.ts"
   },
   "devDependencies": {
     "turbo": "^2.0.0",

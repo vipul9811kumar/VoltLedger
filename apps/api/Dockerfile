@@ -1,5 +1,6 @@
 # ── Stage 1: install all deps + generate Prisma ───────────────────────────────
 FROM node:20-slim AS builder
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 RUN npm install -g pnpm@9 --silent
 WORKDIR /app
 
@@ -27,6 +28,7 @@ RUN node_modules/.bin/prisma generate --schema packages/db/prisma/schema.prisma
 
 # ── Stage 2: production image ──────────────────────────────────────────────────
 FROM node:20-slim AS runner
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 RUN npm install -g pnpm@9 --silent
 WORKDIR /app
 

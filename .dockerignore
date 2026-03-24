@@ -5,7 +5,7 @@
 **/dist
 **/node_modules
 **/*.log
-.env
+**/.env
 *.env.local
 docs
 README.md

@@ -1,5 +1,6 @@
 # ── Stage 1: install deps + build Next.js ─────────────────────────────────────
 FROM node:20-slim AS builder
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 RUN npm install -g pnpm@9 --silent
 WORKDIR /app
 
@@ -26,6 +27,7 @@ RUN NEXT_TELEMETRY_DISABLED=1 pnpm --filter @voltledger/dashboard build
 
 # ── Stage 2: production image ──────────────────────────────────────────────────
 FROM node:20-slim AS runner
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 RUN npm install -g pnpm@9 --silent
 WORKDIR /app
 

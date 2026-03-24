@@ -1,0 +1,34 @@
+{
+  "name": "voltledger",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Financial-grade battery residual risk intelligence for lenders, auctions, and secondary markets",
+  "workspaces": [
+    "apps/api",
+    "apps/ingestion",
+    "apps/dashboard",
+    "packages/types",
+    "packages/db"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "db:migrate": "pnpm --filter @voltledger/db migrate",
+    "db:seed": "pnpm --filter @voltledger/db seed",
+    "infra:up": "docker compose -f infra/docker-compose.yml up -d",
+    "infra:down": "docker compose -f infra/docker-compose.yml down"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0",
+    "prettier": "^3.2.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.0.0"
+}

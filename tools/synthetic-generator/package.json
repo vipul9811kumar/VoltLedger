@@ -4,9 +4,9 @@
   "private": true,
   "description": "Realistic EV battery telemetry data generator for VoltLedger dev/testing",
   "scripts": {
-    "generate": "tsx src/index.ts",
-    "generate:small": "tsx src/index.ts --batteries 10 --weeks 52",
-    "generate:fleet": "tsx src/index.ts --batteries 100 --weeks 260",
+    "generate": "dotenv -e ../../.env --override -- tsx src/index.ts",
+    "generate:small": "dotenv -e ../../.env --override -- tsx src/index.ts --batteries 10 --weeks 52",
+    "generate:fleet": "dotenv -e ../../.env --override -- tsx src/index.ts --batteries 100 --weeks 260",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

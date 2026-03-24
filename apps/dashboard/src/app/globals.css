@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #0a0f1e;
+  --card: #111827;
+  --border: #1e2d40;
+  --accent: #3b82f6;
+  --text: #e2e8f0;
+  --muted: #64748b;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Grade badge colors */
+.grade-A { @apply bg-emerald-500/20 text-emerald-400 border border-emerald-500/30; }
+.grade-B { @apply bg-blue-500/20 text-blue-400 border border-blue-500/30; }
+.grade-C { @apply bg-yellow-500/20 text-yellow-400 border border-yellow-500/30; }
+.grade-D { @apply bg-orange-500/20 text-orange-400 border border-orange-500/30; }
+.grade-F { @apply bg-red-500/20 text-red-400 border border-red-500/30; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }

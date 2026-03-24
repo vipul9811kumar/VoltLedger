@@ -4,3 +4,6 @@ dist/
 *.env.local
 .turbo/
 *.log
+apps/dashboard/.next/
+apps/dashboard/tsconfig.tsbuildinfo
+apps/dashboard/next-env.d.ts

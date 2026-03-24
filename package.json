@@ -10,7 +10,8 @@
     "packages/types",
     "packages/db",
     "tools/synthetic-generator",
-    "tools/bulk-score"
+    "tools/bulk-score",
+    "tools/generate-key"
   ],
   "scripts": {
     "dev": "turbo run dev",
@@ -32,6 +33,7 @@
     "generate:synthetic:fleet": "dotenv -e .env --override -- tsx tools/synthetic-generator/src/index.ts --batteries 100 --weeks 260",
     "generate:synthetic:seed": "dotenv -e .env --override -- tsx tools/synthetic-generator/src/index.ts --batteries 50 --weeks 260 --seed-db",
     "bulk-score": "dotenv -e .env --override -- tsx tools/bulk-score/src/index.ts",
+    "generate-key": "dotenv -e .env --override -- tsx tools/generate-key/src/index.ts",
     "api:dev": "dotenv -e .env --override -- tsx apps/api/src/index.ts",
     "dashboard:dev": "dotenv -e .env --override -- sh -c 'cd apps/dashboard && next dev -p 3002'"
   },

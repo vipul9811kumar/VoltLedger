@@ -1,0 +1,19 @@
+{
+  "name": "@voltledger/generate-key",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "scripts": {
+    "start": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@voltledger/db": "workspace:*",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "tsx": "^4.11.0",
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0",
+    "@types/bcryptjs": "^2.4.4"
+  }
+}

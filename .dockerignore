@@ -1,0 +1,12 @@
+.git
+.gitignore
+.turbo
+**/.next
+**/dist
+**/node_modules
+**/*.log
+.env
+*.env.local
+docs
+README.md
+infra/docker-compose.yml

@@ -1,0 +1,28 @@
+# VoltLedger Railway deployment config
+# Docs: https://docs.railway.app/reference/config-as-code
+
+[build]
+builder = "DOCKERFILE"
+
+# ── API service ────────────────────────────────────────────────────────────────
+# In Railway dashboard: create a service → point to this repo → set
+# "Dockerfile Path" to apps/api/Dockerfile, "Build Context" to /
+#
+# Required env vars for the API service:
+#   DATABASE_URL      — from Railway Postgres plugin (auto-injected if linked)
+#   REDIS_URL         — from Railway Redis plugin (auto-injected if linked)
+#   NODE_ENV          = production
+#   DEV_SKIP_AUTH     = false
+#   RESEND_API_KEY    — from resend.com
+#   EMAIL_FROM        — e.g. VoltLedger <noreply@yourdomain.com>
+#   EMAIL_NOTIFY      — your inbox for early access notifications
+#   CORS_ORIGIN       — your dashboard URL, e.g. https://dash.voltledger.io
+
+# ── Dashboard service ──────────────────────────────────────────────────────────
+# In Railway dashboard: create a second service → same repo →
+# "Dockerfile Path" = apps/dashboard/Dockerfile, "Build Context" = /
+#
+# Required env vars for the dashboard service:
+#   DATABASE_URL      — same Postgres plugin
+#   NODE_ENV          = production
+#   NEXT_TELEMETRY_DISABLED = 1

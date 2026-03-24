@@ -11,7 +11,7 @@ import { secondLifeRoutes } from './routes/second-life';
 import { healthRoutes } from './routes/health';
 import { earlyAccessRoutes } from './routes/early-access';
 
-const PORT = parseInt(process.env.API_PORT ?? '3001');
+const PORT = parseInt(process.env.PORT ?? process.env.API_PORT ?? '3001');
 const HOST = process.env.API_HOST ?? '0.0.0.0';
 
 async function build() {

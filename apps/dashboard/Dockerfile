@@ -1,5 +1,5 @@
 # ── Stage 1: install deps ──────────────────────────────────────────────────────
-FROM node:20-alpine AS deps
+FROM node:20-slim AS deps
 RUN npm install -g pnpm@9 --silent
 WORKDIR /app
 
@@ -28,7 +28,7 @@ RUN node_modules/.bin/prisma generate --schema packages/db/prisma/schema.prisma
 RUN pnpm --filter @voltledger/dashboard build
 
 # ── Stage 3: production image ──────────────────────────────────────────────────
-FROM node:20-alpine AS runner
+FROM node:20-slim AS runner
 RUN npm install -g pnpm@9 --silent
 WORKDIR /app
 
@@ -47,14 +47,12 @@ COPY tools/generate-key/package.json ./tools/generate-key/
 
 RUN pnpm install --frozen-lockfile --prod
 
-# Next.js standalone output + static assets
+# Copy built output and generated Prisma client from builder
 COPY --from=builder /app/apps/dashboard/.next     ./apps/dashboard/.next
 COPY --from=builder /app/apps/dashboard/public    ./apps/dashboard/public
 COPY --from=builder /app/packages/db/src          ./packages/db/src
 COPY --from=builder /app/packages/db/prisma       ./packages/db/prisma
-
-# Regenerate Prisma client in the runner
-RUN node_modules/.bin/prisma generate --schema packages/db/prisma/schema.prisma
+COPY --from=builder /app/node_modules/.pnpm       ./node_modules/.pnpm
 
 EXPOSE 3000
 

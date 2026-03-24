@@ -39,7 +39,7 @@ async function main() {
 
   const flush = async () => {
     if (batch.length === 0) return;
-    const jobs = batch.map(data => ({ name: `telemetry:${data.serialNumber}`, data }));
+    const jobs = batch.map(data => ({ name: `telemetry:${data.serialNumber}` as const, data })) as any;
     await telemetryQueue.addBulk(jobs);
     totalEnqueued += batch.length;
     process.stdout.write(`  Enqueued ${totalEnqueued} jobs...\r`);

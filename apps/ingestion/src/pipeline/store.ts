@@ -3,7 +3,7 @@
  * Also updates battery.lastTelemetryAt.
  */
 
-import { prisma } from '@voltledger/db';
+import { prisma, type Battery } from '@voltledger/db';
 import type { TelemetryJob } from '../queues/telemetry.queue';
 import { normalizeTelemetry } from './normalize';
 
@@ -76,7 +76,7 @@ export async function storeTelemetry(
  * Look up battery by serial number.
  * Returns null if not found.
  */
-export async function resolveBattery(serialNumber: string) {
+export async function resolveBattery(serialNumber: string): Promise<Pick<Battery, 'id' | 'chemistry' | 'nominalCapacityKwh' | 'status'> | null> {
   return prisma.battery.findUnique({
     where: { serialNumber },
     select: { id: true, chemistry: true, nominalCapacityKwh: true, status: true },
@@ -87,7 +87,7 @@ export async function resolveBattery(serialNumber: string) {
  * Auto-register a battery when it arrives in telemetry but isn't in the DB yet.
  * Picks the first battery model matching the chemistry as a default.
  */
-export async function autoRegisterBattery(serialNumber: string, chemistry?: string) {
+export async function autoRegisterBattery(serialNumber: string, chemistry?: string): Promise<Pick<Battery, 'id' | 'chemistry' | 'nominalCapacityKwh' | 'status'> | null> {
   const model = await prisma.batteryModel.findFirst({
     where: chemistry ? { chemistry: chemistry as any } : undefined,
   });

@@ -50,6 +50,6 @@ export function normalizeTelemetry(
       ? Math.round(job.odometer)
       : null,
 
-    rawPayload:             job.rawPayload ?? undefined,
+    rawPayload:             (job.rawPayload ?? undefined) as any,
   };
 }

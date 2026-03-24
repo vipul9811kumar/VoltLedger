@@ -37,7 +37,7 @@ export function startTelemetryWorker() {
       }
 
       // ── 2. Resolve battery ─────────────────────────────────────────────────
-      const battery = await resolveBattery(data.serialNumber);
+      let battery = await resolveBattery(data.serialNumber);
 
       if (!battery) {
         // Auto-register: create battery record from telemetry metadata
@@ -68,7 +68,7 @@ export function startTelemetryWorker() {
 
       // ── 5. Enqueue scoring (Phase 3) ───────────────────────────────────────
       await scoringQueue.add(
-        `score-${battery.id}`,
+        `score-${battery.id}` as any,
         { batteryId: battery.id, triggeredBy: 'telemetry_ingest' } satisfies ScoringJob,
         {
           // Debounce: collapse multiple scoring requests for same battery

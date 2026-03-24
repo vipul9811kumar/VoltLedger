@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VoltLedger — Battery Intelligence for Lenders</title>
+  <meta name="description" content="Financial-grade battery residual risk intelligence. Know the true health of every EV battery before you lend." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #060b18;
+      --bg2:      #0d1527;
+      --bg3:      #111d35;
+      --border:   rgba(59,130,246,0.15);
+      --blue:     #3b82f6;
+      --blue-dim: #1d4ed8;
+      --green:    #10b981;
+      --yellow:   #f59e0b;
+      --red:      #ef4444;
+      --text:     #e2e8f0;
+      --muted:    #64748b;
+      --mono:     'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(6,11,24,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #fff;
+      text-decoration: none;
+    }
+    .nav-logo .bolt {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      font-size: 0.9rem;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--blue-dim); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 1.5rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(59,130,246,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(59,130,246,0.12);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1.75rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      max-width: 14ch;
+      margin: 0 auto 1.5rem;
+    }
+    .hero h1 .accent {
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.2rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--blue-dim); transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 0.85rem 2rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .btn-secondary:hover { border-color: rgba(59,130,246,0.5); transform: translateY(-1px); }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg2);
+    }
+    .stat-item {
+      flex: 1;
+      min-width: 180px;
+      padding: 2rem 2.5rem;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .stat-value span { color: var(--blue); }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 0.25rem;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 1.5rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ── PROBLEM ── */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+    .problem-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+    }
+    .problem-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+    .problem-card h3 {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .problem-card p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── API SHOWCASE ── */
+    .api-section { background: var(--bg2); }
+    .api-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 4rem;
+      align-items: center;
+      margin-top: 3.5rem;
+    }
+    .api-endpoints { display: flex; flex-direction: column; gap: 0.75rem; }
+    .endpoint-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .endpoint-btn:hover, .endpoint-btn.active {
+      background: rgba(59,130,246,0.08);
+      border-color: rgba(59,130,246,0.4);
+    }
+    .method-badge {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 5px;
+      min-width: 40px;
+      text-align: center;
+    }
+    .method-get { background: rgba(16,185,129,0.15); color: var(--green); }
+    .endpoint-path {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text);
+    }
+    .endpoint-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .api-response {
+      background: #080e1e;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .response-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+    .response-dots { display: flex; gap: 0.4rem; }
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .dot-red   { background: #ff5f57; }
+    .dot-yellow{ background: #febc2e; }
+    .dot-green { background: #28c840; }
+    .status-ok {
+      font-size: 0.72rem;
+      font-family: var(--mono);
+      color: var(--green);
+      background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.2);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+    .response-body {
+      padding: 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      line-height: 1.8;
+      white-space: pre;
+      overflow-x: auto;
+      min-height: 320px;
+    }
+    .key   { color: #7dd3fc; }
+    .str   { color: #86efac; }
+    .num   { color: #fb923c; }
+    .grade-a { color: var(--green); font-weight: 700; }
+    .grade-b { color: #a3e635; font-weight: 700; }
+
+    /* ── HOW IT WORKS ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      margin-top: 3.5rem;
+      position: relative;
+    }
+    .step {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      position: relative;
+    }
+    .step-number {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 1.25rem;
+    }
+    .step h3 { font-weight: 700; margin-bottom: 0.5rem; }
+    .step p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── FEATURES ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 3.5rem;
+    }
+    .feature-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feature-card:hover {
+      border-color: rgba(59,130,246,0.35);
+      transform: translateY(-2px);
+    }
+    .feature-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .feature-card h3 { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem; }
+    .feature-card p { font-size: 0.825rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── ROADMAP ── */
+    .roadmap-section { background: var(--bg2); }
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+    .phase-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .phase-card.active { border-color: rgba(59,130,246,0.4); }
+    .phase-card.active::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(59,130,246,0.05) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .phase-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+    .tag-live    { background: rgba(16,185,129,0.15); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
+    .tag-q3      { background: rgba(59,130,246,0.12); color: var(--blue);  border: 1px solid rgba(59,130,246,0.25); }
+    .tag-q1-26   { background: rgba(245,158,11,0.12); color: var(--yellow);border: 1px solid rgba(245,158,11,0.25); }
+    .phase-card h3 { font-weight: 800; font-size: 1.1rem; margin-bottom: 0.4rem; }
+    .phase-card .phase-sub { font-size: 0.825rem; color: var(--muted); margin-bottom: 1.25rem; }
+    .phase-items { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .phase-items li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+    .phase-items li::before {
+      content: '→';
+      color: var(--blue);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .phase-card.active .phase-items li { color: var(--text); }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align: center;
+      padding: 7rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(59,130,246,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-section h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .cta-section p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+    }
+    .cta-form {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+    .cta-form input {
+      flex: 1;
+      min-width: 220px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.85rem 1.25rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .cta-form input:focus { border-color: rgba(59,130,246,0.5); }
+    .cta-form input::placeholder { color: var(--muted); }
+    .cta-note {
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+    .footer-right {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .api-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-links   { display: none; }
+      .stat-item   { min-width: 140px; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="bolt">⚡</span>
+    VoltLedger
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="#api">API</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+  </ul>
+  <a href="#early-access" class="nav-cta">Request Access</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <span class="hero-badge">⚡ Lender API — Now in Early Access</span>
+  <h1>
+    Know the Battery.<br />
+    <span class="accent">Before You Lend.</span>
+  </h1>
+  <p class="hero-sub">
+    VoltLedger gives lenders, insurers, and auto-finance teams financial-grade intelligence on EV battery health — before you approve a loan.
+  </p>
+  <div class="hero-actions">
+    <a href="#early-access" class="btn-primary">Request API Access</a>
+    <a href="#api" class="btn-secondary">View API Docs →</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <div class="stat-value">A–F</div>
+    <div class="stat-label">Risk Grade per Battery</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value"><span>5</span> Sub-Scores</div>
+    <div class="stat-label">Degradation · Thermal · Usage · Capacity · Age</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value"><span>&lt;</span>200ms</div>
+    <div class="stat-label">API Response Time</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-value">30+</div>
+    <div class="stat-label">Battery Data Fields Analyzed</div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="container">
+    <p class="section-label">The Problem</p>
+    <h2 class="section-title">EV Loans Are Blind Bets</h2>
+    <p class="section-sub">
+      The battery is 40–60% of an EV's value. Yet most lenders approve loans with zero visibility into actual battery health.
+    </p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon" style="background:rgba(239,68,68,0.12)">🔋</div>
+        <h3>Hidden Degradation</h3>
+        <p>A battery rated at 100 kWh from the factory may be delivering 72 kWh today. Book value doesn't reflect actual residual value.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon" style="background:rgba(245,158,11,0.12)">📉</div>
+        <h3>LTV Miscalculation</h3>
+        <p>Loan-to-value ratios ignore battery state-of-health. A degraded battery collapses collateral value mid-term — leaving lenders exposed.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon" style="background:rgba(59,130,246,0.12)">🔍</div>
+        <h3>No Standardized Signal</h3>
+        <p>OEM telematics, BMS data, and charge records live in silos. There's no unified, lender-ready score — until now.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- API SHOWCASE -->
+<section id="api" class="api-section">
+  <div class="container">
+    <p class="section-label">Lender API</p>
+    <h2 class="section-title">One API. Complete Battery Intelligence.</h2>
+    <p class="section-sub">
+      Integrate VoltLedger in hours. Pull battery risk scores, residual value estimates, and LTV recommendations directly into your underwriting flow.
+    </p>
+
+    <div class="api-layout">
+      <div class="api-endpoints">
+        <div class="endpoint-btn active" onclick="showEndpoint(0, this)">
+          <span class="method-badge method-get">GET</span>
+          <div>
+            <div class="endpoint-path">/v1/battery/{serial}/risk</div>
+            <div class="endpoint-desc">Composite risk score + grade (A–F)</div>
+          </div>
+        </div>
+        <div class="endpoint-btn" onclick="showEndpoint(1, this)">
+          <span class="method-badge method-get">GET</span>
+          <div>
+            <div class="endpoint-path">/v1/battery/{serial}/residual-value</div>
+            <div class="endpoint-desc">Current + 60-month value forecast</div>
+          </div>
+        </div>
+        <div class="endpoint-btn" onclick="showEndpoint(2, this)">
+          <span class="method-badge method-get">GET</span>
+          <div>
+            <div class="endpoint-path">/v1/battery/{serial}/ltv</div>
+            <div class="endpoint-desc">Recommended LTV + risk premium (bps)</div>
+          </div>
+        </div>
+        <div class="endpoint-btn" onclick="showEndpoint(3, this)">
+          <span class="method-badge method-get">GET</span>
+          <div>
+            <div class="endpoint-path">/v1/battery/{serial}/second-life</div>
+            <div class="endpoint-desc">Second-life viability + use cases</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="api-response">
+        <div class="response-header">
+          <div class="response-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <span class="status-ok">200 OK</span>
+        </div>
+        <div class="response-body" id="api-body"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="container">
+    <p class="section-label">How It Works</p>
+    <h2 class="section-title">From Serial Number to Credit Decision</h2>
+    <p class="section-sub">Three steps. No new hardware. No lengthy integrations.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Identify the Battery</h3>
+        <p>Send us the battery serial number or VIN. VoltLedger resolves it against our cross-OEM database of battery models, certifications, and telematics feeds.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Score & Value</h3>
+        <p>Our engine fuses SoH telemetry, charge cycle history, thermal exposure, and market comps to produce a 0–1000 risk score and live residual value estimate.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Underwrite with Confidence</h3>
+        <p>Get LTV recommendations, risk-adjusted rate premiums, and portfolio-level exposure summaries — all via a single REST API call.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <p class="section-label">Capabilities</p>
+    <h2 class="section-title">Built for Finance Teams</h2>
+    <p class="section-sub">Every data point a lender needs, structured the way credit teams think.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Risk Score (0–1000)</h3>
+        <p>Five sub-scores rolled into one composite signal — degradation, thermal history, usage pattern, capacity retention, and age-adjusted SoH.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3>Residual Value Engine</h3>
+        <p>Current fair market value and 60-month depreciation forecast with confidence intervals, referenced to live secondary market comps.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>LTV Recommendations</h3>
+        <p>Battery-adjusted loan-to-value ratios with risk premium in basis points, calibrated to chemistry, model, and lifecycle stage.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>Second-Life Assessment</h3>
+        <p>Know your exit before you enter — stationary storage, fleet reuse, refurbishment, or recycle pathway with value estimates for each.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📁</div>
+        <h3>Lifecycle History</h3>
+        <p>Full ownership chain, maintenance records, swap history, and certification status — verified and structured for due diligence.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <h3>Portfolio Webhooks</h3>
+        <p>Get alerted when a battery in your loan book crosses SoH thresholds or changes ownership — before it becomes a default risk.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap" class="roadmap-section">
+  <div class="container">
+    <p class="section-label">Roadmap</p>
+    <h2 class="section-title">Where We're Going</h2>
+    <p class="section-sub">Starting with lenders. Expanding to the full battery lifecycle ecosystem.</p>
+    <div class="roadmap">
+      <div class="phase-card active">
+        <span class="phase-tag tag-live">⚡ Phase 1 — Live</span>
+        <h3>Lender API</h3>
+        <p class="phase-sub">Financial intelligence for EV loan underwriting</p>
+        <ul class="phase-items">
+          <li>Battery risk score (0–1000, A–F grade)</li>
+          <li>Residual value + 60-month forecast</li>
+          <li>LTV recommendations + rate premiums</li>
+          <li>Second-life pathway assessment</li>
+          <li>Portfolio webhook alerts</li>
+          <li>Multi-chemistry support (LFP, NMC, NCA)</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <span class="phase-tag tag-q3">Phase 2 — Q3 2026</span>
+        <h3>Battery Passport</h3>
+        <p class="phase-sub">EU-compliant digital identity for every battery pack</p>
+        <ul class="phase-items">
+          <li>EU Battery Regulation compliance layer</li>
+          <li>Immutable lifecycle event ledger</li>
+          <li>Supply chain provenance (cell → pack → vehicle)</li>
+          <li>Environmental impact tracking (CO₂, recycled content)</li>
+          <li>Certification & compliance status</li>
+          <li>QR-scannable passport per unit</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <span class="phase-tag tag-q1-26">Phase 3 — Q1 2027</span>
+        <h3>Secondary Market & Recyclers</h3>
+        <p class="phase-sub">Intelligence layer for the full end-of-life ecosystem</p>
+        <ul class="phase-items">
+          <li>Auction house integrations</li>
+          <li>Recycler contract intelligence</li>
+          <li>Refurbisher grading API</li>
+          <li>Cross-border compliance tracking</li>
+          <li>Fleet remarketing dashboards</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="early-access" class="cta-section">
+  <div class="cta-glow"></div>
+  <p class="section-label" style="text-align:center">Early Access</p>
+  <h2>Ready to lend smarter?</h2>
+  <p>Join lenders and auto-finance teams getting early API access. We'll reach out within 48 hours.</p>
+  <form class="cta-form" onsubmit="handleSubmit(event)">
+    <input type="email" placeholder="your@company.com" required />
+    <button type="submit" class="btn-primary">Request Access</button>
+  </form>
+  <p class="cta-note">No spam. API keys issued after a quick 20-min onboarding call.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">⚡ VoltLedger</span>
+  <span class="footer-right">Financial-grade battery intelligence &mdash; &copy; 2026 VoltLedger</span>
+</footer>
+
+<script>
+  const responses = [
+    `{
+  <span class="key">"serial"</span>:        <span class="str">"PACK-FL-CA-001"</span>,
+  <span class="key">"chemistry"</span>:      <span class="str">"LFP"</span>,
+  <span class="key">"model"</span>:          <span class="str">"CATL LFP-2 Pro"</span>,
+  <span class="key">"score"</span>:          <span class="num">847</span>,
+  <span class="key">"grade"</span>:          <span class="grade-a">"A"</span>,
+  <span class="key">"soh_pct"</span>:        <span class="num">91.2</span>,
+  <span class="key">"sub_scores"</span>: {
+    <span class="key">"degradation"</span>:    <span class="num">880</span>,
+    <span class="key">"thermal"</span>:        <span class="num">910</span>,
+    <span class="key">"usage_pattern"</span>:  <span class="num">795</span>,
+    <span class="key">"capacity"</span>:       <span class="num">862</span>,
+    <span class="key">"age_adjusted"</span>:   <span class="num">788</span>
+  },
+  <span class="key">"flagged"</span>:         <span class="str">false</span>,
+  <span class="key">"assessed_at"</span>:    <span class="str">"2026-03-24T10:41:00Z"</span>
+}`,
+    `{
+  <span class="key">"serial"</span>:              <span class="str">"PACK-FL-CA-001"</span>,
+  <span class="key">"current_value_usd"</span>:   <span class="num">12400</span>,
+  <span class="key">"confidence_low"</span>:      <span class="num">11100</span>,
+  <span class="key">"confidence_high"</span>:     <span class="num">13750</span>,
+  <span class="key">"pct_of_vehicle_value"</span>: <span class="num">44.8</span>,
+  <span class="key">"forecast_12m_usd"</span>:    <span class="num">11200</span>,
+  <span class="key">"forecast_36m_usd"</span>:    <span class="num">8900</span>,
+  <span class="key">"forecast_60m_usd"</span>:    <span class="num">6400</span>,
+  <span class="key">"soh_at_60m_pct"</span>:      <span class="num">77.4</span>,
+  <span class="key">"currency"</span>:            <span class="str">"USD"</span>,
+  <span class="key">"model_version"</span>:       <span class="str">"rv-2.1"</span>
+}`,
+    `{
+  <span class="key">"serial"</span>:             <span class="str">"PACK-FL-CA-001"</span>,
+  <span class="key">"loan_amount_usd"</span>:    <span class="num">22000</span>,
+  <span class="key">"purchase_price_usd"</span>: <span class="num">27700</span>,
+  <span class="key">"term_months"</span>:        <span class="num">60</span>,
+  <span class="key">"recommended_ltv"</span>:    <span class="num">0.72</span>,
+  <span class="key">"max_ltv"</span>:            <span class="num">0.78</span>,
+  <span class="key">"risk_premium_bps"</span>:   <span class="num">45</span>,
+  <span class="key">"risk_grade"</span>:         <span class="grade-a">"A"</span>,
+  <span class="key">"battery_ltv_haircut"</span>: <span class="num">0.06</span>,
+  <span class="key">"rationale"</span>:          <span class="str">"Low degradation, LFP chemistry,
+                       strong thermal history"</span>
+}`,
+    `{
+  <span class="key">"serial"</span>:          <span class="str">"PACK-FL-CA-001"</span>,
+  <span class="key">"soh_pct"</span>:         <span class="num">91.2</span>,
+  <span class="key">"viability_score"</span>: <span class="num">88</span>,
+  <span class="key">"recommended_use"</span>: <span class="str">"stationary_storage"</span>,
+  <span class="key">"use_cases"</span>: [
+    <span class="str">"stationary_storage"</span>,
+    <span class="str">"ev_fleet_reuse"</span>
+  ],
+  <span class="key">"second_life_value_usd"</span>: <span class="num">4200</span>,
+  <span class="key">"disqualifiers"</span>:          [],
+  <span class="key">"recycler_value_usd"</span>:     <span class="num">1800</span>
+}`
+  ];
+
+  function showEndpoint(idx, el) {
+    document.querySelectorAll('.endpoint-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    const body = document.getElementById('api-body');
+    body.style.opacity = 0;
+    setTimeout(() => {
+      body.innerHTML = responses[idx];
+      body.style.opacity = 1;
+    }, 150);
+  }
+
+  document.getElementById('api-body').style.transition = 'opacity 0.15s';
+  showEndpoint(0, document.querySelector('.endpoint-btn'));
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = 'Thanks! We\'ll be in touch.';
+    btn.style.background = '#10b981';
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>

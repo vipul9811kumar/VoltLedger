@@ -13,7 +13,7 @@ import { Worker, type Job } from 'bullmq';
 import { createRedisConnection } from '../redis';
 import { scoringQueue, TELEMETRY_QUEUE, type TelemetryJob, type ScoringJob } from '../queues/telemetry.queue';
 import { validateTelemetry } from '../pipeline/validate';
-import { storeTelemetry, resolveBattery } from '../pipeline/store';
+import { storeTelemetry, resolveBattery, autoRegisterBattery } from '../pipeline/store';
 
 const CONCURRENCY = parseInt(process.env.INGESTION_CONCURRENCY ?? '5');
 
@@ -40,8 +40,12 @@ export function startTelemetryWorker() {
       const battery = await resolveBattery(data.serialNumber);
 
       if (!battery) {
-        // Battery not registered — dead-letter for manual review
-        throw new Error(`Battery not found: ${data.serialNumber}`);
+        // Auto-register: create battery record from telemetry metadata
+        battery = await autoRegisterBattery(data.serialNumber, data.chemistry);
+        if (!battery) {
+          throw new Error(`Cannot register battery ${data.serialNumber} — no matching model for chemistry: ${data.chemistry}`);
+        }
+        console.info(`[worker] ➕ Auto-registered battery ${data.serialNumber} (${data.chemistry})`);
       }
 
       if (battery.status === 'DECOMMISSIONED') {

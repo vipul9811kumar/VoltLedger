@@ -15,6 +15,7 @@ export interface TelemetryJob {
   serialNumber: string;
   source: string;
   recordedAt: string;           // ISO 8601
+  chemistry?: string;           // for auto-registration if battery not found
 
   // Core health
   stateOfHealth: number;        // 0–100

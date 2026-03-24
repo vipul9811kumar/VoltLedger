@@ -56,6 +56,7 @@ async function main() {
       const job: TelemetryJob = {
         serialNumber:          raw.serialNumber,
         source:                raw.source ?? 'SYNTHETIC',
+        chemistry:             raw.chemistry,
         recordedAt:            raw.recordedAt,
         stateOfHealth:         raw.stateOfHealth,
         stateOfCharge:         raw.stateOfCharge,

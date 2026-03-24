@@ -74,11 +74,34 @@ export async function storeTelemetry(
 
 /**
  * Look up battery by serial number.
- * Returns null if not found (caller decides whether to reject or auto-register).
+ * Returns null if not found.
  */
 export async function resolveBattery(serialNumber: string) {
   return prisma.battery.findUnique({
     where: { serialNumber },
+    select: { id: true, chemistry: true, nominalCapacityKwh: true, status: true },
+  });
+}
+
+/**
+ * Auto-register a battery when it arrives in telemetry but isn't in the DB yet.
+ * Picks the first battery model matching the chemistry as a default.
+ */
+export async function autoRegisterBattery(serialNumber: string, chemistry?: string) {
+  const model = await prisma.batteryModel.findFirst({
+    where: chemistry ? { chemistry: chemistry as any } : undefined,
+  });
+
+  if (!model) return null;
+
+  return prisma.battery.create({
+    data: {
+      serialNumber,
+      batteryModelId:    model.id,
+      chemistry:         model.chemistry,
+      nominalCapacityKwh: model.capacityKwh,
+      dataSource:        'SYNTHETIC',
+    },
     select: { id: true, chemistry: true, nominalCapacityKwh: true, status: true },
   });
 }

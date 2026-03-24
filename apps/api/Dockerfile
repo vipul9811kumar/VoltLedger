@@ -32,7 +32,7 @@ COPY tools/synthetic-generator/package.json ./tools/synthetic-generator/
 COPY tools/bulk-score/package.json   ./tools/bulk-score/
 COPY tools/generate-key/package.json ./tools/generate-key/
 
-RUN pnpm install --frozen-lockfile --prod
+RUN pnpm install --frozen-lockfile
 
 # Copy source
 COPY packages/db       ./packages/db

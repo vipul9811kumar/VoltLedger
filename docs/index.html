@@ -1212,13 +1212,13 @@
   <p class="section-label" style="text-align:center">Early Access</p>
   <h2>Ready to lend smarter?</h2>
   <p>Join lenders and auto-finance teams getting early API access. We'll reach out within 48 hours.</p>
-  <form onsubmit="handleSubmit(event)" style="max-width:600px;margin:0 auto">
+  <form id="access-form" onsubmit="handleSubmit(event)" style="max-width:600px;margin:0 auto">
     <div class="cta-form-grid">
-      <input type="text" placeholder="First name" required />
-      <input type="text" placeholder="Last name" required />
-      <input type="email" placeholder="Work email" required style="grid-column:1/-1" />
-      <input type="text" placeholder="Company" required />
-      <select required>
+      <input id="f-first" type="text" placeholder="First name" required />
+      <input id="f-last" type="text" placeholder="Last name" required />
+      <input id="f-email" type="email" placeholder="Work email" required style="grid-column:1/-1" />
+      <input id="f-company" type="text" placeholder="Company" required />
+      <select id="f-role" required>
         <option value="" disabled selected>Role</option>
         <option>Credit / Underwriting</option>
         <option>Risk Management</option>
@@ -1229,6 +1229,7 @@
         <option>Other</option>
       </select>
     </div>
+    <div id="form-error" style="color:#f87171;font-size:.82rem;text-align:center;margin-top:.5rem;display:none"></div>
     <div class="cta-submit-row">
       <button type="submit" class="btn-primary" id="submit-btn">Request Access →</button>
     </div>
@@ -1393,12 +1394,61 @@
   document.getElementById('api-body').style.transition = 'opacity 0.15s';
   showEndpoint(0, document.querySelector('.endpoint-btn'));
 
-  function handleSubmit(e) {
+  // Replace with your deployed API base URL when live.
+  // Falls back to a Formspree form ID if the API is not available.
+  const API_BASE      = 'https://api.voltledger.io';
+  const FORMSPREE_URL = 'https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID';
+
+  async function handleSubmit(e) {
     e.preventDefault();
-    const btn = document.getElementById('submit-btn');
-    btn.textContent = 'Thanks! We\'ll be in touch within 48h.';
-    btn.style.background = '#10b981';
+
+    const btn   = document.getElementById('submit-btn');
+    const errEl = document.getElementById('form-error');
+    const payload = {
+      firstName: document.getElementById('f-first').value.trim(),
+      lastName:  document.getElementById('f-last').value.trim(),
+      email:     document.getElementById('f-email').value.trim(),
+      company:   document.getElementById('f-company').value.trim(),
+      role:      document.getElementById('f-role').value,
+    };
+
+    btn.textContent = 'Sending…';
     btn.disabled = true;
+    errEl.style.display = 'none';
+
+    try {
+      const res = await fetch(`${API_BASE}/v1/early-access`, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error('API error');
+
+      // Success
+      btn.textContent = '✓ You\'re on the list! Check your inbox.';
+      btn.style.background = '#10b981';
+      document.getElementById('access-form').reset();
+
+    } catch (_) {
+      // Fallback: Formspree (works even without the API deployed)
+      const fd = new FormData();
+      Object.entries(payload).forEach(([k, v]) => fd.append(k, v));
+      fd.append('_subject', `VoltLedger early access — ${payload.company}`);
+
+      try {
+        const fb = await fetch(FORMSPREE_URL, { method: 'POST', body: fd, headers: { Accept: 'application/json' } });
+        if (!fb.ok) throw new Error();
+        btn.textContent = '✓ You\'re on the list! Check your inbox.';
+        btn.style.background = '#10b981';
+        document.getElementById('access-form').reset();
+      } catch (_2) {
+        btn.textContent = 'Request Access →';
+        btn.disabled = false;
+        errEl.textContent = 'Something went wrong — please email us at hello@voltledger.io';
+        errEl.style.display = 'block';
+      }
+    }
   }
 </script>
 </body>

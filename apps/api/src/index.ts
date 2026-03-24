@@ -9,6 +9,7 @@ import { residualValueRoutes } from './routes/residual-value';
 import { ltvRoutes } from './routes/ltv';
 import { secondLifeRoutes } from './routes/second-life';
 import { healthRoutes } from './routes/health';
+import { earlyAccessRoutes } from './routes/early-access';
 
 const PORT = parseInt(process.env.API_PORT ?? '3001');
 const HOST = process.env.API_HOST ?? '0.0.0.0';
@@ -30,8 +31,8 @@ async function build() {
 
   // ── API key middleware (simple header check) ───────────────────────────────
   app.addHook('onRequest', async (req, reply) => {
-    // Skip auth for health check and in dev mode
-    if (req.url === '/health' || req.url === '/') return;
+    // Skip auth for health check, early access, and in dev mode
+    if (req.url === '/health' || req.url === '/' || req.url.startsWith('/v1/early-access')) return;
     if (process.env.DEV_SKIP_AUTH === 'true') return;
 
     const apiKey = req.headers['x-api-key'];
@@ -54,6 +55,7 @@ async function build() {
   await app.register(residualValueRoutes,{ prefix: '/v1/batteries' });
   await app.register(ltvRoutes,          { prefix: '/v1/batteries' });
   await app.register(secondLifeRoutes,   { prefix: '/v1/batteries' });
+  await app.register(earlyAccessRoutes,  { prefix: '/v1/early-access' });
 
   return app;
 }

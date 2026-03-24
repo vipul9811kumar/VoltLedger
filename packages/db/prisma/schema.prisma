@@ -527,3 +527,24 @@ model Loan {
   @@index([batteryId])
   @@map("loans")
 }
+
+// ─────────────────────────────────────────────
+// EARLY ACCESS
+// ─────────────────────────────────────────────
+
+model EarlyAccessRequest {
+  id          String   @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String   @unique
+  company     String
+  role        String
+  status      String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@map("early_access_requests")
+}

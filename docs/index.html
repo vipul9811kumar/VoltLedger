@@ -1162,46 +1162,53 @@
   <div class="container">
     <p class="section-label">Roadmap</p>
     <h2 class="section-title">Where We're Going</h2>
-    <p class="section-sub">Starting with lenders. Expanding to the full battery lifecycle ecosystem.</p>
+    <p class="section-sub">The lender use case is live. Everything after deepens the data moat and widens the addressable market.</p>
     <div class="roadmap">
+
       <div class="phase-card active">
         <span class="phase-tag tag-live">⚡ Phase 1 — Live</span>
         <h3>Lender API</h3>
-        <p class="phase-sub">Financial intelligence for EV loan underwriting</p>
+        <p class="phase-sub">Financial-grade intelligence for EV loan underwriting</p>
         <ul class="phase-items">
           <li>Battery risk score (0–1000, A–F grade)</li>
           <li>Residual value + 60-month forecast</li>
-          <li>LTV recommendations + rate premiums</li>
-          <li>Second-life pathway assessment</li>
+          <li>LTV recommendations + risk premiums (bps)</li>
+          <li>Second-life pathway + exit value estimates</li>
           <li>Degradation forecast (3–60 months)</li>
           <li>Multi-chemistry support (LFP, NMC, NCA)</li>
         </ul>
       </div>
+
       <div class="phase-card">
         <span class="phase-tag tag-q3">Phase 2 — Q3 2026</span>
-        <h3>Battery Passport</h3>
-        <p class="phase-sub">EU-compliant digital identity for every battery pack</p>
+        <h3>EU Regulation Ready</h3>
+        <p class="phase-sub">EU Battery Regulation (2023/1542) mandates a digital Battery Passport for every EV battery from Feb 2027. VoltLedger becomes the bridge between that passport and your underwriting flow.</p>
         <ul class="phase-items">
-          <li>EU Battery Regulation compliance layer</li>
-          <li>Immutable lifecycle event ledger</li>
+          <li>Ingest EU-compliant passport data as a scoring input</li>
+          <li>Passport-verified risk scores for EU lenders</li>
+          <li>Lenders get compliance coverage — no regulation work required</li>
+          <li>SoH, carbon footprint &amp; recycled content fields included</li>
           <li>Supply chain provenance (cell → pack → vehicle)</li>
-          <li>Environmental impact tracking (CO₂, recycled content)</li>
-          <li>Certification &amp; compliance status</li>
-          <li>QR-scannable passport per unit</li>
+          <li>Works alongside — not replacing — existing telemetry inputs</li>
         </ul>
+        <div style="margin-top:1rem;padding:.65rem .85rem;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.15);border-radius:8px;font-size:.78rem;color:#94a3b8;line-height:1.6">
+          <strong style="color:#93c5fd">Who benefits:</strong> EU-market lenders, fleet operators, and insurers who need to verify passport data at loan origination — without building their own compliance layer.
+        </div>
       </div>
+
       <div class="phase-card">
         <span class="phase-tag tag-q1-26">Phase 3 — Q1 2027</span>
         <h3>Secondary Market &amp; Recyclers</h3>
-        <p class="phase-sub">Intelligence layer for the full end-of-life ecosystem</p>
+        <p class="phase-sub">Intelligence layer for the full end-of-life ecosystem — where battery data becomes a tradeable asset.</p>
         <ul class="phase-items">
-          <li>Auction house integrations</li>
-          <li>Recycler contract intelligence</li>
+          <li>Auction house integrations (condition-verified listings)</li>
+          <li>Recycler contract intelligence (material value by chemistry)</li>
           <li>Refurbisher grading API</li>
-          <li>Cross-border compliance tracking</li>
+          <li>Cross-border compliance &amp; tariff tracking</li>
           <li>Fleet remarketing dashboards</li>
         </ul>
       </div>
+
     </div>
   </div>
 </section>
@@ -1397,7 +1404,7 @@
   // Replace with your deployed API base URL when live.
   // Falls back to a Formspree form ID if the API is not available.
   const API_BASE      = 'https://api.voltledger.io';
-  const FORMSPREE_URL = 'https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID';
+  const FORMSPREE_URL = 'https://formspree.io/f/mreozqbo';
 
   async function handleSubmit(e) {
     e.preventDefault();

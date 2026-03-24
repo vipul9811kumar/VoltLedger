@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { StatCard } from '@/components/StatCard';
 import { GradeBadge } from '@/components/GradeBadge';
 import { GradeDistChart } from '@/components/GradeDistChart';

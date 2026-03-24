@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { getBatteryList } from '@/lib/data';
 import { GradeBadge } from '@/components/GradeBadge';
 import Link from 'next/link';

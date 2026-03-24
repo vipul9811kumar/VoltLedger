@@ -1,8 +1,9 @@
+export const dynamic = 'force-dynamic';
+
 import { getFlaggedBatteries } from '@/lib/data';
 import { GradeBadge } from '@/components/GradeBadge';
 import Link from 'next/link';
 
-export const revalidate = 30;
 
 export default async function FlaggedPage() {
   const batteries = await getFlaggedBatteries();

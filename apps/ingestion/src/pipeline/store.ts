@@ -94,13 +94,17 @@ export async function autoRegisterBattery(serialNumber: string, chemistry?: stri
 
   if (!model) return null;
 
-  return prisma.battery.create({
-    data: {
+  // upsert prevents race condition when multiple concurrent workers
+  // see the same unknown battery and all try to register it simultaneously
+  return prisma.battery.upsert({
+    where:  { serialNumber },
+    update: {},
+    create: {
       serialNumber,
-      batteryModelId:    model.id,
-      chemistry:         model.chemistry,
+      batteryModelId:     model.id,
+      chemistry:          model.chemistry,
       nominalCapacityKwh: model.capacityKwh,
-      dataSource:        'SYNTHETIC',
+      dataSource:         'SYNTHETIC',
     },
     select: { id: true, chemistry: true, nominalCapacityKwh: true, status: true },
   });

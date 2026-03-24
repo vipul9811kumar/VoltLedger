@@ -68,11 +68,11 @@ export function startTelemetryWorker() {
 
       // ── 5. Enqueue scoring (Phase 3) ───────────────────────────────────────
       await scoringQueue.add(
-        `score:${battery.id}`,
+        `score-${battery.id}`,
         { batteryId: battery.id, triggeredBy: 'telemetry_ingest' } satisfies ScoringJob,
         {
-          // Debounce: don't re-score if already queued in last 60s
-          jobId: `score:${battery.id}`,
+          // Debounce: collapse multiple scoring requests for same battery
+          jobId: `score-${battery.id}`,
           delay: 0,
         },
       );

@@ -104,7 +104,7 @@ export function computeCycleCount(profile: UsageProfile, weeksElapsed: number): 
 /** Compute cumulative odometer at a given week */
 export function computeOdometer(profile: UsageProfile, weeksElapsed: number): number {
   const totalKm = profile.avgDailyKm * weeksElapsed * 7;
-  return Math.round(totalKm + gaussianNoise(0, 20));
+  return Math.max(0, Math.round(totalKm + gaussianNoise(0, 20)));
 }
 
 /** Generate a realistic thermal snapshot for a given chemistry + usage + season */

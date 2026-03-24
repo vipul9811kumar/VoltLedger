@@ -8,7 +8,8 @@
     "apps/ingestion",
     "apps/dashboard",
     "packages/types",
-    "packages/db"
+    "packages/db",
+    "tools/synthetic-generator"
   ],
   "scripts": {
     "dev": "turbo run dev",
@@ -18,7 +19,10 @@
     "db:migrate": "pnpm --filter @voltledger/db migrate",
     "db:seed": "pnpm --filter @voltledger/db seed",
     "infra:up": "docker compose -f infra/docker-compose.yml up -d",
-    "infra:down": "docker compose -f infra/docker-compose.yml down"
+    "infra:down": "docker compose -f infra/docker-compose.yml down",
+    "generate:synthetic": "pnpm --filter @voltledger/synthetic-generator generate",
+    "generate:synthetic:small": "pnpm --filter @voltledger/synthetic-generator generate:small",
+    "generate:synthetic:fleet": "pnpm --filter @voltledger/synthetic-generator generate:fleet"
   },
   "devDependencies": {
     "turbo": "^2.0.0",

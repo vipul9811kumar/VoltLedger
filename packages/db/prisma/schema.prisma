@@ -1,0 +1,529 @@
+// VoltLedger — Prisma Schema
+// PostgreSQL · designed for TimescaleDB migration on battery_telemetry_points
+// Run: pnpm --filter @voltledger/db generate
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────────
+
+enum Chemistry {
+  LFP
+  NMC
+  NCA
+  LTO
+  UNKNOWN
+}
+
+enum BatteryStatus {
+  ACTIVE
+  FLAGGED
+  DECOMMISSIONED
+  SECOND_LIFE
+}
+
+enum DataSource {
+  OEM_API
+  MQTT_TELEMATICS
+  MANUAL_UPLOAD
+  AUCTION_SCAN
+  SYNTHETIC
+}
+
+enum LenderTier {
+  STARTER
+  PROFESSIONAL
+  ENTERPRISE
+}
+
+enum LenderType {
+  BANK
+  CREDIT_UNION
+  CAPTIVE_FINANCE
+  AUTO_FINTECH
+  AUCTION_HOUSE
+  INSURANCE
+  REMARKETING
+}
+
+enum ApiKeyStatus {
+  ACTIVE
+  REVOKED
+  EXPIRED
+}
+
+enum RiskGrade {
+  A
+  B
+  C
+  D
+  F
+}
+
+enum SecondLifeUseCase {
+  STATIONARY_STORAGE_GRID
+  STATIONARY_STORAGE_COMMERCIAL
+  STATIONARY_STORAGE_RESIDENTIAL
+  EV_FLEET_LOWER_DEMAND
+  REFURBISHMENT_RESALE
+  RECYCLING_ONLY
+}
+
+enum LifecycleEventType {
+  MANUFACTURED
+  SOLD
+  REGISTERED
+  SERVICE
+  SWAP
+  DAMAGE
+  REPAIR
+  CERTIFICATION
+  DECOMMISSIONED
+  SECOND_LIFE_ENTRY
+  RECYCLED
+}
+
+// ─────────────────────────────────────────────
+// BATTERY DOMAIN
+// ─────────────────────────────────────────────
+
+model BatteryModel {
+  id                   String   @id @default(cuid())
+  modelName            String
+  manufacturer         String
+  chemistry            Chemistry
+  capacityKwh          Float
+  nominalVoltageV      Float
+  weightKg             Float?
+  ratedCycleLife       Int      // cycles to 80% SoH
+  calendarLifeYears    Int?
+  warrantyYears        Int?
+  // EU Battery Passport fields
+  disassemblyManualUrl String?
+  hazardousSubstances  String[]
+  extinguishingAgents  String[]
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  batteries Battery[]
+
+  @@map("battery_models")
+}
+
+model Battery {
+  id                   String        @id @default(cuid())
+  serialNumber         String        @unique
+  vin                  String?       // linked vehicle VIN (nullable — battery may exist before vehicle)
+  batteryModelId       String
+  batteryModel         BatteryModel  @relation(fields: [batteryModelId], references: [id])
+  chemistry            Chemistry
+  nominalCapacityKwh   Float
+  status               BatteryStatus @default(ACTIVE)
+  dataSource           DataSource    @default(MANUAL_UPLOAD)
+  manufacturedAt       DateTime?
+  firstSeenAt          DateTime      @default(now())
+  lastTelemetryAt      DateTime?
+  oemWarrantyExpiresAt DateTime?
+
+  // Relations
+  telemetryPoints      BatteryTelemetryPoint[]
+  riskScores           RiskScore[]
+  residualValues       ResidualValueEstimate[]
+  degradationForecasts DegradationForecast[]
+  ltvRecommendations   LtvRecommendation[]
+  secondLifeAssessments SecondLifeAssessment[]
+  lifecycleEvents      LifecycleEvent[]
+  ownershipHistory     BatteryOwnershipHistory[]
+  certifications       Certification[]
+  supplyChain          SupplyChain?
+  loans                Loan[]
+
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([vin])
+  @@index([status])
+  @@index([chemistry])
+  @@map("batteries")
+}
+
+// Time-series table — partition by recordedAt when migrating to TimescaleDB
+model BatteryTelemetryPoint {
+  id                     String     @id @default(cuid())
+  batteryId              String
+  battery                Battery    @relation(fields: [batteryId], references: [id])
+  recordedAt             DateTime
+
+  // Core health metrics
+  stateOfHealth          Float      // 0–100 (%)
+  stateOfCharge          Float      // 0–100 (%)
+  fullChargeCapacityKwh  Float
+  cycleCount             Int
+
+  // Thermal
+  cellTempMin            Float      // °C
+  cellTempMax            Float      // °C
+  cellTempAvg            Float      // °C
+
+  // Electrical
+  voltageMin             Float      // V
+  voltageMax             Float      // V
+  internalResistanceAvg  Float?     // mΩ
+
+  // Usage patterns
+  chargingEvents24h      Int?
+  dcFastChargeRatio      Float?     // 0–1 (fraction of DCFC charges)
+  odometer               Float?     // km
+
+  source                 DataSource
+  rawPayload             Json?
+
+  createdAt              DateTime   @default(now())
+
+  // Composite index critical for time-range queries per battery
+  @@index([batteryId, recordedAt(sort: Desc)])
+  @@index([recordedAt(sort: Desc)])
+  @@map("battery_telemetry_points")
+}
+
+model LifecycleEvent {
+  id          String             @id @default(cuid())
+  batteryId   String
+  battery     Battery            @relation(fields: [batteryId], references: [id])
+  eventType   LifecycleEventType
+  eventDate   DateTime
+  description String?
+  metadata    Json?
+  performedBy String?            // user or organization name
+  createdAt   DateTime           @default(now())
+
+  @@index([batteryId, eventDate(sort: Desc)])
+  @@map("lifecycle_events")
+}
+
+model BatteryOwnershipHistory {
+  id                  String    @id @default(cuid())
+  batteryId           String
+  battery             Battery   @relation(fields: [batteryId], references: [id])
+  ownerOrganizationId String?
+  ownerOrganization   Organization? @relation(fields: [ownerOrganizationId], references: [id])
+  ownerName           String?
+  ownershipStartDate  DateTime
+  ownershipEndDate    DateTime?
+  transferReason      String?
+  createdAt           DateTime  @default(now())
+
+  @@index([batteryId])
+  @@map("battery_ownership_history")
+}
+
+model Certification {
+  id                String    @id @default(cuid())
+  batteryId         String
+  battery           Battery   @relation(fields: [batteryId], references: [id])
+  certificationType String    // e.g. "UN38.3", "IEC62619", "EU Battery Passport"
+  issuingBody       String?
+  issueDate         DateTime
+  expiryDate        DateTime?
+  certificateUrl    String?
+  isValid           Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+
+  @@index([batteryId])
+  @@map("certifications")
+}
+
+model SupplyChain {
+  id                     String   @id @default(cuid())
+  batteryId              String   @unique
+  battery                Battery  @relation(fields: [batteryId], references: [id])
+  rawMaterialOrigin      String?
+  manufacturingFacility  String?
+  assemblyLocation       String?
+  cathodeSupplier        String?
+  anodeSupplier          String?
+  recycledContentPct     Float?
+  co2FootprintKgCo2e     Float?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  @@map("supply_chains")
+}
+
+// ─────────────────────────────────────────────
+// INTELLIGENCE — COMPUTED OUTPUTS
+// ─────────────────────────────────────────────
+
+model RiskScore {
+  id               String    @id @default(cuid())
+  batteryId        String
+  battery          Battery   @relation(fields: [batteryId], references: [id])
+  scoredAt         DateTime  @default(now())
+
+  // Composite
+  compositeScore   Int       // 0–1000 (higher = lower risk, like FICO)
+  grade            RiskGrade
+
+  // Sub-scores (0–100 each)
+  degradationScore       Int
+  thermalScore           Int
+  usagePatternScore      Int
+  capacityRetentionScore Int
+  ageAdjustedScore       Int
+
+  // Flags
+  abnormalDegradation    Boolean @default(false)
+  thermalAnomalyDetected Boolean @default(false)
+  highDcfcUsage          Boolean @default(false)  // >40% DCFC
+  deepDischargeHistory   Boolean @default(false)
+
+  confidenceLevel  Float     // 0–1
+  modelVersion     String    @default("1.0")
+
+  @@index([batteryId, scoredAt(sort: Desc)])
+  @@map("risk_scores")
+}
+
+model ResidualValueEstimate {
+  id                           String   @id @default(cuid())
+  batteryId                    String
+  battery                      Battery  @relation(fields: [batteryId], references: [id])
+  estimatedAt                  DateTime @default(now())
+
+  vehicleMarketValueUsd        Float
+  batteryResidualValueUsd      Float
+  batteryValuePctOfVehicle     Float    // typically 40–60%
+
+  // Forecasts (USD)
+  residualAt12MonthsUsd        Float
+  residualAt24MonthsUsd        Float
+  residualAt36MonthsUsd        Float
+  residualAt60MonthsUsd        Float
+
+  // 95% confidence interval on current value
+  confidenceLowUsd             Float
+  confidenceHighUsd            Float
+
+  baseMarketDataSource         String   @default("synthetic_model")
+  modelVersion                 String   @default("1.0")
+
+  @@index([batteryId, estimatedAt(sort: Desc)])
+  @@map("residual_value_estimates")
+}
+
+model DegradationForecast {
+  id               String   @id @default(cuid())
+  batteryId        String
+  battery          Battery  @relation(fields: [batteryId], references: [id])
+  forecastedAt     DateTime @default(now())
+  currentSoH       Float
+
+  // Predicted SoH at future points (%)
+  sohAt6Months     Float
+  sohAt12Months    Float
+  sohAt24Months    Float
+  sohAt36Months    Float
+  sohAt60Months    Float
+
+  // Dates when SoH hits thresholds (null = not projected in range)
+  projectedDate80Pct DateTime?  // EoL for most use cases
+  projectedDate70Pct DateTime?  // Second-life threshold
+  projectedDate60Pct DateTime?
+
+  confidenceLevel  Float
+  modelVersion     String   @default("1.0")
+
+  @@index([batteryId, forecastedAt(sort: Desc)])
+  @@map("degradation_forecasts")
+}
+
+model LtvRecommendation {
+  id                      String   @id @default(cuid())
+  batteryId               String
+  battery                 Battery  @relation(fields: [batteryId], references: [id])
+  lenderId                String?
+  lender                  Lender?  @relation(fields: [lenderId], references: [id])
+  recommendedAt           DateTime @default(now())
+
+  recommendedLtvPct       Float    // e.g. 72.5
+  maxLtvPct               Float
+  adjustedResidualUsd     Float
+  riskPremiumBps          Int      // basis points
+  grade                   RiskGrade
+  rationale               String
+
+  // Inputs
+  requestedLoanAmountUsd  Float
+  vehiclePurchasePriceUsd Float
+  loanTermMonths          Int
+
+  modelVersion            String   @default("1.0")
+
+  @@index([batteryId])
+  @@index([lenderId])
+  @@map("ltv_recommendations")
+}
+
+model SecondLifeAssessment {
+  id                            String             @id @default(cuid())
+  batteryId                     String
+  battery                       Battery            @relation(fields: [batteryId], references: [id])
+  assessedAt                    DateTime           @default(now())
+  currentSoH                    Float
+  isViable                      Boolean
+  viabilityScore                Int                // 0–100
+  recommendedUseCase            SecondLifeUseCase?
+  estimatedRemainingLifeYears   Float
+  estimatedSecondLifeValueUsd   Float
+  recyclerValueUsd              Float
+  disqualifiers                 String[]
+  modelVersion                  String             @default("1.0")
+
+  @@index([batteryId])
+  @@map("second_life_assessments")
+}
+
+// ─────────────────────────────────────────────
+// LENDER / TENANT
+// ─────────────────────────────────────────────
+
+model Organization {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  location    String?
+  website     String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  lender              Lender?
+  ownershipHistory    BatteryOwnershipHistory[]
+
+  @@map("organizations")
+}
+
+model Lender {
+  id             String      @id @default(cuid())
+  organizationId String      @unique
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  tier           LenderTier
+  lenderType     LenderType
+  contactEmail   String
+  contactName    String
+  isActive       Boolean     @default(true)
+
+  // Billing
+  monthlyBatteryQuota    Int?    // null = unlimited (enterprise)
+  batteriesUsedThisMonth Int     @default(0)
+  acvUsd                 Float   @default(0)
+  billingCycleResetAt    DateTime?
+
+  apiKeys            ApiKey[]
+  usageRecords       ApiUsageRecord[]
+  ltvRecommendations LtvRecommendation[]
+  webhooks           WebhookSubscription[]
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("lenders")
+}
+
+model ApiKey {
+  id          String       @id @default(cuid())
+  lenderId    String
+  lender      Lender       @relation(fields: [lenderId], references: [id])
+  keyPrefix   String       @unique  // first 12 chars shown in UI
+  keyHash     String       // bcrypt of full key — never store plaintext
+  label       String
+  status      ApiKeyStatus @default(ACTIVE)
+  permissions String[]     // ApiPermission values
+  expiresAt   DateTime?
+  lastUsedAt  DateTime?
+  createdAt   DateTime     @default(now())
+
+  usageRecords ApiUsageRecord[]
+
+  @@index([lenderId])
+  @@map("api_keys")
+}
+
+model ApiUsageRecord {
+  id          String   @id @default(cuid())
+  lenderId    String
+  lender      Lender   @relation(fields: [lenderId], references: [id])
+  apiKeyId    String
+  apiKey      ApiKey   @relation(fields: [apiKeyId], references: [id])
+  endpoint    String
+  method      String
+  batteryId   String?
+  statusCode  Int
+  latencyMs   Int
+  billedUnits Int      @default(1)
+  recordedAt  DateTime @default(now())
+
+  @@index([lenderId, recordedAt(sort: Desc)])
+  @@index([recordedAt(sort: Desc)])
+  @@map("api_usage_records")
+}
+
+model WebhookSubscription {
+  id         String    @id @default(cuid())
+  lenderId   String
+  lender     Lender    @relation(fields: [lenderId], references: [id])
+  url        String
+  secret     String    // HMAC signing secret (hashed)
+  events     String[]  // WebhookEventType values
+  isActive   Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+
+  deliveries WebhookDelivery[]
+
+  @@map("webhook_subscriptions")
+}
+
+model WebhookDelivery {
+  id             String              @id @default(cuid())
+  subscriptionId String
+  subscription   WebhookSubscription @relation(fields: [subscriptionId], references: [id])
+  eventType      String
+  payload        Json
+  statusCode     Int?
+  attemptCount   Int                 @default(1)
+  succeededAt    DateTime?
+  failedAt       DateTime?
+  createdAt      DateTime            @default(now())
+
+  @@index([subscriptionId])
+  @@map("webhook_deliveries")
+}
+
+// ─────────────────────────────────────────────
+// LOANS
+// ─────────────────────────────────────────────
+
+model Loan {
+  id              String    @id @default(cuid())
+  batteryId       String
+  battery         Battery   @relation(fields: [batteryId], references: [id])
+  lenderName      String
+  amountUsd       Float
+  startDate       DateTime
+  endDate         DateTime?
+  status          String    // ACTIVE, PAID_OFF, DEFAULTED, RESTRUCTURED
+  interestRatePct Float?
+  ltvAtOrigination Float?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([batteryId])
+  @@map("loans")
+}

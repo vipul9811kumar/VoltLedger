@@ -1,0 +1,20 @@
+{
+  "name": "@voltledger/synthetic-generator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Realistic EV battery telemetry data generator for VoltLedger dev/testing",
+  "scripts": {
+    "generate": "tsx src/index.ts",
+    "generate:small": "tsx src/index.ts --batteries 10 --weeks 52",
+    "generate:fleet": "tsx src/index.ts --batteries 100 --weeks 260",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@voltledger/db": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.11.0",
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  }
+}

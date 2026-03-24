@@ -1,0 +1,19 @@
+{
+  "name": "@voltledger/bulk-score",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Bulk-score batteries without a RiskScore",
+  "main": "./src/index.ts",
+  "scripts": {
+    "start": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@voltledger/db": "workspace:*",
+    "@voltledger/scoring": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.11.0",
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  }
+}

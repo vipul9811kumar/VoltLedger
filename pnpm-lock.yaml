@@ -181,6 +181,25 @@ importers:
 
   packages/types: {}
 
+  tools/bulk-score:
+    dependencies:
+      '@voltledger/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@voltledger/scoring':
+        specifier: workspace:*
+        version: link:../../packages/scoring
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.37
+      tsx:
+        specifier: ^4.11.0
+        version: 4.21.0
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   tools/synthetic-generator:
     dependencies:
       '@voltledger/db':

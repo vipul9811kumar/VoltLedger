@@ -2,12 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { UserButton } from '@clerk/nextjs';
 import clsx from 'clsx';
 
 const NAV = [
   { href: '/',           label: 'Overview',    icon: '◈' },
   { href: '/fleet',      label: 'Fleet',       icon: '⬡' },
   { href: '/flagged',    label: 'Flagged',     icon: '⚑' },
+  { href: '/account',    label: 'Account',     icon: '⊙' },
 ];
 
 export function Sidebar() {
@@ -43,8 +45,9 @@ export function Sidebar() {
         ))}
       </nav>
 
-      {/* Footer */}
-      <div className="px-5 py-4 border-t border-[#1e2d40]">
+      {/* Footer — user avatar + sign out */}
+      <div className="px-5 py-4 border-t border-[#1e2d40] flex items-center gap-3">
+        <UserButton />
         <p className="text-[10px] text-slate-600 font-mono">MODEL v1.0</p>
       </div>
     </aside>

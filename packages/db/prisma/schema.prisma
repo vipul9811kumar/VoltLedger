@@ -39,6 +39,14 @@ enum DataSource {
   SYNTHETIC
 }
 
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+  INCOMPLETE
+}
+
 enum LenderTier {
   STARTER
   PROFESSIONAL
@@ -421,14 +429,22 @@ model Lender {
   contactName    String
   isActive       Boolean     @default(true)
 
-  // Billing
+  // Billing — Stripe
+  stripeCustomerId      String?            @unique
+  stripeSubscriptionId  String?            @unique
+  stripePriceId         String?            // active price ID (maps to tier)
+  subscriptionStatus    SubscriptionStatus @default(TRIALING)
+  currentPeriodEnd      DateTime?          // quota resets here
+
+  // Usage quotas
   monthlyBatteryQuota     Int?    // null = unlimited (enterprise)
   batteriesUsedThisMonth  Int     @default(0)
-  monthlyVinLookupQuota   Int?    // null = unlimited; Starter default = 25
+  monthlyVinLookupQuota   Int?    // null = unlimited; Starter = 25
   vinLookupsUsedThisMonth Int     @default(0)
   acvUsd                  Float   @default(0)
   billingCycleResetAt     DateTime?
 
+  users              LenderUser[]
   apiKeys            ApiKey[]
   usageRecords       ApiUsageRecord[]
   ltvRecommendations LtvRecommendation[]
@@ -438,6 +454,26 @@ model Lender {
   updatedAt          DateTime @updatedAt
 
   @@map("lenders")
+}
+
+enum LenderUserRole {
+  OWNER
+  MEMBER
+  VIEWER
+}
+
+model LenderUser {
+  id        String         @id @default(cuid())
+  clerkId   String         @unique   // Clerk user ID
+  email     String
+  name      String?
+  role      LenderUserRole @default(MEMBER)
+  lenderId  String
+  lender    Lender         @relation(fields: [lenderId], references: [id])
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@map("lender_users")
 }
 
 model ApiKey {

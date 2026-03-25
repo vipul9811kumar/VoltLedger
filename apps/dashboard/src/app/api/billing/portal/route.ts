@@ -1,8 +1,8 @@
-import { auth } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2024-11-20.acacia' });
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2026-02-25.clover' });
 
 export async function POST() {
   const { userId } = auth();

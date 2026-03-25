@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 
-import { auth, currentUser } from '@clerk/nextjs';
+import { auth, currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { UpgradeButton } from './UpgradeButton';
 import { BillingPortalButton } from './BillingPortalButton';

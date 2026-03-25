@@ -45,22 +45,33 @@ export async function lookupRoutes(app: FastifyInstance) {
     // ── Find battery ─────────────────────────────────────────────────────────
     let battery = null;
 
-    if (vin) {
-      battery = await prisma.battery.findFirst({
-        where: { vin: { equals: vin, mode: 'insensitive' } },
-        include: {
-          batteryModel: true,
-          riskScores:   { orderBy: { scoredAt: 'desc' }, take: 1 },
-        },
-      });
-    } else if (id) {
-      const isCuid = /^c[a-z0-9]{20,}$/.test(id!);
+    const includeSpec = {
+      batteryModel: true,
+      riskScores:   { orderBy: { scoredAt: 'desc' } as const, take: 1 },
+    };
+
+    // Normalise the raw query — could be a VIN, serial number, or CUID
+    const rawQuery = (vin ?? id)!;
+
+    // 1. Try exact VIN match
+    battery = await prisma.battery.findFirst({
+      where: { vin: { equals: rawQuery, mode: 'insensitive' } },
+      include: includeSpec,
+    });
+
+    // 2. Fall back to serial number (handles CATL-US-23-00001 style IDs)
+    if (!battery) {
       battery = await prisma.battery.findUnique({
-        where: isCuid ? { id: id! } : { serialNumber: id! },
-        include: {
-          batteryModel: true,
-          riskScores:   { orderBy: { scoredAt: 'desc' }, take: 1 },
-        },
+        where: { serialNumber: rawQuery },
+        include: includeSpec,
+      }).catch(() => null);
+    }
+
+    // 3. Fall back to CUID primary key
+    if (!battery && /^c[a-z0-9]{20,}$/.test(rawQuery)) {
+      battery = await prisma.battery.findUnique({
+        where: { id: rawQuery },
+        include: includeSpec,
       });
     }
 

@@ -6,14 +6,15 @@ import { UserButton } from '@clerk/nextjs';
 import clsx from 'clsx';
 
 const NAV = [
-  { href: '/',           label: 'Overview',    icon: '◈' },
-  { href: '/fleet',      label: 'Fleet',       icon: '⬡' },
-  { href: '/flagged',    label: 'Flagged',     icon: '⚑' },
-  { href: '/account',         label: 'Account',     icon: '⊙' },
-  { href: '/admin/requests',  label: 'Requests',    icon: '✉' },
+  { href: '/',       label: 'Overview', icon: '◈' },
+  { href: '/fleet',  label: 'Fleet',    icon: '⬡' },
+  { href: '/flagged',label: 'Flagged',  icon: '⚑' },
+  { href: '/account',label: 'Account',  icon: '⊙' },
 ];
 
-export function Sidebar() {
+const ADMIN_NAV = { href: '/admin/requests', label: 'Requests', icon: '✉' };
+
+export function Sidebar({ isAdmin = false }: { isAdmin?: boolean }) {
   const path = usePathname();
 
   return (
@@ -29,7 +30,7 @@ export function Sidebar() {
 
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-1">
-        {NAV.map(({ href, label, icon }) => (
+        {[...NAV, ...(isAdmin ? [ADMIN_NAV] : [])].map(({ href, label, icon }) => (
           <Link
             key={href}
             href={href}

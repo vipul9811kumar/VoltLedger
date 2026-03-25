@@ -24,6 +24,9 @@ export default async function AdminRequestsPage() {
   const { userId } = auth();
   if (!userId) redirect('/sign-in');
 
+  const adminId = process.env.ADMIN_CLERK_USER_ID;
+  if (adminId && userId !== adminId) redirect('/');
+
   const requests: any[] = await getRequests();
   const pending  = requests.filter(r => r.status === 'PENDING');
   const resolved = requests.filter(r => r.status !== 'PENDING');

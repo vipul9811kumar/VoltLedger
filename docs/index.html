@@ -622,8 +622,66 @@
     .footer-links a:hover { color: var(--text); }
     .footer-right { color: var(--muted); }
 
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: .4rem;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all .25s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile-menu {
+      display: none;
+      position: fixed;
+      top: 57px; left: 0; right: 0;
+      background: rgba(6,11,24,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem 1.5rem;
+      z-index: 99;
+      flex-direction: column;
+      gap: .25rem;
+    }
+    .nav-mobile-menu.open { display: flex; }
+    .nav-mobile-menu a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 1rem;
+      padding: .65rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: color .2s;
+    }
+    .nav-mobile-menu a:last-child { border-bottom: none; }
+    .nav-mobile-menu a:hover { color: var(--text); }
+    .nav-mobile-menu .mob-cta {
+      margin-top: .75rem;
+      background: var(--blue);
+      color: #fff;
+      padding: .6rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      text-align: center;
+      border-bottom: none;
+    }
+
     @media (max-width: 768px) {
       .nav-links { display: none; }
+      .nav-right { display: none; }
+      .nav-hamburger { display: flex; }
       .api-layout { grid-template-columns: 1fr; }
       .browser-content { grid-template-columns: 1fr; }
       .dash-sidebar { display: none; }
@@ -653,7 +711,34 @@
     <a href="#api-docs" class="nav-docs">View API Docs</a>
     <a href="#early-access" class="nav-cta">Request Access</a>
   </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="nav-mobile-menu" id="mobileMenu">
+  <a href="#how-it-works" class="mob-link">How It Works</a>
+  <a href="#dashboard" class="mob-link">Dashboard</a>
+  <a href="#api" class="mob-link">API</a>
+  <a href="#api-docs" class="mob-link">API Docs</a>
+  <a href="#roadmap" class="mob-link">Roadmap</a>
+  <a href="#early-access" class="mob-cta">Request Access →</a>
+</div>
+
+<script>
+  const btn  = document.getElementById('hamburger');
+  const menu = document.getElementById('mobileMenu');
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+  });
+  // Close when a link is tapped
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    btn.classList.remove('open');
+    menu.classList.remove('open');
+  }));
+</script>
 
 <!-- HERO -->
 <section class="hero">

@@ -21,11 +21,14 @@ const STATUS_STYLES: Record<string, string> = {
 };
 
 export default async function AdminRequestsPage() {
-  const { userId } = auth();
+  const { userId, sessionClaims } = auth();
   if (!userId) redirect('/sign-in');
 
-  const adminId = process.env.ADMIN_CLERK_USER_ID;
-  if (adminId && userId !== adminId) redirect('/');
+  const meta      = sessionClaims?.publicMetadata as any;
+  const isAdmin   = meta?.isAdmin === true;
+  const adminId   = process.env.ADMIN_CLERK_USER_ID;
+  const isAllowed = isAdmin || (adminId && userId === adminId);
+  if (!isAllowed) redirect('/');
 
   const requests: any[] = await getRequests();
   const pending  = requests.filter(r => r.status === 'PENDING');

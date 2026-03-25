@@ -5,6 +5,7 @@ const isPublic = createRouteMatcher([
   '/sign-in(.*)',
   '/sign-up(.*)',
   '/pending(.*)',
+  '/api/early-access(.*)',
   '/api/webhooks/stripe(.*)',
   '/api/webhooks/clerk(.*)',
 ]);
@@ -15,9 +16,13 @@ export default clerkMiddleware((auth, req) => {
   // Require login for all other routes
   auth().protect();
 
-  // After login: if no lenderId in session metadata → not yet provisioned
-  const lenderId = (auth().sessionClaims?.publicMetadata as any)?.lenderId;
-  if (!lenderId) {
+  const meta = auth().sessionClaims?.publicMetadata as any;
+
+  // Admins bypass the lenderId gate entirely
+  if (meta?.isAdmin === true) return;
+
+  // Regular users: must have a provisioned lender account
+  if (!meta?.lenderId) {
     const pendingUrl = new URL('/pending', req.url);
     return NextResponse.redirect(pendingUrl);
   }

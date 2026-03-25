@@ -18,15 +18,10 @@ export function BatterySearch() {
     setError('');
 
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL ?? '';
-      // Try lookup endpoint — accepts VIN or battery serial/ID
-      const res = await fetch(`${API_URL}/v1/batteries/lookup?${
-        q.length === 17 && /^[A-HJ-NPR-Z0-9]{17}$/i.test(q)
-          ? `vin=${encodeURIComponent(q)}`
-          : `id=${encodeURIComponent(q)}`
-      }`, {
-        headers: { 'x-service-token': process.env.NEXT_PUBLIC_SERVICE_TOKEN ?? '' },
-      });
+      const param = q.length === 17 && /^[A-HJ-NPR-Z0-9]{17}$/i.test(q)
+        ? `vin=${encodeURIComponent(q)}`
+        : `id=${encodeURIComponent(q)}`;
+      const res = await fetch(`/api/battery/lookup?${param}`);
 
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));

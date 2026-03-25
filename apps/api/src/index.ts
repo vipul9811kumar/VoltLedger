@@ -10,6 +10,7 @@ import { ltvRoutes } from './routes/ltv';
 import { secondLifeRoutes } from './routes/second-life';
 import { healthRoutes } from './routes/health';
 import { earlyAccessRoutes } from './routes/early-access';
+import { fleetRoutes } from './routes/fleet';
 
 const PORT = parseInt(process.env.PORT ?? process.env.API_PORT ?? '3001');
 const HOST = process.env.API_HOST ?? '0.0.0.0';
@@ -35,6 +36,10 @@ async function build() {
     if (req.url === '/health' || req.url === '/' || req.url.startsWith('/v1/early-access')) return;
     if (process.env.DEV_SKIP_AUTH === 'true') return;
 
+    // Service-to-service token — for internal clients (e.g. dashboard)
+    const serviceToken = req.headers['x-service-token'];
+    if (serviceToken && serviceToken === process.env.SERVICE_TOKEN) return;
+
     const apiKey = req.headers['x-api-key'];
     if (!apiKey) {
       return reply.status(401).send({ error: 'Missing X-Api-Key header' });
@@ -56,6 +61,7 @@ async function build() {
   await app.register(ltvRoutes,          { prefix: '/v1/batteries' });
   await app.register(secondLifeRoutes,   { prefix: '/v1/batteries' });
   await app.register(earlyAccessRoutes,  { prefix: '/v1/early-access' });
+  await app.register(fleetRoutes,        { prefix: '/v1/batteries' });
 
   return app;
 }

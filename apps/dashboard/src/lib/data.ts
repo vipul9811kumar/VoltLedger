@@ -1,123 +1,111 @@
 /**
- * Server-side data fetching — reads directly from Prisma (same process).
- * In production these would be authenticated API calls.
+ * Server-side data fetching — calls the VoltLedger API.
+ * No direct Prisma / DB access from the dashboard.
  */
 
-import { prisma } from '@voltledger/db';
+const API_URL      = process.env.INTERNAL_API_URL ?? 'http://localhost:3001';
+const SERVICE_TOKEN = process.env.SERVICE_TOKEN ?? '';
 
-// ── Fleet overview ────────────────────────────────────────────────────────────
+async function apiFetch<T>(path: string): Promise<T> {
+  const res = await fetch(`${API_URL}${path}`, {
+    headers: { 'x-service-token': SERVICE_TOKEN },
+    cache: 'no-store',
+  });
+  if (!res.ok) throw new Error(`API ${path} → ${res.status}`);
+  return res.json() as Promise<T>;
+}
+
+// ── Types (minimal — match API response shapes) ───────────────────────────────
+
+type RiskGrade = 'A' | 'B' | 'C' | 'D' | 'F';
+
+interface RiskScore {
+  compositeScore: number;
+  grade: RiskGrade;
+  scoredAt: string;
+  abnormalDegradation: boolean;
+  thermalAnomalyDetected: boolean;
+  highDcfcUsage: boolean;
+  deepDischargeHistory: boolean;
+}
+
+interface BatteryModel {
+  id: string;
+  manufacturer: string;
+  modelName: string;
+  capacityKwh?: number;
+  chemistry?: string;
+  nominalVoltageV?: number;
+  ratedCycleLife?: number;
+  warrantyYears?: number;
+}
+
+interface Battery {
+  id: string;
+  serialNumber: string;
+  vin?: string | null;
+  chemistry: string;
+  nominalCapacityKwh: number;
+  status: string;
+  manufacturedAt?: string | null;
+  lastTelemetryAt?: string | null;
+  batteryModel: BatteryModel;
+  riskScores: RiskScore[];
+}
+
+// ── Fleet overview ─────────────────────────────────────────────────────────────
 
 export async function getFleetStats() {
-  const [total, byGrade, byStatus, recentlyScored] = await Promise.all([
-    prisma.battery.count(),
-
-    prisma.riskScore.groupBy({
-      by: ['grade'],
-      _count: { grade: true },
-      where: {
-        scoredAt: {
-          gte: new Date(Date.now() - 7 * 24 * 3600 * 1000), // last 7 days
-        },
-      },
-    }),
-
-    prisma.battery.groupBy({
-      by: ['status'],
-      _count: { status: true },
-    }),
-
-    prisma.riskScore.count({
-      where: { scoredAt: { gte: new Date(Date.now() - 24 * 3600 * 1000) } },
-    }),
-  ]);
-
-  const gradeCounts: Record<string, number> = { A: 0, B: 0, C: 0, D: 0, F: 0 };
-  byGrade.forEach(g => { gradeCounts[g.grade] = g._count.grade; });
-
-  const statusCounts: Record<string, number> = {};
-  byStatus.forEach(s => { statusCounts[s.status] = s._count.status; });
-
-  return { total, gradeCounts, statusCounts, recentlyScored };
+  return apiFetch<{
+    total: number;
+    gradeCounts: Record<string, number>;
+    statusCounts: Record<string, number>;
+    recentlyScored: number;
+  }>('/v1/batteries/fleet/stats');
 }
 
 // ── Battery list (with latest risk score) ─────────────────────────────────────
 
 export async function getBatteryList(page = 1, pageSize = 20, grade?: string) {
-  const where = grade
-    ? {
-        riskScores: {
-          some: {
-            grade: grade as any,
-            scoredAt: { gte: new Date(Date.now() - 7 * 24 * 3600 * 1000) },
-          },
-        },
-      }
-    : {};
-
-  const [batteries, total] = await Promise.all([
-    prisma.battery.findMany({
-      where,
-      include: {
-        batteryModel: { select: { manufacturer: true, modelName: true } },
-        riskScores:   { orderBy: { scoredAt: 'desc' }, take: 1 },
-      },
-      orderBy: { lastTelemetryAt: 'desc' },
-      skip: (page - 1) * pageSize,
-      take: pageSize,
-    }),
-    prisma.battery.count({ where }),
-  ]);
-
-  return { batteries, total, pages: Math.ceil(total / pageSize) };
+  const params = new URLSearchParams({
+    page: String(page),
+    pageSize: String(pageSize),
+    ...(grade ? { grade } : {}),
+  });
+  return apiFetch<{ batteries: Battery[]; total: number; pages: number }>(
+    `/v1/batteries/fleet/batteries?${params}`
+  );
 }
 
 // ── Single battery detail ─────────────────────────────────────────────────────
 
 export async function getBatteryDetail(serialNumber: string) {
-  return prisma.battery.findUnique({
-    where: { serialNumber },
-    include: {
-      batteryModel: true,
-      riskScores:            { orderBy: { scoredAt: 'desc' }, take: 1 },
-      residualValues:        { orderBy: { estimatedAt: 'desc' }, take: 1 },
-      ltvRecommendations:    { orderBy: { recommendedAt: 'desc' }, take: 1 },
-      secondLifeAssessments: { orderBy: { assessedAt: 'desc' }, take: 1 },
-      degradationForecasts:  { orderBy: { forecastedAt: 'desc' }, take: 1 },
-    },
-  });
+  try {
+    return await apiFetch<Battery & {
+      residualValues: any[];
+      ltvRecommendations: any[];
+      secondLifeAssessments: any[];
+      degradationForecasts: any[];
+    }>(`/v1/batteries/${serialNumber}/detail`);
+  } catch {
+    return null;
+  }
 }
 
 // ── Telemetry history for SoH sparkline ───────────────────────────────────────
 
 export async function getBatterySoHHistory(batteryId: string, weeks = 12) {
-  const cutoff = new Date(Date.now() - weeks * 7 * 24 * 3600 * 1000);
-  return prisma.batteryTelemetryPoint.findMany({
-    where:   { batteryId, recordedAt: { gte: cutoff } },
-    select:  { recordedAt: true, stateOfHealth: true, cellTempMax: true, stateOfCharge: true },
-    orderBy: { recordedAt: 'asc' },
-  });
+  // batteryId here is actually serialNumber (called with b.serialNumber in pages)
+  return apiFetch<Array<{
+    recordedAt: string;
+    stateOfHealth: number;
+    cellTempMax: number;
+    stateOfCharge: number;
+  }>>(`/v1/batteries/${batteryId}/telemetry?weeks=${weeks}`);
 }
 
-// ── Flagged batteries (need attention) ───────────────────────────────────────
+// ── Flagged batteries (need attention) ────────────────────────────────────────
 
 export async function getFlaggedBatteries() {
-  return prisma.battery.findMany({
-    where: {
-      riskScores: {
-        some: {
-          OR: [
-            { abnormalDegradation: true },
-            { thermalAnomalyDetected: true },
-            { grade: { in: ['D', 'F'] } },
-          ],
-          scoredAt: { gte: new Date(Date.now() - 7 * 24 * 3600 * 1000) },
-        },
-      },
-    },
-    include: {
-      batteryModel: { select: { manufacturer: true, modelName: true } },
-      riskScores:   { orderBy: { scoredAt: 'desc' }, take: 1 },
-    },
-    take: 10,
-  });
+  return apiFetch<Battery[]>('/v1/batteries/fleet/flagged');
 }

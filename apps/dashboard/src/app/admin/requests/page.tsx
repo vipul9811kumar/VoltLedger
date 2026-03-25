@@ -4,14 +4,18 @@ import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { ApproveButton, RejectButton } from './Actions';
 
-async function getRequests() {
-  const API_URL = process.env.INTERNAL_API_URL!;
-  const res = await fetch(`${API_URL}/v1/admin/early-access`, {
-    headers: { 'x-service-token': process.env.SERVICE_TOKEN! },
-    cache: 'no-store',
-  });
-  if (!res.ok) return [];
-  return res.json();
+async function getRequests(): Promise<{ data: any[] | null; error: string | null }> {
+  try {
+    const API_URL = process.env.INTERNAL_API_URL!;
+    const res = await fetch(`${API_URL}/v1/admin/early-access`, {
+      headers: { 'x-service-token': process.env.SERVICE_TOKEN! },
+      cache: 'no-store',
+    });
+    if (!res.ok) return { data: null, error: `API returned ${res.status}` };
+    return { data: await res.json(), error: null };
+  } catch (err: any) {
+    return { data: null, error: err?.message ?? 'Could not reach API' };
+  }
 }
 
 const STATUS_STYLES: Record<string, string> = {
@@ -30,9 +34,9 @@ export default async function AdminRequestsPage() {
   const isAllowed = isAdmin || (adminId && userId === adminId);
   if (!isAllowed) redirect('/');
 
-  const requests: any[] = await getRequests();
-  const pending  = requests.filter(r => r.status === 'PENDING');
-  const resolved = requests.filter(r => r.status !== 'PENDING');
+  const { data: requests, error } = await getRequests();
+  const pending  = requests?.filter(r => r.status === 'PENDING') ?? [];
+  const resolved = requests?.filter(r => r.status !== 'PENDING') ?? [];
 
   return (
     <div className="p-8 max-w-5xl space-y-6">
@@ -41,11 +45,19 @@ export default async function AdminRequestsPage() {
         <p className="text-slate-500 text-sm mt-1">{pending.length} pending · {resolved.length} resolved</p>
       </div>
 
-      {requests.length === 0 && (
+      {error && (
+        <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
+          <p className="text-red-400 font-semibold text-sm">Could not load requests</p>
+          <p className="text-red-300/70 text-xs font-mono mt-1">{error}</p>
+          <p className="text-slate-500 text-xs mt-2">Check INTERNAL_API_URL and SERVICE_TOKEN in Railway.</p>
+        </div>
+      )}
+
+      {!error && requests?.length === 0 && (
         <p className="text-slate-500 text-sm">No requests yet.</p>
       )}
 
-      {[
+      {!error && [
         { label: 'Pending', items: pending },
         { label: 'Resolved', items: resolved },
       ].map(({ label, items }) => items.length > 0 && (

@@ -7,6 +7,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@voltledger/db';
 
+// Allow cross-origin POST from the marketing site
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin':  '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+}
+
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>;
   try {
@@ -41,6 +53,9 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json(
     { id: record.id, message: "Request received. We'll be in touch within 48 hours." },
-    { status: 201 }
+    {
+      status: 201,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+    }
   );
 }

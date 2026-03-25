@@ -1636,8 +1636,10 @@
   document.getElementById('api-body').style.transition = 'opacity 0.15s';
   showEndpoint(0, document.querySelector('.endpoint-btn'));
 
-  // Primary: dashboard /api/early-access (direct DB write — always warm, instant response)
-  // Fallback: Formspree (emergency only)
+  // Primary:  Fastify API (has CORS configured, stable)
+  // Fallback: Dashboard direct-DB route (CORS enabled)
+  // Last:     Formspree (emergency only — data won't reach DB)
+  const API_BASE       = 'https://voltledger-api-production.up.railway.app';
   const DASHBOARD_BASE = 'https://voltledger-dashboard-production.up.railway.app';
   const FORMSPREE_URL  = 'https://formspree.io/f/mreozqbo';
 
@@ -1658,37 +1660,49 @@
     btn.disabled = true;
     errEl.style.display = 'none';
 
+    function onSuccess() {
+      btn.textContent = '✓ You\'re on the list! Check your inbox.';
+      btn.style.background = '#10b981';
+      document.getElementById('access-form').reset();
+    }
+    function onFailure() {
+      btn.textContent = 'Request Access →';
+      btn.disabled = false;
+      errEl.textContent = 'Something went wrong — please email us at hello@voltledger.io';
+      errEl.style.display = 'block';
+    }
+
     try {
-      const res = await fetch(`${DASHBOARD_BASE}/api/early-access`, {
+      // Primary: Fastify API
+      const res = await fetch(`${API_BASE}/v1/early-access`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify(payload),
       });
-
-      if (!res.ok) throw new Error('API error');
-
-      // Success
-      btn.textContent = '✓ You\'re on the list! Check your inbox.';
-      btn.style.background = '#10b981';
-      document.getElementById('access-form').reset();
-
+      if (!res.ok) throw new Error('api-error');
+      onSuccess();
     } catch (_) {
-      // Fallback: Formspree (emergency — record may not reach DB)
-      const fd = new FormData();
-      Object.entries(payload).forEach(([k, v]) => fd.append(k, v));
-      fd.append('_subject', `VoltLedger early access — ${payload.company}`);
-
       try {
-        const fb = await fetch(FORMSPREE_URL, { method: 'POST', body: fd, headers: { Accept: 'application/json' } });
-        if (!fb.ok) throw new Error();
-        btn.textContent = '✓ You\'re on the list! Check your inbox.';
-        btn.style.background = '#10b981';
-        document.getElementById('access-form').reset();
+        // Fallback 1: Dashboard direct-DB route
+        const res2 = await fetch(`${DASHBOARD_BASE}/api/early-access`, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(payload),
+        });
+        if (!res2.ok) throw new Error('dashboard-error');
+        onSuccess();
       } catch (_2) {
-        btn.textContent = 'Request Access →';
-        btn.disabled = false;
-        errEl.textContent = 'Something went wrong — please email us at hello@voltledger.io';
-        errEl.style.display = 'block';
+        // Last resort: Formspree (data won't reach DB)
+        try {
+          const fd = new FormData();
+          Object.entries(payload).forEach(([k, v]) => fd.append(k, v));
+          fd.append('_subject', `VoltLedger early access — ${payload.company}`);
+          const fb = await fetch(FORMSPREE_URL, { method: 'POST', body: fd, headers: { Accept: 'application/json' } });
+          if (!fb.ok) throw new Error();
+          onSuccess();
+        } catch (_3) {
+          onFailure();
+        }
       }
     }
   }

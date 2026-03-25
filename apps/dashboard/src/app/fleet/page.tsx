@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic';
 
 import { getBatteryList } from '@/lib/data';
 import { GradeBadge } from '@/components/GradeBadge';
+import { BatterySearch } from '@/components/BatterySearch';
 import Link from 'next/link';
 
 export const revalidate = 30;
@@ -28,21 +29,23 @@ export default async function FleetPage({
           <p className="text-slate-500 text-sm mt-1">{total} batteries total</p>
         </div>
 
-        {/* Grade filters */}
-        <div className="flex gap-2">
-          {GRADE_FILTERS.map(g => (
-            <Link
-              key={g}
-              href={`/fleet?grade=${g}`}
-              className={`px-3 py-1 rounded-md text-xs transition-colors ${
-                (searchParams.grade ?? 'All') === g
-                  ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                  : 'text-slate-400 hover:text-white border border-transparent hover:border-[#1e2d40]'
-              }`}
-            >
-              {g}
-            </Link>
-          ))}
+        <div className="flex items-center gap-4">
+          <BatterySearch />
+          <div className="flex gap-2">
+            {GRADE_FILTERS.map(g => (
+              <Link
+                key={g}
+                href={`/fleet?grade=${g}`}
+                className={`px-3 py-1 rounded-md text-xs transition-colors ${
+                  (searchParams.grade ?? 'All') === g
+                    ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                    : 'text-slate-400 hover:text-white border border-transparent hover:border-[#1e2d40]'
+                }`}
+              >
+                {g}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
 

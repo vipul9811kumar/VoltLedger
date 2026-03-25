@@ -422,10 +422,12 @@ model Lender {
   isActive       Boolean     @default(true)
 
   // Billing
-  monthlyBatteryQuota    Int?    // null = unlimited (enterprise)
-  batteriesUsedThisMonth Int     @default(0)
-  acvUsd                 Float   @default(0)
-  billingCycleResetAt    DateTime?
+  monthlyBatteryQuota     Int?    // null = unlimited (enterprise)
+  batteriesUsedThisMonth  Int     @default(0)
+  monthlyVinLookupQuota   Int?    // null = unlimited; Starter default = 25
+  vinLookupsUsedThisMonth Int     @default(0)
+  acvUsd                  Float   @default(0)
+  billingCycleResetAt     DateTime?
 
   apiKeys            ApiKey[]
   usageRecords       ApiUsageRecord[]

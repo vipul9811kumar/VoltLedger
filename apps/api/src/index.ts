@@ -11,6 +11,7 @@ import { secondLifeRoutes } from './routes/second-life';
 import { healthRoutes } from './routes/health';
 import { earlyAccessRoutes } from './routes/early-access';
 import { fleetRoutes } from './routes/fleet';
+import { lookupRoutes } from './routes/lookup';
 
 const PORT = parseInt(process.env.PORT ?? process.env.API_PORT ?? '3001');
 const HOST = process.env.API_HOST ?? '0.0.0.0';
@@ -62,6 +63,7 @@ async function build() {
   await app.register(secondLifeRoutes,   { prefix: '/v1/batteries' });
   await app.register(earlyAccessRoutes,  { prefix: '/v1/early-access' });
   await app.register(fleetRoutes,        { prefix: '/v1/batteries' });
+  await app.register(lookupRoutes,       { prefix: '/v1/batteries' });
 
   return app;
 }

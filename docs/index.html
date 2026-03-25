@@ -678,10 +678,85 @@
       border-bottom: none;
     }
 
+    /* ── PRICING ── */
+    .pricing-section { padding: 6rem 2rem; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+      align-items: start;
+    }
+    .pricing-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+    }
+    .pricing-card-featured {
+      border-color: rgba(59,130,246,.5);
+      background: linear-gradient(160deg, rgba(59,130,246,.06) 0%, var(--card) 60%);
+      box-shadow: 0 0 40px rgba(59,130,246,.08);
+    }
+    .plan-badge {
+      position: absolute;
+      top: -12px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--blue);
+      color: #fff;
+      font-size: .7rem;
+      font-weight: 700;
+      padding: .25rem .75rem;
+      border-radius: 20px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .plan-name { font-size: .8rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+    .plan-price { font-size: 2.75rem; font-weight: 800; color: var(--text); line-height: 1; }
+    .plan-per { font-size: 1rem; font-weight: 400; color: var(--muted); }
+    .plan-quota { font-size: .85rem; color: var(--text); font-weight: 500; }
+    .plan-overage { font-size: .75rem; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: .55rem; flex: 1; }
+    .plan-features li { font-size: .8rem; padding-left: 1.4rem; position: relative; }
+    .feat-yes { color: var(--text); }
+    .feat-no  { color: var(--muted); opacity: .5; }
+    .feat-yes::before { content: '✓'; position: absolute; left: 0; color: #34d399; font-weight: 700; }
+    .feat-no::before  { content: '–'; position: absolute; left: 0; color: var(--muted); }
+    .feat-cap {
+      display: inline-block;
+      margin-left: .4rem;
+      font-size: .68rem;
+      color: var(--blue);
+      background: rgba(59,130,246,.1);
+      border: 1px solid rgba(59,130,246,.2);
+      border-radius: 4px;
+      padding: .1rem .4rem;
+    }
+    .plan-cta {
+      display: block;
+      text-align: center;
+      padding: .65rem 1.25rem;
+      border-radius: 8px;
+      font-size: .875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s;
+      margin-top: .5rem;
+    }
+    .plan-cta-primary { background: var(--blue); color: #fff; }
+    .plan-cta-primary:hover { background: var(--blue-dim); }
+    .plan-cta-ghost { border: 1px solid var(--border); color: var(--text); }
+    .plan-cta-ghost:hover { border-color: rgba(59,130,246,.4); color: var(--blue); }
+
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .nav-right { display: none; }
       .nav-hamburger { display: flex; }
+      .pricing-grid { grid-template-columns: 1fr; }
       .api-layout { grid-template-columns: 1fr; }
       .browser-content { grid-template-columns: 1fr; }
       .dash-sidebar { display: none; }
@@ -705,6 +780,7 @@
     <li><a href="#dashboard">Dashboard</a></li>
     <li><a href="#api">API</a></li>
     <li><a href="#api-docs">API Docs</a></li>
+    <li><a href="#pricing">Pricing</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
   </ul>
   <div class="nav-right">
@@ -722,6 +798,7 @@
   <a href="#dashboard" class="mob-link">Dashboard</a>
   <a href="#api" class="mob-link">API</a>
   <a href="#api-docs" class="mob-link">API Docs</a>
+  <a href="#pricing" class="mob-link">Pricing</a>
   <a href="#roadmap" class="mob-link">Roadmap</a>
   <a href="#early-access" class="mob-cta">Request Access →</a>
 </div>
@@ -1238,6 +1315,79 @@
         <h3>Portfolio Webhooks</h3>
         <p>Get alerted when a battery in your loan book crosses SoH thresholds or changes ownership — before it becomes a default risk.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="pricing-section">
+  <div class="container">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Simple, usage-based pricing</h2>
+    <p class="section-sub">Pay for what you score. Every battery report counts against your monthly quota — no hidden fees.</p>
+
+    <div class="pricing-grid">
+
+      <!-- STARTER -->
+      <div class="pricing-card">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">$299<span class="plan-per">/mo</span></div>
+        <div class="plan-quota">100 batteries / month</div>
+        <div class="plan-overage">$4.99 per additional battery</div>
+        <ul class="plan-features">
+          <li class="feat-yes">Risk score + grade (A–F)</li>
+          <li class="feat-yes">Full sub-scores (thermal, degradation…)</li>
+          <li class="feat-yes">VIN &amp; Battery ID lookup <span class="feat-cap">25 lookups/mo</span></li>
+          <li class="feat-yes">Dashboard — fleet view</li>
+          <li class="feat-yes">REST API access</li>
+          <li class="feat-no">Residual value estimate</li>
+          <li class="feat-no">LTV recommendation</li>
+          <li class="feat-no">Portfolio analytics</li>
+          <li class="feat-no">Webhooks</li>
+        </ul>
+        <a href="#early-access" class="plan-cta plan-cta-ghost">Request Access</a>
+      </div>
+
+      <!-- PROFESSIONAL -->
+      <div class="pricing-card pricing-card-featured">
+        <div class="plan-badge">Most Popular</div>
+        <div class="plan-name">Professional</div>
+        <div class="plan-price">$799<span class="plan-per">/mo</span></div>
+        <div class="plan-quota">500 batteries / month</div>
+        <div class="plan-overage">$2.49 per additional battery</div>
+        <ul class="plan-features">
+          <li class="feat-yes">Everything in Starter</li>
+          <li class="feat-yes">VIN &amp; Battery ID lookup <span class="feat-cap">unlimited within quota</span></li>
+          <li class="feat-yes">Dashboard — full search &amp; detail</li>
+          <li class="feat-yes">Residual value estimate</li>
+          <li class="feat-yes">LTV recommendation</li>
+          <li class="feat-yes">Second-life assessment</li>
+          <li class="feat-yes">Portfolio analytics</li>
+          <li class="feat-yes">Webhooks</li>
+          <li class="feat-yes">Priority email support</li>
+        </ul>
+        <a href="#early-access" class="plan-cta plan-cta-primary">Request Access</a>
+      </div>
+
+      <!-- ENTERPRISE -->
+      <div class="pricing-card">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price">Custom</div>
+        <div class="plan-quota">Unlimited batteries</div>
+        <div class="plan-overage">Volume pricing available</div>
+        <ul class="plan-features">
+          <li class="feat-yes">Everything in Professional</li>
+          <li class="feat-yes">VIN bulk lookup API</li>
+          <li class="feat-yes">Multi-user dashboard</li>
+          <li class="feat-yes">White-label option</li>
+          <li class="feat-yes">Custom integrations</li>
+          <li class="feat-yes">SLA &amp; uptime guarantee</li>
+          <li class="feat-yes">Dedicated account manager</li>
+          <li class="feat-yes">On-premise deployment option</li>
+        </ul>
+        <a href="#early-access" class="plan-cta plan-cta-ghost">Contact Sales</a>
+      </div>
+
     </div>
   </div>
 </section>

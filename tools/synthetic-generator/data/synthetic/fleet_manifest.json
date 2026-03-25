@@ -1,0 +1,222 @@
+[
+  {
+    "id": "ffbc3603-8133-4e15-afa0-85214844e972",
+    "serialNumber": "PANA-US-25-00001",
+    "vin": "1HGRG0LPTE2LTCBKY",
+    "modelId": "panasonic-nca-100",
+    "modelName": "2170 NCA 100",
+    "manufacturer": "Panasonic",
+    "chemistry": "NCA",
+    "usageProfile": "HIGH_MILEAGE_DRIVER",
+    "manufacturedAt": "2025-05-28T05:20:24.235Z",
+    "ageWeeks": 43,
+    "summary": {
+      "currentSoH": 92.7,
+      "currentCycles": 317,
+      "currentOdometerKm": 45180,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": false,
+        "thermalAnomaly": false
+      }
+    }
+  },
+  {
+    "id": "5ea2bfd0-ff00-49ea-b1b2-7367cc2e11de",
+    "serialNumber": "SKO-EU-23-00002",
+    "vin": "WDDL5SKK8NXG2Y2TZ",
+    "modelId": "sk-nmc-commercial",
+    "modelName": "NMC-Commercial 120",
+    "manufacturer": "SK On",
+    "chemistry": "NMC",
+    "usageProfile": "WEEKEND_DRIVER",
+    "manufacturedAt": "2025-05-21T05:20:24.235Z",
+    "ageWeeks": 44,
+    "summary": {
+      "currentSoH": 98.3,
+      "currentCycles": 14,
+      "currentOdometerKm": 6163,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": false,
+        "thermalAnomaly": false
+      }
+    }
+  },
+  {
+    "id": "d576388e-684c-4139-8ad0-f71f4f2ff8d3",
+    "serialNumber": "PANA-EU-23-00003",
+    "vin": "1HG7MLFMJ4XZRY3JF",
+    "modelId": "panasonic-nca-100",
+    "modelName": "2170 NCA 100",
+    "manufacturer": "Panasonic",
+    "chemistry": "NCA",
+    "usageProfile": "DAILY_COMMUTER",
+    "manufacturedAt": "2025-11-05T05:20:24.235Z",
+    "ageWeeks": 20,
+    "summary": {
+      "currentSoH": 98.3,
+      "currentCycles": 34,
+      "currentOdometerKm": 7021,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": false,
+        "thermalAnomaly": false
+      }
+    }
+  },
+  {
+    "id": "60f7475c-c882-4939-8706-860e6fc0faa1",
+    "serialNumber": "CATL-CA-24-00004",
+    "vin": "SCAUUEJBH0FZP8LGG",
+    "modelId": "catl-lfp-60",
+    "modelName": "LFP-60 Standard Range",
+    "manufacturer": "CATL",
+    "chemistry": "LFP",
+    "usageProfile": "RIDESHARE_FLEET",
+    "manufacturedAt": "2025-10-08T05:20:24.235Z",
+    "ageWeeks": 24,
+    "summary": {
+      "currentSoH": 97.8,
+      "currentCycles": 358,
+      "currentOdometerKm": 42017,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": true,
+        "thermalAnomaly": true
+      }
+    }
+  },
+  {
+    "id": "65757498-3083-40f1-b139-5f5c84f8a3b9",
+    "serialNumber": "PANA-IN-25-00005",
+    "vin": "JN1MFYU3RB5V1UD7N",
+    "modelId": "panasonic-nca-100",
+    "modelName": "2170 NCA 100",
+    "manufacturer": "Panasonic",
+    "chemistry": "NCA",
+    "usageProfile": "HIGH_MILEAGE_DRIVER",
+    "manufacturedAt": "2025-12-03T05:20:24.235Z",
+    "ageWeeks": 16,
+    "summary": {
+      "currentSoH": 97.7,
+      "currentCycles": 118,
+      "currentOdometerKm": 16804,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": false,
+        "thermalAnomaly": false
+      }
+    }
+  },
+  {
+    "id": "a9eee7d0-228b-453b-bec9-d8f6699fb4d5",
+    "serialNumber": "CATL-US-25-00006",
+    "vin": "KMH0GR9P0FDTG1JSK",
+    "modelId": "catl-lfp-60",
+    "modelName": "LFP-60 Standard Range",
+    "manufacturer": "CATL",
+    "chemistry": "LFP",
+    "usageProfile": "WEEKEND_DRIVER",
+    "manufacturedAt": "2025-11-05T05:20:24.235Z",
+    "ageWeeks": 20,
+    "summary": {
+      "currentSoH": 98.9,
+      "currentCycles": 6,
+      "currentOdometerKm": 2823,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": false,
+        "thermalAnomaly": false
+      }
+    }
+  },
+  {
+    "id": "0b7f514e-8dda-413c-9754-e59d22a8eaad",
+    "serialNumber": "SKO-EU-24-00007",
+    "vin": "SCA24HJ93LP3BJ0P0",
+    "modelId": "sk-nmc-commercial",
+    "modelName": "NMC-Commercial 120",
+    "manufacturer": "SK On",
+    "chemistry": "NMC",
+    "usageProfile": "WEEKEND_DRIVER",
+    "manufacturedAt": "2025-12-17T05:20:24.235Z",
+    "ageWeeks": 14,
+    "summary": {
+      "currentSoH": 100,
+      "currentCycles": 4,
+      "currentOdometerKm": 1967,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": false,
+        "thermalAnomaly": false
+      }
+    }
+  },
+  {
+    "id": "fed9ca70-0c39-4fd6-8ae0-bb75b34b5e01",
+    "serialNumber": "PANA-CA-25-00008",
+    "vin": "SCATN0F3CRP493SE5",
+    "modelId": "panasonic-nca-100",
+    "modelName": "2170 NCA 100",
+    "manufacturer": "Panasonic",
+    "chemistry": "NCA",
+    "usageProfile": "RIDESHARE_FLEET",
+    "manufacturedAt": "2025-10-08T05:20:24.235Z",
+    "ageWeeks": 24,
+    "summary": {
+      "currentSoH": 91.6,
+      "currentCycles": 358,
+      "currentOdometerKm": 42024,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": true,
+        "thermalAnomaly": true
+      }
+    }
+  },
+  {
+    "id": "0730c8cc-8fce-4697-b274-5dff9b536c28",
+    "serialNumber": "PANA-EU-24-00009",
+    "vin": "JN1TS0PFJRU9LVU74",
+    "modelId": "panasonic-nca-100",
+    "modelName": "2170 NCA 100",
+    "manufacturer": "Panasonic",
+    "chemistry": "NCA",
+    "usageProfile": "RIDESHARE_FLEET",
+    "manufacturedAt": "2025-04-16T05:20:24.235Z",
+    "ageWeeks": 49,
+    "summary": {
+      "currentSoH": 83.3,
+      "currentCycles": 731,
+      "currentOdometerKm": 85752,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": true,
+        "thermalAnomaly": false
+      }
+    }
+  },
+  {
+    "id": "a2e0e2e5-7a81-4ea9-bcc1-d2bc05050fdc",
+    "serialNumber": "PANA-CA-24-00010",
+    "vin": "JN1RXAB6A48VSJMBE",
+    "modelId": "panasonic-nca-100",
+    "modelName": "2170 NCA 100",
+    "manufacturer": "Panasonic",
+    "chemistry": "NCA",
+    "usageProfile": "COMMERCIAL_DELIVERY",
+    "manufacturedAt": "2025-11-05T05:20:24.235Z",
+    "ageWeeks": 20,
+    "summary": {
+      "currentSoH": 94.7,
+      "currentCycles": 225,
+      "currentOdometerKm": 25176,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": true,
+        "thermalAnomaly": true
+      }
+    }
+  }
+]

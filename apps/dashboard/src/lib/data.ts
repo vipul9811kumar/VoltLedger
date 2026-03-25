@@ -23,6 +23,14 @@ interface RiskScore {
   compositeScore: number;
   grade: RiskGrade;
   scoredAt: string;
+  confidenceLevel?: number;
+  // Sub-scores (0–100)
+  degradationScore?: number;
+  thermalScore?: number;
+  usagePatternScore?: number;
+  capacityRetentionScore?: number;
+  ageAdjustedScore?: number;
+  // Flags
   abnormalDegradation: boolean;
   thermalAnomalyDetected: boolean;
   highDcfcUsage: boolean;

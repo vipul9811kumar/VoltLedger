@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ClerkProvider afterSignOutUrl="/sign-in">
+    <ClerkProvider afterSignOutUrl="/sign-in" signInUrl="/sign-in" signUpUrl="/sign-up">
       <html lang="en">
         <body className="flex h-screen overflow-hidden bg-[#0a0f1e]">
           <Sidebar />

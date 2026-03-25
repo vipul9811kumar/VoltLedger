@@ -93,7 +93,7 @@ export default async function BatteryDetailPage({ params }: { params: { serial: 
         {/* SoH History Chart */}
         <div className="bg-[#111827] border border-[#1e2d40] rounded-xl p-5 space-y-3">
           <h2 className="text-sm font-semibold text-white">SoH History (12 weeks)</h2>
-          <SoHHistory batteryId={battery.id} />
+          <SoHHistory batteryId={battery.serialNumber} />
 
           {forecast && (
             <div className="pt-3 border-t border-[#1e2d40]">

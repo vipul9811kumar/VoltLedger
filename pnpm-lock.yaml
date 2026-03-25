@@ -78,9 +78,6 @@ importers:
 
   apps/dashboard:
     dependencies:
-      '@voltledger/db':
-        specifier: workspace:*
-        version: link:../../packages/db
       clsx:
         specifier: ^2.1.1
         version: 2.1.1

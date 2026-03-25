@@ -16,10 +16,13 @@ export default clerkMiddleware((auth, req) => {
   // Require login for all other routes
   auth().protect();
 
-  const meta = auth().sessionClaims?.publicMetadata as any;
+  const { userId, sessionClaims } = auth();
+  const meta = sessionClaims?.publicMetadata as any;
 
-  // Admins bypass the lenderId gate entirely
-  if (meta?.isAdmin === true) return;
+  // Admin bypass — check env var (immediate, no session refresh needed)
+  // OR publicMetadata.isAdmin (after next sign-in)
+  const adminClerkId = process.env.ADMIN_CLERK_USER_ID;
+  if ((adminClerkId && userId === adminClerkId) || meta?.isAdmin === true) return;
 
   // Regular users: must have a provisioned lender account
   if (!meta?.lenderId) {

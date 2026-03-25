@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getBatteryDetail, getBatterySoHHistory } from '@/lib/data';
+import { getBatteryDetail } from '@/lib/data';
 import { GradeBadge } from '@/components/GradeBadge';
 import { ScoreBar } from '@/components/ScoreBar';
 import { SoHChart } from '@/components/SoHChart';
@@ -12,15 +12,7 @@ function usd(v: number) {
 }
 
 export default async function BatteryDetailPage({ params }: { params: { serial: string } }) {
-  const [battery, sohHistory] = await Promise.all([
-    getBatteryDetail(params.serial),
-    (async () => {
-      const tmp = await getBatteryDetail(params.serial);
-      if (!tmp) return [];
-      const { getBatterySoHHistory: fn } = await import('@/lib/data');
-      return fn(tmp.id);
-    })(),
-  ]);
+  const battery = await getBatteryDetail(params.serial);
 
   if (!battery) notFound();
 
@@ -70,11 +62,11 @@ export default async function BatteryDetailPage({ params }: { params: { serial: 
           {risk ? (
             <>
               <div className="space-y-3">
-                <ScoreBar label="Degradation"        value={risk.degradationScore} />
-                <ScoreBar label="Thermal"            value={risk.thermalScore} />
-                <ScoreBar label="Usage Pattern"      value={risk.usagePatternScore} />
-                <ScoreBar label="Capacity Retention" value={risk.capacityRetentionScore} />
-                <ScoreBar label="Age-Adjusted"       value={risk.ageAdjustedScore} />
+                <ScoreBar label="Degradation"        value={risk.degradationScore ?? 0} />
+                <ScoreBar label="Thermal"            value={risk.thermalScore ?? 0} />
+                <ScoreBar label="Usage Pattern"      value={risk.usagePatternScore ?? 0} />
+                <ScoreBar label="Capacity Retention" value={risk.capacityRetentionScore ?? 0} />
+                <ScoreBar label="Age-Adjusted"       value={risk.ageAdjustedScore ?? 0} />
               </div>
 
               {/* Flags */}
@@ -89,8 +81,7 @@ export default async function BatteryDetailPage({ params }: { params: { serial: 
               )}
 
               <p className="text-xs text-slate-600">
-                Confidence: {Math.round(risk.confidenceLevel * 100)}% ·{' '}
-                Model {risk.modelVersion} ·{' '}
+                {risk.confidenceLevel != null && <>Confidence: {Math.round(risk.confidenceLevel * 100)}% · </>}
                 {new Date(risk.scoredAt).toLocaleDateString()}
               </p>
             </>
@@ -225,7 +216,7 @@ export default async function BatteryDetailPage({ params }: { params: { serial: 
               </div>
               {sl.disqualifiers.length > 0 && (
                 <div className="mt-3 pt-2 border-t border-[#1e2d40] space-y-1">
-                  {sl.disqualifiers.map(d => (
+                  {sl.disqualifiers.map((d: string) => (
                     <p key={d} className="text-xs text-orange-400/80">⚠ {d}</p>
                   ))}
                 </div>

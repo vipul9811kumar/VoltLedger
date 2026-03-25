@@ -4,7 +4,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine,
 } from 'recharts';
 
-interface Point { recordedAt: Date; stateOfHealth: number }
+interface Point { recordedAt: Date | string; stateOfHealth: number }
 
 export function SoHChart({ data }: { data: Point[] }) {
   const chartData = data.map(p => ({

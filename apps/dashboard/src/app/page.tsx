@@ -9,10 +9,26 @@ import Link from 'next/link';
 export const revalidate = 60; // refresh every 60s
 
 export default async function OverviewPage() {
-  const [stats, flagged] = await Promise.all([
-    getFleetStats(),
-    getFlaggedBatteries(),
-  ]);
+  let stats: Awaited<ReturnType<typeof getFleetStats>>;
+  let flagged: Awaited<ReturnType<typeof getFlaggedBatteries>>;
+
+  try {
+    [stats, flagged] = await Promise.all([getFleetStats(), getFlaggedBatteries()]);
+  } catch (err: any) {
+    return (
+      <div className="p-8">
+        <h1 className="text-2xl font-bold text-white mb-2">Fleet Overview</h1>
+        <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-5 mt-4">
+          <p className="text-red-400 font-semibold text-sm mb-1">Could not reach the API</p>
+          <p className="text-red-300/70 text-xs font-mono break-all">{err?.message ?? String(err)}</p>
+          <p className="text-slate-500 text-xs mt-3">
+            Check that <code className="text-slate-400">INTERNAL_API_URL</code> and{' '}
+            <code className="text-slate-400">SERVICE_TOKEN</code> are set correctly in Railway.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const totalScored = Object.values(stats.gradeCounts).reduce((a, b) => a + b, 0);
   const highRiskCount = (stats.gradeCounts['D'] ?? 0) + (stats.gradeCounts['F'] ?? 0);

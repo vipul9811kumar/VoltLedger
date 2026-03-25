@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
         await updateLender(lender.id, {
           subscriptionStatus: status,
           stripePriceId:      priceId,
-          currentPeriodEnd:   new Date(sub.current_period_end * 1000).toISOString(),
+          currentPeriodEnd:   new Date((sub as any).current_period_end * 1000).toISOString(),
           ...(tierConfig ?? {}),
         });
       }
@@ -114,7 +114,7 @@ export async function POST(req: NextRequest) {
 
     case 'invoice.payment_failed': {
       const invoice = event.data.object as Stripe.Invoice;
-      const subId = invoice.subscription as string;
+      const subId = (invoice as any).subscription as string;
       const API_URL = process.env.INTERNAL_API_URL!;
       const res = await fetch(`${API_URL}/v1/account/by-subscription/${subId}`, {
         headers: { 'x-service-token': process.env.SERVICE_TOKEN! },

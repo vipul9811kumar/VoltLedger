@@ -5,10 +5,13 @@ import { redirect } from 'next/navigation';
 import { UpgradeButton } from './UpgradeButton';
 import { BillingPortalButton } from './BillingPortalButton';
 
-async function getLenderAccount() {
+async function getLenderAccount(clerkUserId: string) {
   const API_URL = process.env.INTERNAL_API_URL ?? 'http://localhost:3001';
   const res = await fetch(`${API_URL}/v1/account`, {
-    headers: { 'x-service-token': process.env.SERVICE_TOKEN ?? '' },
+    headers: {
+      'x-service-token':  process.env.SERVICE_TOKEN ?? '',
+      'x-clerk-user-id':  clerkUserId,
+    },
     cache: 'no-store',
   });
   if (!res.ok) return null;
@@ -54,7 +57,7 @@ export default async function AccountPage() {
   if (!userId) redirect('/sign-in');
 
   const user = await currentUser();
-  const account = await getLenderAccount();
+  const account = await getLenderAccount(userId);
 
   const tier = account?.tier ?? 'STARTER';
   const status = account?.subscriptionStatus ?? 'TRIALING';

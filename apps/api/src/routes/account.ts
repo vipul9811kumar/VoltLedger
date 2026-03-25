@@ -11,15 +11,17 @@ import { prisma } from '@voltledger/db';
 
 export async function accountRoutes(app: FastifyInstance) {
 
-  // GET /v1/account — returns the first active lender (demo: single-tenant)
-  // In multi-tenant: resolve from the authenticated Clerk user's lenderId
-  app.get('/account', async (_req, reply) => {
-    const lender = await prisma.lender.findFirst({
-      include: { organization: { select: { name: true } } },
-      orderBy: { createdAt: 'asc' },
+  // GET /v1/account — resolve lender from the Clerk user ID in x-clerk-user-id header
+  app.get('/account', async (req, reply) => {
+    const clerkId = req.headers['x-clerk-user-id'] as string | undefined;
+    if (!clerkId) return reply.status(400).send({ error: 'Missing x-clerk-user-id header' });
+
+    const lenderUser = await prisma.lenderUser.findUnique({
+      where:   { clerkId },
+      include: { lender: { include: { organization: { select: { name: true } } } } },
     });
-    if (!lender) return reply.status(404).send({ error: 'No lender found' });
-    return lender;
+    if (!lenderUser) return reply.status(404).send({ error: 'No lender found for this user' });
+    return lenderUser.lender;
   });
 
   // POST /v1/account/sync — called by Stripe webhook to update subscription state

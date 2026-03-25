@@ -580,6 +580,7 @@ model EarlyAccessRequest {
   role        String
   status      String   @default("PENDING") // PENDING, APPROVED, REJECTED
   notes       String?
+  clerkUserId String?  @unique // set when the user completes sign-up and is provisioned
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

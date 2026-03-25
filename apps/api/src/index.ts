@@ -14,6 +14,7 @@ import { fleetRoutes } from './routes/fleet';
 import { lookupRoutes } from './routes/lookup';
 import { accountRoutes } from './routes/account';
 import { adminRoutes } from './routes/admin';
+import { provisionRoutes } from './routes/provision';
 
 const PORT = parseInt(process.env.PORT ?? process.env.API_PORT ?? '3001');
 const HOST = process.env.API_HOST ?? '0.0.0.0';
@@ -36,7 +37,7 @@ async function build() {
   // ── API key middleware (simple header check) ───────────────────────────────
   app.addHook('onRequest', async (req, reply) => {
     // Skip auth for health check, early access, and in dev mode
-    if (req.url === '/health' || req.url === '/' || req.url.startsWith('/v1/early-access')) return;
+    if (req.url === '/health' || req.url === '/' || req.url.startsWith('/v1/early-access') || req.url.startsWith('/v1/provision')) return;
     if (req.url.startsWith('/v1/admin') && req.headers['x-service-token'] === process.env.SERVICE_TOKEN) return;
     if (process.env.DEV_SKIP_AUTH === 'true') return;
 
@@ -69,6 +70,7 @@ async function build() {
   await app.register(lookupRoutes,       { prefix: '/v1/batteries' });
   await app.register(accountRoutes,      { prefix: '/v1' });
   await app.register(adminRoutes,        { prefix: '/v1/admin' });
+  await app.register(provisionRoutes,    { prefix: '/v1/provision' });
 
   return app;
 }

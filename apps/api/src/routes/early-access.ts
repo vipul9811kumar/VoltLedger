@@ -10,7 +10,7 @@ const bodySchema = z.object({
   role:      z.string().min(1).max(80),
 });
 
-async function getResend() {
+export async function getResend() {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     console.warn('[email] RESEND_API_KEY not set — skipping email');
@@ -20,7 +20,7 @@ async function getResend() {
   return new Resend(apiKey);
 }
 
-function from() {
+export function from() {
   return (process.env.EMAIL_FROM ?? 'VoltLedger <onboarding@resend.dev>').trim();
 }
 

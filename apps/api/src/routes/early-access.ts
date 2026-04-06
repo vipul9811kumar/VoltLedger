@@ -85,7 +85,7 @@ export async function sendApprovalEmail(data: {
   const resend = await getResend();
   if (!resend) return;
   const dashboardUrl = (process.env.NEXT_PUBLIC_APP_URL ?? 'https://voltledger.io').trim();
-  const signUpUrl    = `${dashboardUrl}/sign-up`;
+  const signUpUrl    = `${dashboardUrl}/sign-up?email_address=${encodeURIComponent(data.email)}`;
 
   await resend.emails.send({
     from: from(),

@@ -14,16 +14,17 @@ import { prisma } from '@voltledger/db';
 export async function fleetRoutes(app: FastifyInstance) {
   // ── Fleet overview stats ───────────────────────────────────────────────────
   app.get('/fleet/stats', async () => {
-    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 3600 * 1000);
-    const oneDayAgo    = new Date(Date.now() - 24 * 3600 * 1000);
+    const oneDayAgo = new Date(Date.now() - 24 * 3600 * 1000);
 
-    const [total, byGrade, byStatus, recentlyScored] = await Promise.all([
+    // Get the latest risk score per battery, then group by grade
+    const latestScores = await prisma.riskScore.findMany({
+      distinct: ['batteryId'],
+      orderBy:  { scoredAt: 'desc' },
+      select:   { grade: true, scoredAt: true },
+    });
+
+    const [total, byStatus, recentlyScored] = await Promise.all([
       prisma.battery.count(),
-      prisma.riskScore.groupBy({
-        by: ['grade'],
-        _count: { grade: true },
-        where: { scoredAt: { gte: sevenDaysAgo } },
-      }),
       prisma.battery.groupBy({
         by: ['status'],
         _count: { status: true },
@@ -34,7 +35,7 @@ export async function fleetRoutes(app: FastifyInstance) {
     ]);
 
     const gradeCounts: Record<string, number> = { A: 0, B: 0, C: 0, D: 0, F: 0 };
-    byGrade.forEach(g => { gradeCounts[g.grade] = g._count.grade; });
+    latestScores.forEach(s => { gradeCounts[s.grade] = (gradeCounts[s.grade] ?? 0) + 1; });
 
     const statusCounts: Record<string, number> = {};
     byStatus.forEach(s => { statusCounts[s.status] = s._count.status; });
@@ -50,15 +51,9 @@ export async function fleetRoutes(app: FastifyInstance) {
     const pageSize = parseInt(req.query.pageSize ?? '20');
     const grade    = req.query.grade;
 
-    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 3600 * 1000);
-
+    // Filter by grade uses the latest score per battery (no date cutoff)
     const where = grade ? {
-      riskScores: {
-        some: {
-          grade: grade as any,
-          scoredAt: { gte: sevenDaysAgo },
-        },
-      },
+      riskScores: { some: { grade: grade as any } },
     } : {};
 
     const [batteries, total] = await Promise.all([
@@ -80,8 +75,6 @@ export async function fleetRoutes(app: FastifyInstance) {
 
   // ── Flagged batteries ──────────────────────────────────────────────────────
   app.get('/fleet/flagged', async () => {
-    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 3600 * 1000);
-
     const batteries = await prisma.battery.findMany({
       where: {
         riskScores: {
@@ -91,7 +84,6 @@ export async function fleetRoutes(app: FastifyInstance) {
               { thermalAnomalyDetected: true },
               { grade: { in: ['D', 'F'] } },
             ],
-            scoredAt: { gte: sevenDaysAgo },
           },
         },
       },

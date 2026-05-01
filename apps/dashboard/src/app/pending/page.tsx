@@ -10,15 +10,24 @@ export default function PendingPage() {
   const { userId, isLoaded } = useAuth();
   const { signOut }          = useClerk();
   const router               = useRouter();
-  const [state, setState]    = useState<State>('checking');
+  const [state, setState]       = useState<State>('checking');
   const [retrying, setRetrying] = useState(false);
+  const [errorDetail, setErrorDetail] = useState('');
 
   async function tryProvision() {
     try {
       const res  = await fetch('/api/provision/retry', { method: 'POST' });
       const data = await res.json();
-      setState(data.provisioned ? 'provisioned' : 'pending');
-    } catch {
+      if (data.provisioned) {
+        setState('provisioned');
+      } else if (data.error) {
+        setErrorDetail(data.error + (data.detail ? ': ' + data.detail : ''));
+        setState('error');
+      } else {
+        setState('pending');
+      }
+    } catch (err: any) {
+      setErrorDetail(err?.message ?? 'Network error');
       setState('error');
     }
   }
@@ -104,6 +113,9 @@ export default function PendingPage() {
             <div className="space-y-2">
               <h1 className="text-2xl font-bold text-white">Something went wrong</h1>
               <p className="text-slate-400">Could not reach the provisioning service. Please try again.</p>
+              {errorDetail && (
+                <p className="text-xs text-red-400/70 font-mono break-all mt-1">{errorDetail}</p>
+              )}
             </div>
             <button
               onClick={handleRetry}

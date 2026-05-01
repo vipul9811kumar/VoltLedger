@@ -556,6 +556,124 @@
     .phase-items li::before { content: '✓'; color: var(--green); font-size: .7rem; flex-shrink: 0; }
     .phase-card:not(.active) .phase-items li::before { color: var(--muted); content: '○'; }
 
+    /* ── FLEET OPS SECTION ── */
+    .fleet-ops-section { background: #050e09; }
+    .fleet-ops-section .section-label { color: #10b981; }
+    .fleet-ops-section .section-title .accent-green { color: #10b981; }
+
+    .fleet-ops-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-top: 3rem;
+    }
+    @media (max-width: 820px) { .fleet-ops-layout { grid-template-columns: 1fr; } }
+
+    .fleet-ops-copy ul { list-style: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: .75rem; }
+    .fleet-ops-copy li { display: flex; align-items: flex-start; gap: .65rem; font-size: .9rem; color: var(--muted); }
+    .fleet-ops-copy li .check-g { color: #10b981; font-weight: 700; flex-shrink: 0; margin-top: .1rem; }
+    .fleet-ops-copy li strong { color: var(--text); }
+
+    /* Fleet ops dashboard mockup */
+    .fo-frame {
+      background: #0a140a;
+      border: 1px solid rgba(16,185,129,.15);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(16,185,129,.08);
+    }
+    .fo-topbar {
+      background: #0f1e0f;
+      display: flex; align-items: center; gap: .5rem;
+      padding: .6rem .9rem;
+      border-bottom: 1px solid rgba(16,185,129,.1);
+    }
+    .fo-url {
+      flex: 1; text-align: center;
+      font-family: var(--mono); font-size: .7rem; color: #4b7060;
+      background: rgba(0,0,0,.3); padding: .18rem .7rem; border-radius: 4px;
+      max-width: 300px; margin: 0 auto;
+    }
+    .fo-body { display: grid; grid-template-columns: 150px 1fr; min-height: 280px; }
+    .fo-sidebar {
+      background: #080f08;
+      border-right: 1px solid rgba(16,185,129,.08);
+      padding: .75rem .6rem;
+    }
+    .fo-logo {
+      font-size: .68rem; font-weight: 700; color: #10b981;
+      padding: .3rem .5rem; margin-bottom: .6rem;
+      display: flex; align-items: center; gap: .3rem;
+    }
+    .fo-nav-item {
+      display: flex; align-items: center; gap: .4rem;
+      padding: .35rem .5rem; border-radius: 5px;
+      font-size: .68rem; color: #3d6b50; margin-bottom: .15rem;
+    }
+    .fo-nav-item.active { background: rgba(16,185,129,.12); color: #6ee7b7; }
+    .fo-nav-sep { font-size: .6rem; color: #1e3d2a; padding: .4rem .5rem .1rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    .fo-main { padding: .75rem; }
+    .fo-header { font-size: .7rem; font-weight: 600; color: #e2e8f0; margin-bottom: .6rem; }
+    .fo-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: .4rem; margin-bottom: .6rem; }
+    .fo-stat {
+      background: #0f1e0f; border: 1px solid rgba(16,185,129,.1);
+      border-radius: 7px; padding: .4rem .5rem;
+    }
+    .fo-stat-val { font-size: .9rem; font-weight: 700; font-family: var(--mono); }
+    .fo-stat-val-green { color: #10b981; }
+    .fo-stat-val-yellow { color: #f59e0b; }
+    .fo-stat-val-red { color: #ef4444; }
+    .fo-stat-lbl { font-size: .58rem; color: #3d6b50; margin-top: .1rem; }
+
+    .fo-panels { display: grid; grid-template-columns: 1.4fr 1fr; gap: .4rem; }
+    .fo-panel {
+      background: #0f1e0f; border: 1px solid rgba(16,185,129,.08);
+      border-radius: 7px; padding: .5rem .6rem;
+    }
+    .fo-panel-title { font-size: .6rem; font-weight: 600; color: #6ee7b7; text-transform: uppercase; letter-spacing: .05em; margin-bottom: .4rem; }
+
+    /* SoH histogram bars */
+    .soh-row { display: flex; align-items: center; gap: .3rem; margin-bottom: .2rem; }
+    .soh-lbl { font-size: .58rem; font-family: var(--mono); color: #3d6b50; width: 38px; text-align: right; flex-shrink: 0; }
+    .soh-bg { flex: 1; background: rgba(255,255,255,.04); border-radius: 2px; height: 6px; }
+    .soh-fill { height: 6px; border-radius: 2px; }
+    .soh-green { background: rgba(16,185,129,.65); }
+    .soh-yellow { background: rgba(245,158,11,.55); }
+    .soh-red { background: rgba(239,68,68,.55); }
+    .soh-cnt { font-size: .56rem; color: #3d6b50; width: 22px; text-align: right; }
+
+    /* replace queue bars */
+    .rq-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: .3rem; font-size: .62rem; }
+    .rq-lbl { color: #4b7060; }
+    .rq-val-r { color: #ef4444; font-family: var(--mono); font-weight: 600; }
+    .rq-val-o { color: #f97316; font-family: var(--mono); font-weight: 600; }
+    .rq-val-y { color: #f59e0b; font-family: var(--mono); font-weight: 600; }
+    .rq-bar-bg { height: 4px; background: rgba(255,255,255,.04); border-radius: 2px; margin-bottom: .4rem; }
+    .rq-bar-fill-r { height: 4px; background: rgba(239,68,68,.5); border-radius: 2px; }
+    .rq-bar-fill-o { height: 4px; background: rgba(249,115,22,.5); border-radius: 2px; }
+    .rq-bar-fill-y { height: 4px; background: rgba(245,158,11,.5); border-radius: 2px; }
+
+    /* Fleet ops features grid */
+    .fo-features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+    .fo-feature-card {
+      background: #080f08;
+      border: 1px solid rgba(16,185,129,.12);
+      border-radius: 12px;
+      padding: 1.4rem;
+      transition: border-color .2s;
+    }
+    .fo-feature-card:hover { border-color: rgba(16,185,129,.3); }
+    .fo-feature-icon { font-size: 1.4rem; margin-bottom: .6rem; }
+    .fo-feature-card h3 { font-size: .9rem; font-weight: 600; color: #e2e8f0; margin-bottom: .35rem; }
+    .fo-feature-card p { font-size: .82rem; color: var(--muted); line-height: 1.65; }
+
     /* ── CTA ── */
     .cta-section {
       padding: 7rem 1.5rem;
@@ -777,9 +895,9 @@
   </a>
   <ul class="nav-links">
     <li><a href="#how-it-works">How It Works</a></li>
-    <li><a href="#dashboard">Dashboard</a></li>
+    <li><a href="#dashboard">Lender Dashboard</a></li>
+    <li><a href="#fleet-ops">Fleet Ops</a></li>
     <li><a href="#api">API</a></li>
-    <li><a href="#api-docs">API Docs</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
   </ul>
@@ -795,9 +913,9 @@
 <!-- MOBILE MENU -->
 <div class="nav-mobile-menu" id="mobileMenu">
   <a href="#how-it-works" class="mob-link">How It Works</a>
-  <a href="#dashboard" class="mob-link">Dashboard</a>
+  <a href="#dashboard" class="mob-link">Lender Dashboard</a>
+  <a href="#fleet-ops" class="mob-link">Fleet Ops</a>
   <a href="#api" class="mob-link">API</a>
-  <a href="#api-docs" class="mob-link">API Docs</a>
   <a href="#pricing" class="mob-link">Pricing</a>
   <a href="#roadmap" class="mob-link">Roadmap</a>
   <a href="#early-access" class="mob-cta">Request Access →</a>
@@ -1110,6 +1228,136 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLEET OPS SECTION -->
+<section id="fleet-ops" class="fleet-ops-section">
+  <div class="container">
+    <p class="section-label">Fleet Ops</p>
+    <h2 class="section-title">Built for the <span class="accent-green">Fleet Operator</span>, Too</h2>
+    <p class="section-sub">Hertz. Amazon Logistics. Utility fleets. VoltLedger gives fleet operators a live readiness view across every vehicle — from daily shift planning to long-term replacement budgeting.</p>
+
+    <div class="fleet-ops-layout">
+      <!-- Copy -->
+      <div class="fleet-ops-copy">
+        <ul>
+          <li>
+            <span class="check-g">✓</span>
+            <span><strong>Shift Readiness</strong> — instantly see what percentage of your fleet is ready to go, limited range, or grounded based on real-time SoH data</span>
+          </li>
+          <li>
+            <span class="check-g">✓</span>
+            <span><strong>Active Alerts</strong> — thermal anomalies, DCFC overuse, and abnormal degradation flagged by battery, filterable by type</span>
+          </li>
+          <li>
+            <span class="check-g">✓</span>
+            <span><strong>Replacement Queue</strong> — 30 / 60 / 90-day forecast of batteries hitting 80% SoH with estimated replacement cost rollup</span>
+          </li>
+          <li>
+            <span class="check-g">✓</span>
+            <span><strong>Second-Life Pipeline</strong> — viable batteries assessed for stationary storage, lower-demand fleet reuse, or recycler handoff with dollar value recovery estimates</span>
+          </li>
+          <li>
+            <span class="check-g">✓</span>
+            <span><strong>SoH Distribution Histogram</strong> — fleet-wide health distribution across 7 bands, color-coded by operational status</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Fleet Ops dashboard mockup -->
+      <div class="fo-frame">
+        <div class="fo-topbar">
+          <span class="b-dot b-dot-r" style="width:8px;height:8px"></span>
+          <span class="b-dot b-dot-y" style="width:8px;height:8px"></span>
+          <span class="b-dot b-dot-g" style="width:8px;height:8px"></span>
+          <span class="fo-url">voltledger.io/fleet-ops</span>
+        </div>
+        <div class="fo-body">
+          <!-- Sidebar -->
+          <div class="fo-sidebar">
+            <div class="fo-logo">⚡ Fleet Ops</div>
+            <div class="fo-nav-item active">◈ Readiness</div>
+            <div class="fo-nav-item">⚑ Alerts</div>
+            <div class="fo-nav-item">↻ Replace Queue</div>
+            <div class="fo-nav-item">♻ Second Life</div>
+            <div class="fo-nav-sep">Lender View</div>
+            <div class="fo-nav-item" style="font-size:.62rem;color:#1e3d2a">⇄ Switch</div>
+          </div>
+          <!-- Main content -->
+          <div class="fo-main">
+            <div class="fo-header">Fleet Readiness — 2,047 batteries tracked</div>
+            <!-- Stat cards -->
+            <div class="fo-stats">
+              <div class="fo-stat">
+                <div class="fo-stat-val fo-stat-val-green">87%</div>
+                <div class="fo-stat-lbl">Shift Ready</div>
+              </div>
+              <div class="fo-stat">
+                <div class="fo-stat-val" style="color:#e2e8f0">88.4%</div>
+                <div class="fo-stat-lbl">Avg SoH</div>
+              </div>
+              <div class="fo-stat">
+                <div class="fo-stat-val fo-stat-val-yellow">24</div>
+                <div class="fo-stat-lbl">Alerts</div>
+              </div>
+              <div class="fo-stat">
+                <div class="fo-stat-val fo-stat-val-red">37</div>
+                <div class="fo-stat-lbl">Replace 90d</div>
+              </div>
+            </div>
+            <!-- Panels row -->
+            <div class="fo-panels">
+              <!-- SoH histogram -->
+              <div class="fo-panel">
+                <div class="fo-panel-title">SoH Distribution</div>
+                <div class="soh-row"><span class="soh-lbl">95–100%</span><div class="soh-bg"><div class="soh-fill soh-green" style="width:65%"></div></div><span class="soh-cnt">612</span></div>
+                <div class="soh-row"><span class="soh-lbl">90–95%</span><div class="soh-bg"><div class="soh-fill soh-green" style="width:100%"></div></div><span class="soh-cnt">941</span></div>
+                <div class="soh-row"><span class="soh-lbl">85–90%</span><div class="soh-bg"><div class="soh-fill soh-green" style="width:48%"></div></div><span class="soh-cnt">451</span></div>
+                <div class="soh-row"><span class="soh-lbl">80–85%</span><div class="soh-bg"><div class="soh-fill soh-green" style="width:15%"></div></div><span class="soh-cnt">142</span></div>
+                <div class="soh-row"><span class="soh-lbl">70–80%</span><div class="soh-bg"><div class="soh-fill soh-yellow" style="width:7%"></div></div><span class="soh-cnt">66</span></div>
+                <div class="soh-row"><span class="soh-lbl">&lt;70%</span><div class="soh-bg"><div class="soh-fill soh-red" style="width:4%"></div></div><span class="soh-cnt">35</span></div>
+              </div>
+              <!-- Replace queue -->
+              <div class="fo-panel">
+                <div class="fo-panel-title">Replacement Queue</div>
+                <div class="rq-row"><span class="rq-lbl">Next 30 days</span><span class="rq-val-r">12</span></div>
+                <div class="rq-bar-bg"><div class="rq-bar-fill-r" style="width:32%"></div></div>
+                <div class="rq-row"><span class="rq-lbl">Next 60 days</span><span class="rq-val-o">25</span></div>
+                <div class="rq-bar-bg"><div class="rq-bar-fill-o" style="width:67%"></div></div>
+                <div class="rq-row"><span class="rq-lbl">Next 90 days</span><span class="rq-val-y">37</span></div>
+                <div class="rq-bar-bg"><div class="rq-bar-fill-y" style="width:100%"></div></div>
+                <div style="font-size:.58rem;color:#3d6b50;margin-top:.5rem;font-family:var(--mono)">Est. 90-day cost: $370,000</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fleet Ops feature cards -->
+    <div class="fo-features-grid">
+      <div class="fo-feature-card">
+        <div class="fo-feature-icon">🟢</div>
+        <h3>Live Shift Readiness</h3>
+        <p>Know before dispatch — shift-ready, limited-range, and grounded counts updated from latest telemetry. No manual check-ins.</p>
+      </div>
+      <div class="fo-feature-card">
+        <div class="fo-feature-icon">🌡</div>
+        <h3>Thermal &amp; DCFC Alerts</h3>
+        <p>Thermal anomaly, DCFC overuse, and abnormal degradation flags surfaced per battery — filter to just the risk type you care about.</p>
+      </div>
+      <div class="fo-feature-card">
+        <div class="fo-feature-icon">📅</div>
+        <h3>Replacement Forecasting</h3>
+        <p>30 / 60 / 90-day replacement horizons with per-unit projected dates and confidence levels. Budget your battery capex in advance.</p>
+      </div>
+      <div class="fo-feature-card">
+        <div class="fo-feature-icon">♻️</div>
+        <h3>Second-Life Value Recovery</h3>
+        <p>Before a battery leaves your fleet, know its best exit path — grid storage, lower-demand reuse, refurbishment, or recycler — and the dollar value of each.</p>
       </div>
     </div>
   </div>

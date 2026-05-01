@@ -51,9 +51,9 @@ export default async function OverviewPage() {
           sub="across all lenders"
         />
         <StatCard
-          label="Scored (7d)"
+          label="Scored"
           value={totalScored}
-          sub={`${stats.recentlyScored} in last 24h`}
+          sub={`${stats.recentlyScored} scored today`}
           accent="text-blue-400"
         />
         <StatCard
@@ -97,7 +97,7 @@ export default async function OverviewPage() {
 
           {flagged.length === 0 ? (
             <div className="text-center py-8 text-slate-500 text-sm">
-              No flagged batteries in the last 7 days
+              No flagged batteries
             </div>
           ) : (
             <div className="space-y-2">

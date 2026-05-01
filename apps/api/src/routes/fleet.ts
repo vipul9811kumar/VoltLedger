@@ -74,27 +74,57 @@ export async function fleetRoutes(app: FastifyInstance) {
   });
 
   // ── Flagged batteries ──────────────────────────────────────────────────────
-  app.get('/fleet/flagged', async () => {
-    const batteries = await prisma.battery.findMany({
-      where: {
-        riskScores: {
-          some: {
-            OR: [
-              { abnormalDegradation: true },
-              { thermalAnomalyDetected: true },
-              { grade: { in: ['D', 'F'] } },
-            ],
+  app.get<{
+    Querystring: { page?: string; pageSize?: string };
+  }>('/fleet/flagged', async (req) => {
+    const page     = parseInt(req.query.page ?? '1');
+    const pageSize = parseInt(req.query.pageSize ?? '100');
+
+    // Match batteries whose LATEST risk score has a flag or bad grade
+    const [batteries, total] = await Promise.all([
+      prisma.battery.findMany({
+        where: {
+          riskScores: {
+            some: {
+              OR: [
+                { abnormalDegradation: true },
+                { thermalAnomalyDetected: true },
+                { grade: { in: ['D', 'F'] } },
+              ],
+            },
           },
         },
-      },
-      include: {
-        batteryModel: { select: { manufacturer: true, modelName: true } },
-        riskScores:   { orderBy: { scoredAt: 'desc' }, take: 1 },
-      },
-      take: 10,
+        include: {
+          batteryModel: { select: { manufacturer: true, modelName: true } },
+          riskScores:   { orderBy: { scoredAt: 'desc' }, take: 1 },
+        },
+        orderBy: { lastTelemetryAt: 'desc' },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      prisma.battery.count({
+        where: {
+          riskScores: {
+            some: {
+              OR: [
+                { abnormalDegradation: true },
+                { thermalAnomalyDetected: true },
+                { grade: { in: ['D', 'F'] } },
+              ],
+            },
+          },
+        },
+      }),
+    ]);
+
+    // Post-filter: only keep batteries where the latest score still has a flag
+    const flagged = batteries.filter(b => {
+      const latest = b.riskScores[0];
+      if (!latest) return false;
+      return latest.abnormalDegradation || latest.thermalAnomalyDetected || ['D', 'F'].includes(latest.grade);
     });
 
-    return batteries;
+    return flagged;
   });
 
   // ── Battery telemetry history (SoH sparkline) ──────────────────────────────

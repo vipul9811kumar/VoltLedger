@@ -25,7 +25,9 @@ export default clerkMiddleware((auth, req) => {
   if ((adminClerkId && userId === adminClerkId) || meta?.isAdmin === true) return;
 
   // Regular users: must have a provisioned lender account
-  if (!meta?.lenderId) {
+  // Don't redirect API routes — they handle their own auth responses
+  const isApiRoute = req.nextUrl.pathname.startsWith('/api/');
+  if (!meta?.lenderId && !isApiRoute) {
     const pendingUrl = new URL('/pending', req.url);
     return NextResponse.redirect(pendingUrl);
   }

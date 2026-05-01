@@ -11,6 +11,7 @@ import { secondLifeRoutes } from './routes/second-life';
 import { healthRoutes } from './routes/health';
 import { earlyAccessRoutes } from './routes/early-access';
 import { fleetRoutes } from './routes/fleet';
+import { fleetOpsRoutes } from './routes/fleet-ops';
 import { lookupRoutes } from './routes/lookup';
 import { accountRoutes } from './routes/account';
 import { adminRoutes } from './routes/admin';
@@ -67,6 +68,7 @@ async function build() {
   await app.register(secondLifeRoutes,   { prefix: '/v1/batteries' });
   await app.register(earlyAccessRoutes,  { prefix: '/v1/early-access' });
   await app.register(fleetRoutes,        { prefix: '/v1/batteries' });
+  await app.register(fleetOpsRoutes,     { prefix: '/v1/fleet' });
   await app.register(lookupRoutes,       { prefix: '/v1/batteries' });
   await app.register(accountRoutes,      { prefix: '/v1' });
   await app.register(adminRoutes,        { prefix: '/v1/admin' });

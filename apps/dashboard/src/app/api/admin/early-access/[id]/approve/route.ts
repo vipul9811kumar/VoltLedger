@@ -13,7 +13,7 @@ export async function POST(_req: NextRequest, { params }: { params: { id: string
   const API_URL = process.env.INTERNAL_API_URL!;
   const res = await fetch(`${API_URL}/v1/admin/early-access/${params.id}/approve`, {
     method:  'POST',
-    headers: { 'x-service-token': process.env.SERVICE_TOKEN!, 'content-type': 'application/json' },
+    headers: { 'x-service-token': process.env.SERVICE_TOKEN! },
   });
 
   const data = await res.json();

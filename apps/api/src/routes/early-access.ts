@@ -30,7 +30,7 @@ export async function sendRequestReceivedEmail(data: {
   const resend = await getResend();
   if (!resend) return;
   const notifyAddress = (process.env.EMAIL_NOTIFY ?? 'hello@voltledger.io').trim();
-  const dashboardUrl  = (process.env.NEXT_PUBLIC_APP_URL ?? 'https://voltledger.io').trim();
+  const dashboardUrl  = (process.env.NEXT_PUBLIC_APP_URL ?? process.env.CORS_ORIGIN ?? 'https://voltledger.io').trim();
 
   // 1. Notify admin
   await resend.emails.send({
@@ -84,7 +84,7 @@ export async function sendApprovalEmail(data: {
 }) {
   const resend = await getResend();
   if (!resend) return;
-  const dashboardUrl = (process.env.NEXT_PUBLIC_APP_URL ?? 'https://voltledger.io').trim();
+  const dashboardUrl = (process.env.NEXT_PUBLIC_APP_URL ?? process.env.CORS_ORIGIN ?? 'https://voltledger.io').trim();
   const signUpUrl    = `${dashboardUrl}/sign-up?email_address=${encodeURIComponent(data.email)}`;
 
   await resend.emails.send({

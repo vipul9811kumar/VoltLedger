@@ -102,7 +102,7 @@ export const provisionRoutes: FastifyPluginAsync = async (app) => {
       return reply.send({ provisioned: false });
     }
 
-    const dashboardUrl = (process.env.NEXT_PUBLIC_APP_URL ?? 'https://voltledger.io').trim();
+    const dashboardUrl = (process.env.NEXT_PUBLIC_APP_URL ?? process.env.CORS_ORIGIN ?? 'https://voltledger.io').trim();
 
     // Create Org → Lender → LenderUser → ApiKey in a transaction
     const rawKey = `vl_live_${crypto.randomBytes(16).toString('hex')}`;

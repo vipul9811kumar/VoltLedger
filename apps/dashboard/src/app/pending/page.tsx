@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useAuth, useClerk } from '@clerk/nextjs';
+import { useAuth, useSession } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 
-type State = 'checking' | 'provisioned' | 'metadata_failed' | 'pending' | 'error';
+type State = 'checking' | 'metadata_failed' | 'pending' | 'error';
 
 export default function PendingPage() {
   const { userId, isLoaded } = useAuth();
-  const { signOut }          = useClerk();
+  const { session }          = useSession();
   const router               = useRouter();
   const [state, setState]       = useState<State>('checking');
   const [retrying, setRetrying] = useState(false);
@@ -20,11 +20,13 @@ export default function PendingPage() {
       const data = await res.json();
 
       if (data.provisioned && data.metadataSet === false) {
-        // DB provisioned but Clerk metadata update failed
         setDetail(data.metadataError ?? 'unknown');
         setState('metadata_failed');
       } else if (data.provisioned) {
-        setState('provisioned');
+        // Reload the session so the new JWT carries lenderId, then go straight to dashboard
+        await session?.reload();
+        window.location.href = '/';
+        return;
       } else if (data.error) {
         setDetail(data.error + (data.detail ? ': ' + data.detail : ''));
         setState('error');
@@ -55,14 +57,11 @@ export default function PendingPage() {
       <div className="max-w-md w-full text-center space-y-6">
 
         <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mx-auto text-2xl ${
-          state === 'provisioned'     ? 'bg-emerald-400/10 border border-emerald-400/20' :
-          state === 'metadata_failed' ? 'bg-orange-400/10 border border-orange-400/20'  :
-          state === 'error'           ? 'bg-red-400/10 border border-red-400/20'         :
+          state === 'metadata_failed' ? 'bg-orange-400/10 border border-orange-400/20' :
+          state === 'error'           ? 'bg-red-400/10 border border-red-400/20'        :
                                         'bg-amber-400/10 border border-amber-400/20'
         }`}>
-          {state === 'provisioned'     ? '✅' :
-           state === 'metadata_failed' ? '⚠️' :
-           state === 'error'           ? '❌' : '⏳'}
+          {state === 'metadata_failed' ? '⚠️' : state === 'error' ? '❌' : '⏳'}
         </div>
 
         {/* Checking */}
@@ -71,24 +70,6 @@ export default function PendingPage() {
             <h1 className="text-2xl font-bold text-white">Activating your account…</h1>
             <p className="text-slate-400">Checking your access status.</p>
           </div>
-        )}
-
-        {/* Fully provisioned — sign out/in to refresh JWT */}
-        {state === 'provisioned' && (
-          <>
-            <div className="space-y-2">
-              <h1 className="text-2xl font-bold text-white">Your account is ready!</h1>
-              <p className="text-slate-400 leading-relaxed">
-                Click below to sign in and load your dashboard.
-              </p>
-            </div>
-            <button
-              onClick={() => signOut({ redirectUrl: '/sign-in' })}
-              className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors"
-            >
-              Sign in to the Dashboard →
-            </button>
-          </>
         )}
 
         {/* DB provisioned but Clerk metadata update failed */}

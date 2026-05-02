@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useAuth, useClerk } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 
-type State = 'checking' | 'provisioned' | 'pending' | 'error';
+type State = 'checking' | 'provisioned' | 'metadata_failed' | 'pending' | 'error';
 
 export default function PendingPage() {
   const { userId, isLoaded } = useAuth();
@@ -12,22 +12,27 @@ export default function PendingPage() {
   const router               = useRouter();
   const [state, setState]       = useState<State>('checking');
   const [retrying, setRetrying] = useState(false);
-  const [errorDetail, setErrorDetail] = useState('');
+  const [detail, setDetail]     = useState('');
 
   async function tryProvision() {
     try {
       const res  = await fetch('/api/provision/retry', { method: 'POST' });
       const data = await res.json();
-      if (data.provisioned) {
+
+      if (data.provisioned && data.metadataSet === false) {
+        // DB provisioned but Clerk metadata update failed
+        setDetail(data.metadataError ?? 'unknown');
+        setState('metadata_failed');
+      } else if (data.provisioned) {
         setState('provisioned');
       } else if (data.error) {
-        setErrorDetail(data.error + (data.detail ? ': ' + data.detail : ''));
+        setDetail(data.error + (data.detail ? ': ' + data.detail : ''));
         setState('error');
       } else {
         setState('pending');
       }
     } catch (err: any) {
-      setErrorDetail(err?.message ?? 'Network error');
+      setDetail(err?.message ?? 'Network error');
       setState('error');
     }
   }
@@ -50,13 +55,17 @@ export default function PendingPage() {
       <div className="max-w-md w-full text-center space-y-6">
 
         <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mx-auto text-2xl ${
-          state === 'provisioned' ? 'bg-emerald-400/10 border border-emerald-400/20' :
-          state === 'error'       ? 'bg-red-400/10 border border-red-400/20' :
-                                    'bg-amber-400/10 border border-amber-400/20'
+          state === 'provisioned'     ? 'bg-emerald-400/10 border border-emerald-400/20' :
+          state === 'metadata_failed' ? 'bg-orange-400/10 border border-orange-400/20'  :
+          state === 'error'           ? 'bg-red-400/10 border border-red-400/20'         :
+                                        'bg-amber-400/10 border border-amber-400/20'
         }`}>
-          {state === 'provisioned' ? '✅' : state === 'error' ? '⚠️' : '⏳'}
+          {state === 'provisioned'     ? '✅' :
+           state === 'metadata_failed' ? '⚠️' :
+           state === 'error'           ? '❌' : '⏳'}
         </div>
 
+        {/* Checking */}
         {state === 'checking' && (
           <div className="space-y-2">
             <h1 className="text-2xl font-bold text-white">Activating your account…</h1>
@@ -64,12 +73,13 @@ export default function PendingPage() {
           </div>
         )}
 
+        {/* Fully provisioned — sign out/in to refresh JWT */}
         {state === 'provisioned' && (
           <>
             <div className="space-y-2">
               <h1 className="text-2xl font-bold text-white">Your account is ready!</h1>
               <p className="text-slate-400 leading-relaxed">
-                Sign out and back in to load your dashboard access.
+                Click below to sign in and load your dashboard.
               </p>
             </div>
             <button
@@ -81,13 +91,37 @@ export default function PendingPage() {
           </>
         )}
 
+        {/* DB provisioned but Clerk metadata update failed */}
+        {state === 'metadata_failed' && (
+          <>
+            <div className="space-y-2">
+              <h1 className="text-2xl font-bold text-white">Almost there</h1>
+              <p className="text-slate-400 leading-relaxed">
+                Your account was created but the final access step failed.
+                Contact support with the error below.
+              </p>
+              <p className="text-xs text-orange-400/80 font-mono break-all bg-orange-500/5 border border-orange-500/20 rounded-lg px-3 py-2 mt-2">
+                {detail}
+              </p>
+            </div>
+            <button
+              onClick={handleRetry}
+              disabled={retrying}
+              className="w-full py-3 bg-[#111827] hover:bg-[#1a2438] border border-[#1e2d40] text-white font-semibold rounded-xl transition-colors disabled:opacity-40"
+            >
+              {retrying ? 'Retrying…' : 'Try Again'}
+            </button>
+          </>
+        )}
+
+        {/* Not yet approved */}
         {state === 'pending' && (
           <>
             <div className="space-y-2">
               <h1 className="text-2xl font-bold text-white">Your account is under review</h1>
               <p className="text-slate-400 leading-relaxed">
-                We received your sign-up. Once your early access request is approved,
-                click <strong className="text-white">Activate Account</strong> below to get in.
+                Once your early access request is approved, click{' '}
+                <strong className="text-white">Activate Account</strong> below to get in.
               </p>
             </div>
             <div className="bg-[#111827] border border-[#1e2d40] rounded-xl p-5 text-left space-y-3">
@@ -108,13 +142,15 @@ export default function PendingPage() {
           </>
         )}
 
+        {/* Hard error */}
         {state === 'error' && (
           <>
             <div className="space-y-2">
               <h1 className="text-2xl font-bold text-white">Something went wrong</h1>
-              <p className="text-slate-400">Could not reach the provisioning service. Please try again.</p>
-              {errorDetail && (
-                <p className="text-xs text-red-400/70 font-mono break-all mt-1">{errorDetail}</p>
+              {detail && (
+                <p className="text-xs text-red-400/70 font-mono break-all bg-red-500/5 border border-red-500/20 rounded-lg px-3 py-2">
+                  {detail}
+                </p>
               )}
             </div>
             <button

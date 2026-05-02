@@ -1,5 +1,4 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
-import { NextResponse } from 'next/server';
 
 const isPublic = createRouteMatcher([
   '/sign-in(.*)',
@@ -12,25 +11,10 @@ const isPublic = createRouteMatcher([
 
 export default clerkMiddleware((auth, req) => {
   if (isPublic(req)) return;
-
-  // Require login for all other routes
+  // Require login for all other routes.
+  // Provisioning/lenderId check is handled in the (lender) and fleet-ops layouts
+  // via a direct DB lookup, which is more reliable than reading JWT claims.
   auth().protect();
-
-  const { userId, sessionClaims } = auth();
-  const meta = sessionClaims?.publicMetadata as any;
-
-  // Admin bypass — check env var (immediate, no session refresh needed)
-  // OR publicMetadata.isAdmin (after next sign-in)
-  const adminClerkId = process.env.ADMIN_CLERK_USER_ID;
-  if ((adminClerkId && userId === adminClerkId) || meta?.isAdmin === true) return;
-
-  // Regular users: must have a provisioned lender account
-  // Don't redirect API routes — they handle their own auth responses
-  const isApiRoute = req.nextUrl.pathname.startsWith('/api/');
-  if (!meta?.lenderId && !isApiRoute) {
-    const pendingUrl = new URL('/pending', req.url);
-    return NextResponse.redirect(pendingUrl);
-  }
 });
 
 export const config = {

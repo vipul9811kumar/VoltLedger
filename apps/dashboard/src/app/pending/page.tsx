@@ -2,14 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@clerk/nextjs';
-import { useClerk } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 
 type State = 'checking' | 'metadata_failed' | 'pending' | 'error';
 
 export default function PendingPage() {
   const { userId, isLoaded } = useAuth();
-  const { signOut }          = useClerk();
   const router               = useRouter();
   const [state, setState]       = useState<State>('checking');
   const [retrying, setRetrying] = useState(false);
@@ -24,10 +22,9 @@ export default function PendingPage() {
         setDetail(data.metadataError ?? 'unknown');
         setState('metadata_failed');
       } else if (data.provisioned) {
-        // session.reload() doesn't update the __session cookie read by middleware.
-        // Sign out so Clerk issues a fresh JWT with lenderId on next sign-in.
-        // forceRedirectUrl="/" on the sign-in page ensures we land on the dashboard.
-        await signOut({ redirectUrl: '/sign-in' });
+        // DB row exists — layout will now allow through on next navigation.
+        // No sign-out needed; the layout checks the DB directly, not the JWT.
+        window.location.href = '/';
         return;
       } else if (data.error) {
         setDetail(data.error + (data.detail ? ': ' + data.detail : ''));

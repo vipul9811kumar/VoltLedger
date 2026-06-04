@@ -9,7 +9,8 @@
     "test": "node --test --require tsx/cjs src/*.test.ts"
   },
   "dependencies": {
-    "@voltledger/db": "workspace:*"
+    "@voltledger/db": "workspace:*",
+    "@voltledger/types": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^5.4.0",

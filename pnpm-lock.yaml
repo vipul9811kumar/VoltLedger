@@ -50,6 +50,9 @@ importers:
       '@voltledger/scoring':
         specifier: workspace:*
         version: link:../../packages/scoring
+      '@voltledger/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       bcryptjs:
         specifier: ^2.4.3
         version: 2.4.3
@@ -186,6 +189,9 @@ importers:
       '@voltledger/db':
         specifier: workspace:*
         version: link:../db
+      '@voltledger/types':
+        specifier: workspace:*
+        version: link:../types
     devDependencies:
       '@types/node':
         specifier: ^20.0.0

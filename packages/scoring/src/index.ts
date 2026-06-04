@@ -15,3 +15,6 @@ export type { DegradationForecastResult, ForecastPoint } from './forecast';
 
 export { runIntelligenceEngine } from './engine';
 export type { EngineInput, EngineResult } from './engine';
+
+export { reconcileSoH, computePassportAdjustment } from './passport';
+export type { PassportScoreAdjustment } from './passport';

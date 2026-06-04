@@ -37,6 +37,21 @@ enum DataSource {
   MANUAL_UPLOAD
   AUCTION_SCAN
   SYNTHETIC
+  EU_PASSPORT
+}
+
+enum PassportTier {
+  PUBLIC
+  RESTRICTED
+  CONFIDENTIAL
+}
+
+enum DataExchangeFramework {
+  CATENA_X
+  GS1
+  DIRECT_OEM
+  THIRD_PARTY_AGGREGATOR
+  MOCK
 }
 
 enum SubscriptionStatus {
@@ -154,6 +169,8 @@ model Battery {
   certifications       Certification[]
   supplyChain          SupplyChain?
   loans                Loan[]
+  batteryPassport      BatteryPassport?
+  originationAudits    OriginationAudit[]
 
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
@@ -296,6 +313,11 @@ model RiskScore {
 
   confidenceLevel  Float     // 0–1
   modelVersion     String    @default("1.0")
+
+  // EU Battery Passport enrichment
+  passportVerified        Boolean @default(false)
+  sohSource               String  @default("TELEMETRY") // PASSPORT|TELEMETRY|BLENDED|NONE
+  passportSohDeltaPct     Float?  // passport SoH minus telemetry SoH (positive = passport says healthier)
 
   @@index([batteryId, scoredAt(sort: Desc)])
   @@map("risk_scores")
@@ -449,6 +471,7 @@ model Lender {
   usageRecords       ApiUsageRecord[]
   ltvRecommendations LtvRecommendation[]
   webhooks           WebhookSubscription[]
+  originationAudits  OriginationAudit[]
 
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
@@ -563,6 +586,8 @@ model Loan {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
+  originationAudits OriginationAudit[]
+
   @@index([batteryId])
   @@map("loans")
 }
@@ -587,4 +612,150 @@ model EarlyAccessRequest {
   @@index([email])
   @@index([status])
   @@map("early_access_requests")
+}
+
+// ─────────────────────────────────────────────
+// EU BATTERY PASSPORT  (Regulation 2023/1542)
+// ─────────────────────────────────────────────
+
+model BatteryPassport {
+  id        String   @id @default(cuid())
+  batteryId String   @unique
+  battery   Battery  @relation(fields: [batteryId], references: [id])
+
+  // EU Battery Regulation 2023/1542 unique identifier (ISO/IEC 15459)
+  passportUniqueId      String                @unique
+  passportQrUrl         String?
+  dataExchangeFramework DataExchangeFramework @default(MOCK)
+  tierAccess            PassportTier          @default(PUBLIC)
+
+  // ── PUBLIC TIER — Art. 13 open fields ──────────────────────────────────────
+  batteryCategory       String?   // "EV" | "LMT" | "SLI" | "Industrial"
+  manufacturerName      String?
+  manufacturingDate     DateTime?
+  manufacturingLocation String?
+
+  // Carbon footprint (Art. 7)
+  carbonFootprintKgCo2e Float?    // kg CO2e per kWh (lifecycle)
+  carbonIntensityClass  String?   // A–G rating (delegated acts TBD)
+
+  // Material composition summary (Art. 13.5)
+  recycledContentPct    Float?
+  cobaltPct             Float?
+  lithiumPct            Float?
+  nickelPct             Float?
+  manganesePct          Float?
+
+  // Performance indicators (Art. 13.6)
+  ratedCapacityAh       Float?
+  energyDensityWhKg     Float?
+  powerDensityWKg       Float?
+  expectedLifetimeCycles Int?
+  temperatureRangeMin   Float?    // °C
+  temperatureRangeMax   Float?    // °C
+
+  // Circularity & end-of-life (Art. 13.10)
+  recycledCobaltPct     Float?
+  recycledLithiumPct    Float?
+  recycledNickelPct     Float?
+  eolGuidanceText       String?
+
+  // ── RESTRICTED TIER — "legitimate interest" parties ────────────────────────
+  // Null when VoltLedger has not been granted restricted access
+  unitSoH               Float?    // current SoH (%) at last passport sync
+  unitSoC               Float?    // current SoC (%)
+  chargeCycleCount      Int?      // cumulative full-equivalent cycles
+  fullChargeCapacityAh  Float?    // current measured capacity
+  remainingCapacityAh   Float?
+
+  tempHistoryMin        Float?    // °C — lifetime minimum cell temp recorded
+  tempHistoryMax        Float?    // °C — lifetime maximum cell temp recorded
+  tempHistoryAvg        Float?    // °C — weighted average over service life
+
+  batteryStatusCode     String?   // GOOD | DEGRADED | FAULTY | REPURPOSED
+  negativeEvents        Json?     // [{type, date, description}] faults/accidents
+
+  // ── Sync metadata ──────────────────────────────────────────────────────────
+  issuedAt              DateTime?
+  expiresAt             DateTime?
+  lastSyncedAt          DateTime?
+  syncSucceeded         Boolean   @default(false)
+  syncErrorMessage      String?
+  isVerified            Boolean   @default(false)
+  rawPassportJson       Json?
+
+  verification      PassportVerification?
+  originationAudits OriginationAudit[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([batteryId])
+  @@index([passportUniqueId])
+  @@map("battery_passports")
+}
+
+model PassportVerification {
+  id         String          @id @default(cuid())
+  passportId String          @unique
+  passport   BatteryPassport @relation(fields: [passportId], references: [id])
+  batteryId  String
+
+  verifiedAt         DateTime @default(now())
+  verificationMethod String   // QR_SCAN | API_LOOKUP | MANUAL | MOCK
+
+  // Identity chain checks
+  passportMatchesSerial  Boolean
+  passportMatchesVin     Boolean
+  passportMatchesModel   Boolean
+
+  // Provenance: cell → pack → vehicle
+  cellPackChainValid    Boolean @default(false)
+  packVehicleChainValid Boolean @default(false)
+
+  identityChainValid Boolean
+  confidenceScore    Float   // 0–1
+  discrepancies      String[]
+  verificationNotes  String?
+  verifiedByLenderId String?
+
+  createdAt DateTime @default(now())
+
+  @@index([batteryId])
+  @@map("passport_verifications")
+}
+
+model OriginationAudit {
+  id         String           @id @default(cuid())
+  loanId     String?
+  loan       Loan?            @relation(fields: [loanId], references: [id])
+  batteryId  String
+  battery    Battery          @relation(fields: [batteryId], references: [id])
+  passportId String?
+  passport   BatteryPassport? @relation(fields: [passportId], references: [id])
+  lenderId   String?
+  lender     Lender?          @relation(fields: [lenderId], references: [id])
+
+  checkedAt DateTime @default(now())
+
+  // What data was available and used at origination
+  passportTierAccessed        String?  // PUBLIC | RESTRICTED | null
+  passportVerifiedAtCheck     Boolean  @default(false)
+  sohSource                   String   // PASSPORT | TELEMETRY | BLENDED | NONE
+  sohUsedPct                  Float?
+  compositeScoreAtOrigination Int?
+  riskGradeAtOrigination      String?
+
+  // Frozen evidence — full snapshot of all data used in the underwriting decision
+  evidenceSnapshot  Json
+
+  // Lender-facing attestation
+  attestationText    String
+  attestationVersion String @default("1.0")
+
+  createdAt DateTime @default(now())
+
+  @@index([batteryId])
+  @@index([lenderId])
+  @@map("origination_audits")
 }

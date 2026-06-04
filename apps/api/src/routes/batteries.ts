@@ -47,9 +47,10 @@ export async function batteryRoutes(app: FastifyInstance) {
   });
 
   // POST /v1/batteries/:serial/score — run scoring engine on demand
+  // Accepts optional passportId to blend passport SoH into the risk score.
   app.post<{
     Params: { serial: string };
-    Body: { vehicleValueUsd?: number; baseRateBps?: number };
+    Body: { vehicleValueUsd?: number; baseRateBps?: number; passportId?: string };
   }>('/:serial/score', async (req, reply) => {
     const battery = await prisma.battery.findUnique({
       where: { serialNumber: req.params.serial },
@@ -70,6 +71,50 @@ export async function batteryRoutes(app: FastifyInstance) {
       });
     }
 
+    // Build optional passport context
+    let passportContext: import('@voltledger/types').PassportContext | undefined;
+    const passportId = req.body?.passportId;
+    if (passportId) {
+      const passport = await prisma.batteryPassport.findUnique({
+        where: { id: passportId },
+        include: { verification: true },
+      });
+      if (passport) {
+        passportContext = {
+          passportId:           passport.id,
+          tierAccess:           passport.tierAccess as any,
+          isVerified:           passport.isVerified,
+          identityChainValid:   passport.verification?.identityChainValid,
+          carbonFootprintKgCo2e: passport.carbonFootprintKgCo2e ?? undefined,
+          recycledContentPct:   passport.recycledContentPct ?? undefined,
+          unitSoH:              passport.unitSoH ?? undefined,
+          chargeCycleCount:     passport.chargeCycleCount ?? undefined,
+          tempHistoryMax:       passport.tempHistoryMax ?? undefined,
+          batteryStatusCode:    (passport.batteryStatusCode as any) ?? undefined,
+        };
+      }
+    } else {
+      // Auto-attach passport if one exists for this battery
+      const passport = await prisma.batteryPassport.findUnique({
+        where: { batteryId: battery.id },
+        include: { verification: true },
+      });
+      if (passport) {
+        passportContext = {
+          passportId:           passport.id,
+          tierAccess:           passport.tierAccess as any,
+          isVerified:           passport.isVerified,
+          identityChainValid:   passport.verification?.identityChainValid,
+          carbonFootprintKgCo2e: passport.carbonFootprintKgCo2e ?? undefined,
+          recycledContentPct:   passport.recycledContentPct ?? undefined,
+          unitSoH:              passport.unitSoH ?? undefined,
+          chargeCycleCount:     passport.chargeCycleCount ?? undefined,
+          tempHistoryMax:       passport.tempHistoryMax ?? undefined,
+          batteryStatusCode:    (passport.batteryStatusCode as any) ?? undefined,
+        };
+      }
+    }
+
     try {
       const result = await runIntelligenceEngine(prisma, {
         battery: {
@@ -80,14 +125,20 @@ export async function batteryRoutes(app: FastifyInstance) {
           vehicleValueUsd:    req.body?.vehicleValueUsd ?? 35_000,
         },
         recentPoints,
-        baseRateBps: req.body?.baseRateBps ?? 500,
+        baseRateBps:     req.body?.baseRateBps ?? 500,
+        passportContext,
       });
 
       return reply.status(201).send({
-        batteryId:   result.batteryId,
-        riskScoreId: result.riskScoreId,
-        scoredAt:    result.scoredAt,
-        message:     'Scoring complete. Fetch details via GET endpoints.',
+        batteryId:        result.batteryId,
+        riskScoreId:      result.riskScoreId,
+        scoredAt:         result.scoredAt,
+        sohSource:        result.sohSource,
+        passportVerified: result.passportVerified,
+        passportUsed:     !!passportContext,
+        message: passportContext
+          ? `Scoring complete with ${passportContext.tierAccess} passport data (${result.sohSource} SoH).`
+          : 'Scoring complete (telemetry only — no passport attached).',
       });
     } catch (err) {
       return serverError(reply, err);

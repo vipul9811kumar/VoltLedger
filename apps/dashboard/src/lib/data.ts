@@ -117,3 +117,107 @@ export async function getBatterySoHHistory(batteryId: string, weeks = 12) {
 export async function getFlaggedBatteries() {
   return apiFetch<Battery[]>('/v1/batteries/fleet/flagged');
 }
+
+// ── EU Battery Passport ────────────────────────────────────────────────────────
+
+export type PassportTier = 'PUBLIC' | 'RESTRICTED' | 'CONFIDENTIAL';
+
+export interface PassportComposition {
+  cobaltPct:    number | null;
+  lithiumPct:   number | null;
+  nickelPct:    number | null;
+  manganesePct: number | null;
+}
+
+export interface PassportPerformance {
+  ratedCapacityAh:        number | null;
+  energyDensityWhKg:      number | null;
+  powerDensityWKg:        number | null;
+  expectedLifetimeCycles: number | null;
+  temperatureRangeMin:    number | null;
+  temperatureRangeMax:    number | null;
+}
+
+export interface PassportCircularity {
+  recycledCobaltPct:  number | null;
+  recycledLithiumPct: number | null;
+  recycledNickelPct:  number | null;
+  eolGuidanceText:    string | null;
+}
+
+export interface PassportPublicTier {
+  batteryCategory:       string | null;
+  manufacturerName:      string | null;
+  manufacturingDate:     string | null;
+  manufacturingLocation: string | null;
+  carbonFootprintKgCo2e: number | null;
+  carbonIntensityClass:  string | null;
+  recycledContentPct:    number | null;
+  composition:           PassportComposition;
+  performance:           PassportPerformance;
+  circularity:           PassportCircularity;
+}
+
+export interface PassportRestrictedTier {
+  unitSoH:              number | null;
+  unitSoC:              number | null;
+  chargeCycleCount:     number | null;
+  fullChargeCapacityAh: number | null;
+  remainingCapacityAh:  number | null;
+  tempHistoryMin:       number | null;
+  tempHistoryMax:       number | null;
+  tempHistoryAvg:       number | null;
+  batteryStatusCode:    string | null;
+  negativeEvents:       Array<{ type: string; date: string; description: string }>;
+}
+
+export interface PassportVerification {
+  identityChainValid: boolean;
+  confidenceScore:    number;
+  discrepancies:      string[];
+  verifiedAt:         string;
+}
+
+export interface BatteryPassport {
+  id:                    string;
+  batteryId:             string;
+  passportUniqueId:      string;
+  passportQrUrl:         string | null;
+  dataExchangeFramework: string;
+  tierAccess:            PassportTier;
+  isVerified:            boolean;
+  lastSyncedAt:          string | null;
+  issuedAt:              string | null;
+  expiresAt:             string | null;
+  public:                PassportPublicTier;
+  restricted:            PassportRestrictedTier | null;
+  verification:          PassportVerification | null;
+}
+
+export interface PassportResponse {
+  hasPassport: boolean;
+  serial?:     string;
+  message?:    string;
+  // present when hasPassport = true
+  id?:                    string;
+  batteryId?:             string;
+  passportUniqueId?:      string;
+  passportQrUrl?:         string | null;
+  dataExchangeFramework?: string;
+  tierAccess?:            PassportTier;
+  isVerified?:            boolean;
+  lastSyncedAt?:          string | null;
+  issuedAt?:              string | null;
+  expiresAt?:             string | null;
+  public?:                PassportPublicTier;
+  restricted?:            PassportRestrictedTier | null;
+  verification?:          PassportVerification | null;
+}
+
+export async function getBatteryPassport(serial: string): Promise<PassportResponse> {
+  try {
+    return await apiFetch<PassportResponse>(`/v1/passport/battery/${serial}`);
+  } catch {
+    return { hasPassport: false, serial, message: 'Could not fetch passport data' };
+  }
+}

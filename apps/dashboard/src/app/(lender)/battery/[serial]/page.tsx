@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation';
-import { getBatteryDetail } from '@/lib/data';
+import { getBatteryDetail, getBatteryPassport } from '@/lib/data';
 import { GradeBadge } from '@/components/GradeBadge';
 import { ScoreBar } from '@/components/ScoreBar';
 import { SoHChart } from '@/components/SoHChart';
+import { PassportPanel } from '@/components/PassportPanel';
 import Link from 'next/link';
 
 export const revalidate = 60;
@@ -12,7 +13,10 @@ function usd(v: number) {
 }
 
 export default async function BatteryDetailPage({ params }: { params: { serial: string } }) {
-  const battery = await getBatteryDetail(params.serial);
+  const [battery, passport] = await Promise.all([
+    getBatteryDetail(params.serial),
+    getBatteryPassport(params.serial),
+  ]);
 
   if (!battery) notFound();
 
@@ -80,9 +84,10 @@ export default async function BatteryDetailPage({ params }: { params: { serial: 
                 </div>
               )}
 
-              <p className="text-xs text-slate-600">
-                {risk.confidenceLevel != null && <>Confidence: {Math.round(risk.confidenceLevel * 100)}% · </>}
-                {new Date(risk.scoredAt).toLocaleDateString()}
+              <p className="text-xs text-slate-600 flex items-center gap-2 flex-wrap">
+                {risk.confidenceLevel != null && <span>Confidence: {Math.round(risk.confidenceLevel * 100)}%</span>}
+                {(risk as any).sohSource && <SoHSourceBadge source={(risk as any).sohSource} />}
+                <span>· {new Date(risk.scoredAt).toLocaleDateString()}</span>
               </p>
             </>
           ) : (
@@ -225,6 +230,9 @@ export default async function BatteryDetailPage({ params }: { params: { serial: 
           ) : <p className="text-sm text-slate-500">No assessment available</p>}
         </div>
       </div>
+      {/* EU Battery Passport — full-width row */}
+      <PassportPanel passport={passport} />
+
     </div>
   );
 }
@@ -268,5 +276,25 @@ function ForecastPoint({ label, value }: { label: string; value: string }) {
       <span className="text-slate-500">{label}</span>
       <span className="text-white font-mono">{value}</span>
     </div>
+  );
+}
+
+function SoHSourceBadge({ source }: { source: string }) {
+  const styles: Record<string, string> = {
+    BLENDED:   'text-violet-400 bg-violet-500/10 border-violet-500/30',
+    PASSPORT:  'text-blue-400   bg-blue-500/10   border-blue-500/30',
+    TELEMETRY: 'text-slate-400  bg-slate-500/10  border-slate-500/30',
+    NONE:      'text-slate-600  bg-slate-700/10  border-slate-700/30',
+  };
+  const labels: Record<string, string> = {
+    BLENDED:   'SoH: Blended',
+    PASSPORT:  'SoH: Passport',
+    TELEMETRY: 'SoH: Telemetry',
+    NONE:      'SoH: No data',
+  };
+  return (
+    <span className={`inline-block text-[10px] font-mono px-1.5 py-0.5 rounded border ${styles[source] ?? styles.TELEMETRY}`}>
+      {labels[source] ?? source}
+    </span>
   );
 }

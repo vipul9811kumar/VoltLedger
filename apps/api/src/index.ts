@@ -16,6 +16,8 @@ import { lookupRoutes } from './routes/lookup';
 import { accountRoutes } from './routes/account';
 import { adminRoutes } from './routes/admin';
 import { provisionRoutes } from './routes/provision';
+import { passportRoutes } from './routes/passport';
+import { originationRoutes } from './routes/origination';
 
 const PORT = parseInt(process.env.PORT ?? process.env.API_PORT ?? '3001');
 const HOST = process.env.API_HOST ?? '0.0.0.0';
@@ -73,6 +75,8 @@ async function build() {
   await app.register(accountRoutes,      { prefix: '/v1' });
   await app.register(adminRoutes,        { prefix: '/v1/admin' });
   await app.register(provisionRoutes,    { prefix: '/v1/provision' });
+  await app.register(passportRoutes,     { prefix: '/v1/passport' });
+  await app.register(originationRoutes,  { prefix: '/v1/origination' });
 
   return app;
 }

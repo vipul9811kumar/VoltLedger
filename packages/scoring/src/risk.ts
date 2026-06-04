@@ -3,6 +3,7 @@
  */
 
 import type { BatteryTelemetryPoint } from '@voltledger/db';
+import type { PassportContext, ReconciledSoH } from '@voltledger/types';
 import {
   GRADE_THRESHOLDS,
   SUB_SCORE_WEIGHTS,
@@ -11,6 +12,7 @@ import {
   DCFC_THRESHOLDS,
   MODEL_VERSION,
 } from './constants';
+import { computePassportAdjustment } from './passport';
 
 export interface BatteryContext {
   id: string;
@@ -34,6 +36,11 @@ export interface RiskScoreResult {
   deepDischargeHistory:  boolean;
   confidenceLevel:       number;
   modelVersion:          string;
+  // Passport enrichment
+  passportVerified:      boolean;
+  sohSource:             string;     // PASSPORT | TELEMETRY | BLENDED | NONE
+  passportSohDeltaPct?:  number;     // passportSoH − telemetrySoH
+  passportRationale:     string[];   // human-readable score adjustment notes
 }
 
 function clamp(v: number, min = 0, max = 100): number {
@@ -207,21 +214,25 @@ function scoreAgeAdjusted(currentSoH: number, chemistry: string, ageYears: numbe
 export function computeRiskScore(
   battery: BatteryContext,
   recentPoints: BatteryTelemetryPoint[],
+  passportContext?: PassportContext,
+  reconciledSoHInput?: ReconciledSoH,
 ): RiskScoreResult {
   const chemistry = battery.chemistry || 'NMC';
   const ageYears = battery.manufacturedAt
     ? (Date.now() - new Date(battery.manufacturedAt).getTime()) / (365.25 * 24 * 3600 * 1000)
     : 2; // fallback: assume 2 years
 
-  const latestSoH = recentPoints.at(-1)?.stateOfHealth ?? 85;
+  // Use reconciled SoH if provided (passport-blended), otherwise fall back to latest telemetry
+  const latestTelemetrySoH = recentPoints.at(-1)?.stateOfHealth ?? 85;
+  const sohForScoring = reconciledSoHInput?.value ?? latestTelemetrySoH;
 
   const { score: degScore, abnormal } = scoreDegradation(recentPoints, chemistry, ageYears);
   const { score: thermalScore, anomaly } = scoreThermal(recentPoints, chemistry);
   const { score: usageScore, highDcfc, deepDischarge } = scoreUsagePattern(recentPoints);
-  const capScore  = scoreCapacityRetention(latestSoH);
-  const ageScore  = scoreAgeAdjusted(latestSoH, chemistry, ageYears);
+  const capScore  = scoreCapacityRetention(sohForScoring);
+  const ageScore  = scoreAgeAdjusted(sohForScoring, chemistry, ageYears);
 
-  // Weighted composite → 0–100 → scale to 0–1000
+  // Weighted composite → 0–100
   const composite100 =
     degScore     * SUB_SCORE_WEIGHTS.degradation +
     thermalScore * SUB_SCORE_WEIGHTS.thermalScore +
@@ -229,8 +240,24 @@ export function computeRiskScore(
     capScore     * SUB_SCORE_WEIGHTS.capacityRetention +
     ageScore     * SUB_SCORE_WEIGHTS.ageAdjusted;
 
-  const compositeScore = Math.round(clamp(composite100, 0, 100) * 10);
-  const confidenceLevel = Math.min(1, recentPoints.length / 12); // full confidence at 12+ points
+  // Apply passport score adjustment (bonus/penalty from passport signals)
+  let passportRationale: string[] = [];
+  let passportAdj = 0;
+  if (passportContext) {
+    const pa = computePassportAdjustment(passportContext, reconciledSoHInput ?? {
+      value: latestTelemetrySoH, source: 'TELEMETRY', confidence: 0.7,
+    });
+    passportAdj    = pa.adjustment;
+    passportRationale = pa.rationale;
+  }
+
+  const adjustedComposite = clamp(composite100 + passportAdj, 0, 100);
+  const compositeScore    = Math.round(adjustedComposite * 10); // 0–1000
+
+  // Confidence: telemetry points + passport boost
+  const telemetryConf  = Math.min(1, recentPoints.length / 12);
+  const passportConf   = reconciledSoHInput?.confidence ?? 0;
+  const confidenceLevel = Math.min(1, telemetryConf * 0.7 + passportConf * 0.3);
 
   return {
     batteryId:              battery.id,
@@ -247,5 +274,9 @@ export function computeRiskScore(
     deepDischargeHistory:   deepDischarge,
     confidenceLevel:        Math.round(confidenceLevel * 100) / 100,
     modelVersion:           MODEL_VERSION,
+    passportVerified:       passportContext?.isVerified ?? false,
+    sohSource:              reconciledSoHInput?.source ?? 'TELEMETRY',
+    passportSohDeltaPct:    reconciledSoHInput?.delta,
+    passportRationale,
   };
 }

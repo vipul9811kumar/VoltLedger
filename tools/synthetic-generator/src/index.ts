@@ -14,6 +14,7 @@ import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join } from 'path';
 import { generateFleet, type GeneratedBattery } from './generator';
 import { BATTERY_MODELS } from './models';
+import { generateFleetPassports, type GeneratedPassport } from './passport';
 
 // ── CLI args ──────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
@@ -29,6 +30,7 @@ const SAMPLE_INTERVAL  = parseInt(getArg('sample', '1'));       // weekly
 const OUTPUT_DIR       = getArg('out', './data/synthetic');
 const SEED_DB          = hasFlag('seed-db');
 const VERBOSE          = !hasFlag('quiet');
+const GEN_PASSPORTS    = hasFlag('passports');
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
@@ -38,6 +40,7 @@ async function main() {
   console.log(`  Max history: ${MAX_WEEKS} weeks (${(MAX_WEEKS / 52).toFixed(1)} years)`);
   console.log(`  Sampling   : every ${SAMPLE_INTERVAL} week(s)`);
   console.log(`  Mode       : ${SEED_DB ? 'seed PostgreSQL' : 'write JSON'}`);
+  console.log(`  Passports  : ${GEN_PASSPORTS ? 'yes (~60% coverage)' : 'no (--passports to enable)'}`);
   console.log('─'.repeat(50));
 
   const startTime = Date.now();
@@ -58,10 +61,22 @@ async function main() {
   // ── Stats summary ──────────────────────────────────────────────────────────
   printStats(fleet);
 
+  // Generate passport coverage if requested
+  const passportCoverage = GEN_PASSPORTS ? generateFleetPassports(fleet) : [];
+
+  if (passportCoverage.length > 0) {
+    const withPassport = passportCoverage.filter(p => p.hasPassport).length;
+    const restricted   = passportCoverage.filter(p => p.passport?.tierAccess === 'RESTRICTED').length;
+    console.log(`\n── Passport Coverage ──`);
+    console.log(`  With passport    : ${withPassport}/${fleet.length} (${Math.round(withPassport / fleet.length * 100)}%)`);
+    console.log(`  Restricted tier  : ${restricted}/${withPassport} passported`);
+    console.log(`  No passport      : ${fleet.length - withPassport} (pre-regulation fleet)`);
+  }
+
   if (SEED_DB) {
-    await seedDatabase(fleet);
+    await seedDatabase(fleet, GEN_PASSPORTS ? passportCoverage : undefined);
   } else {
-    writeJsonOutput(fleet, OUTPUT_DIR);
+    writeJsonOutput(fleet, OUTPUT_DIR, GEN_PASSPORTS ? passportCoverage : undefined);
   }
 }
 
@@ -113,7 +128,11 @@ function gradeFromSoH(soh: number, ageWeeks: number): string {
   return 'F';
 }
 
-function writeJsonOutput(fleet: GeneratedBattery[], outDir: string) {
+function writeJsonOutput(
+  fleet: GeneratedBattery[],
+  outDir: string,
+  passportCoverage?: Array<{ serialNumber: string; hasPassport: boolean; passport?: GeneratedPassport }>,
+) {
   if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
 
   // 1. Battery models reference file
@@ -180,16 +199,42 @@ function writeJsonOutput(fleet: GeneratedBattery[], outDir: string) {
   }
   writeFileSync(ndjsonPath, lines.join('\n'));
 
+  // 5. Passport JSON + NDJSON stream (if generated)
+  if (passportCoverage && passportCoverage.length > 0) {
+    const passportMap: Record<string, GeneratedPassport | null> = {};
+    for (const entry of passportCoverage) {
+      passportMap[entry.serialNumber] = entry.passport ?? null;
+    }
+    writeFileSync(
+      join(outDir, 'passport_coverage.json'),
+      JSON.stringify(passportMap, null, 2),
+    );
+
+    // Flat NDJSON for ingestion (one line per passport — nulls skipped)
+    const passportLines = passportCoverage
+      .filter(p => p.passport)
+      .map(p => JSON.stringify({ serialNumber: p.serialNumber, passport: p.passport }));
+    writeFileSync(join(outDir, 'passport_stream.ndjson'), passportLines.join('\n'));
+  }
+
   const totalPoints = fleet.reduce((s, b) => s + b.telemetry.length, 0);
   console.log(`\n✓ Output written to ${outDir}/`);
   console.log(`  battery_models.json         — ${BATTERY_MODELS.length} models`);
   console.log(`  fleet_manifest.json         — ${fleet.length} batteries`);
   console.log(`  batteries/*.json            — ${fleet.length} files with full telemetry`);
   console.log(`  telemetry_stream.ndjson     — ${totalPoints.toLocaleString()} points (NDJSON for ingestion)`);
-  console.log('\n  Next: pipe telemetry_stream.ndjson into apps/ingestion consumer\n');
+  if (passportCoverage) {
+    const n = passportCoverage.filter(p => p.hasPassport).length;
+    console.log(`  passport_coverage.json      — ${fleet.length} batteries (${n} with passport)`);
+    console.log(`  passport_stream.ndjson      — ${n} passport records (NDJSON for ingestion)`);
+  }
+  console.log('\n  Next: pipe telemetry_stream.ndjson and passport_stream.ndjson into ingestion consumer\n');
 }
 
-async function seedDatabase(fleet: GeneratedBattery[]) {
+async function seedDatabase(
+  fleet: GeneratedBattery[],
+  passportCoverage?: Array<{ serialNumber: string; hasPassport: boolean; passport?: GeneratedPassport }>,
+) {
   console.log('\n📦 Seeding PostgreSQL...');
   try {
     // Dynamic import so JSON-only mode doesn't require DB connection
@@ -257,6 +302,77 @@ async function seedDatabase(fleet: GeneratedBattery[]) {
       });
 
       process.stdout.write(`  ✓ ${battery.serialNumber} (${battery.telemetry.length} points)\n`);
+    }
+
+    // Seed passports
+    if (passportCoverage && passportCoverage.length > 0) {
+      console.log('\n📋 Seeding EU Battery Passports...');
+      let passportCount = 0;
+      for (const entry of passportCoverage) {
+        if (!entry.passport) continue;
+
+        const dbBattery = await prisma.battery.findUnique({
+          where: { serialNumber: entry.serialNumber },
+        });
+        if (!dbBattery) continue;
+
+        const p = entry.passport;
+        const isRestricted = p.tierAccess === 'RESTRICTED';
+        const restricted = isRestricted ? (p as any) : null;
+
+        await prisma.batteryPassport.upsert({
+          where: { batteryId: dbBattery.id },
+          update: { lastSyncedAt: new Date(), syncSucceeded: true },
+          create: {
+            batteryId:              dbBattery.id,
+            passportUniqueId:       p.passportUniqueId,
+            passportQrUrl:          p.passportQrUrl,
+            dataExchangeFramework:  'MOCK' as any,
+            tierAccess:             p.tierAccess as any,
+            batteryCategory:        p.batteryCategory,
+            manufacturerName:       p.manufacturerName,
+            manufacturingDate:      new Date(p.manufacturingDate),
+            manufacturingLocation:  p.manufacturingLocation,
+            carbonFootprintKgCo2e:  p.carbonFootprintKgCo2e,
+            carbonIntensityClass:   p.carbonIntensityClass,
+            recycledContentPct:     p.recycledContentPct,
+            cobaltPct:              p.cobaltPct,
+            lithiumPct:             p.lithiumPct,
+            nickelPct:              p.nickelPct,
+            manganesePct:           p.manganesePct,
+            ratedCapacityAh:        p.ratedCapacityAh,
+            energyDensityWhKg:      p.energyDensityWhKg,
+            powerDensityWKg:        p.powerDensityWKg,
+            expectedLifetimeCycles: p.expectedLifetimeCycles,
+            temperatureRangeMin:    p.temperatureRangeMin,
+            temperatureRangeMax:    p.temperatureRangeMax,
+            recycledCobaltPct:      p.recycledCobaltPct,
+            recycledLithiumPct:     p.recycledLithiumPct,
+            recycledNickelPct:      p.recycledNickelPct,
+            eolGuidanceText:        p.eolGuidanceText,
+            issuedAt:               new Date(p.issuedAt),
+            expiresAt:              new Date(p.expiresAt),
+            lastSyncedAt:           new Date(),
+            syncSucceeded:          true,
+            isVerified:             false,
+            // Restricted tier fields (null for public-only passports)
+            unitSoH:               restricted?.unitSoH ?? null,
+            unitSoC:               restricted?.unitSoC ?? null,
+            chargeCycleCount:      restricted?.chargeCycleCount ?? null,
+            fullChargeCapacityAh:  restricted?.fullChargeCapacityAh ?? null,
+            remainingCapacityAh:   restricted?.remainingCapacityAh ?? null,
+            tempHistoryMin:        restricted?.tempHistoryMin ?? null,
+            tempHistoryMax:        restricted?.tempHistoryMax ?? null,
+            tempHistoryAvg:        restricted?.tempHistoryAvg ?? null,
+            batteryStatusCode:     restricted?.batteryStatusCode ?? null,
+            negativeEvents:        restricted?.negativeEvents ?? undefined,
+          },
+        });
+
+        passportCount++;
+        process.stdout.write(`  ✓ ${entry.serialNumber} — ${p.tierAccess} tier\n`);
+      }
+      console.log(`\n  Passports seeded: ${passportCount}`);
     }
 
     await prisma.$disconnect();

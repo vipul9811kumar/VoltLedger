@@ -4,23 +4,28 @@
  */
 
 import type { BatteryTelemetryPoint, PrismaClient } from '@voltledger/db';
+import type { PassportContext } from '@voltledger/types';
 import { computeRiskScore, type BatteryContext } from './risk';
 import { computeResidualValue } from './residual-value';
 import { computeLtv } from './ltv';
 import { assessSecondLife } from './second-life';
 import { computeDegradationForecast } from './forecast';
+import { reconcileSoH } from './passport';
 import { LTV_MAX } from './constants';
 
 export interface EngineInput {
   battery: BatteryContext & { vehicleValueUsd?: number };
   recentPoints: BatteryTelemetryPoint[];
   baseRateBps?: number;
+  passportContext?: PassportContext;
 }
 
 export interface EngineResult {
   batteryId:     string;
   riskScoreId:   string;
   scoredAt:      Date;
+  sohSource:     string;
+  passportVerified: boolean;
 }
 
 function addMonths(date: Date, months: number): Date {
@@ -38,11 +43,15 @@ export async function runIntelligenceEngine(
   prisma: PrismaClient,
   input: EngineInput,
 ): Promise<EngineResult> {
-  const { battery, recentPoints, baseRateBps = 500 } = input;
+  const { battery, recentPoints, baseRateBps = 500, passportContext } = input;
   const vehicleValueUsd = battery.vehicleValueUsd ?? 35_000;
 
-  // 1. Run all scoring models
-  const riskScore      = computeRiskScore(battery, recentPoints);
+  // Reconcile SoH from passport + telemetry before scoring
+  const latestTelemetrySoH = recentPoints.at(-1)?.stateOfHealth;
+  const reconciledSoH = reconcileSoH(latestTelemetrySoH, passportContext);
+
+  // 1. Run all scoring models (pass passport context for enriched risk)
+  const riskScore      = computeRiskScore(battery, recentPoints, passportContext, reconciledSoH);
   const residualValue  = computeResidualValue(battery, riskScore, vehicleValueUsd);
   const ltvResult      = computeLtv(battery, riskScore, residualValue, baseRateBps);
   const secondLife     = assessSecondLife(battery, riskScore);
@@ -69,6 +78,9 @@ export async function runIntelligenceEngine(
         deepDischargeHistory:   riskScore.deepDischargeHistory,
         confidenceLevel:        riskScore.confidenceLevel,
         modelVersion:           riskScore.modelVersion,
+        passportVerified:       riskScore.passportVerified,
+        sohSource:              riskScore.sohSource,
+        passportSohDeltaPct:    riskScore.passportSohDeltaPct ?? null,
         scoredAt,
       },
     });
@@ -184,8 +196,10 @@ export async function runIntelligenceEngine(
   });
 
   return {
-    batteryId:   battery.id,
-    riskScoreId: riskRecord.id,
+    batteryId:        battery.id,
+    riskScoreId:      riskRecord.id,
     scoredAt,
+    sohSource:        riskScore.sohSource,
+    passportVerified: riskScore.passportVerified,
   };
 }

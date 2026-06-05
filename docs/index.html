@@ -882,7 +882,96 @@
       .cta-form-grid { grid-template-columns: 1fr; }
       .stat-item { padding: 1.25rem 2rem; border-right: none; border-bottom: 1px solid var(--border); }
       footer { flex-direction: column; text-align: center; }
+      .steps-6 { grid-template-columns: 1fr !important; }
+      .arch-tier-boxes { grid-template-columns: 1fr !important; }
+      .pipeline-layout { grid-template-columns: 1fr !important; }
+      .tier-grid { grid-template-columns: 1fr !important; }
+      .audit-layout { grid-template-columns: 1fr !important; }
     }
+
+    /* ── 6-STEP WORKFLOW ── */
+    .steps-6 { grid-template-columns: repeat(3, 1fr); }
+    .step-source { display: inline-block; font-size: .65rem; font-family: var(--mono); color: #a78bfa; background: rgba(139,92,246,.1); border: 1px solid rgba(139,92,246,.2); padding: .15rem .45rem; border-radius: 4px; margin-top: .5rem; }
+
+    /* ── ARCHITECTURE DIAGRAM ── */
+    .arch-section { background: var(--bg2); }
+    .arch-diagram { margin-top: 3rem; display: flex; flex-direction: column; gap: .75rem; }
+    .arch-tier { padding: 1.4rem 2rem; border-radius: 14px; }
+    .arch-tier-label { font-size: .65rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; margin-bottom: 1rem; }
+    .arch-tier-boxes { display: grid; gap: 1rem; }
+    .arch-box { border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.25rem; background: rgba(0,0,0,.25); }
+    .arch-box h4 { font-size: .875rem; font-weight: 600; color: #fff; margin-bottom: .3rem; }
+    .arch-box p { font-size: .77rem; color: var(--muted); line-height: 1.6; }
+    .arch-arrow { text-align: center; font-size: 1.1rem; color: rgba(59,130,246,.35); line-height: 1; padding: .1rem 0; }
+
+    /* ── DATA PIPELINE ── */
+    .pipeline-section { background: var(--bg); }
+    .pipeline-layout { display: grid; grid-template-columns: 1fr 200px 1fr; gap: 2rem; margin-top: 3rem; align-items: start; }
+    .pipeline-sources, .pipeline-outputs { display: flex; flex-direction: column; gap: .65rem; }
+    .connector-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: .9rem 1.1rem; transition: border-color .2s; }
+    .connector-item:hover { border-color: rgba(139,92,246,.3); }
+    .connector-name { font-size: .875rem; font-weight: 600; color: #fff; margin-bottom: .2rem; }
+    .connector-desc { font-size: .75rem; color: var(--muted); margin-bottom: .45rem; line-height: 1.5; }
+    .connector-status { display: inline-flex; align-items: center; gap: .3rem; font-size: .67rem; font-weight: 600; padding: .18rem .5rem; border-radius: 4px; }
+    .cs-live { background: rgba(16,185,129,.12); color: #10b981; border: 1px solid rgba(16,185,129,.2); }
+    .cs-q3 { background: rgba(59,130,246,.1); color: #60a5fa; border: 1px solid rgba(59,130,246,.2); }
+    .cs-agree { background: rgba(245,158,11,.1); color: #f59e0b; border: 1px solid rgba(245,158,11,.2); }
+    .pipeline-center { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .75rem; padding: 1rem .5rem; }
+    .factory-box { background: rgba(139,92,246,.08); border: 1px solid rgba(139,92,246,.3); border-radius: 12px; padding: 1.25rem 1rem; text-align: center; }
+    .factory-title { font-size: .8rem; font-weight: 700; color: #c4b5fd; margin-bottom: .5rem; }
+    .factory-sub { font-size: .72rem; color: var(--muted); line-height: 1.6; }
+    .factory-arrow { font-size: 1.2rem; color: rgba(139,92,246,.45); }
+    .output-group { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: .9rem 1.1rem; }
+    .output-tier-label { font-size: .65rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; margin-bottom: .4rem; }
+    .out-public { color: #10b981; }
+    .out-restricted { color: #a78bfa; }
+    .out-scoring { color: var(--blue); }
+    .output-fields { font-size: .77rem; color: var(--muted); line-height: 1.75; }
+    .out-highlight { color: var(--text); font-weight: 500; }
+
+    /* ── LEGITIMATE INTEREST ── */
+    .legit-section { background: var(--bg2); }
+    .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .tier-card { border-radius: 14px; padding: 1.75rem; }
+    .tier-card-public    { background: rgba(16,185,129,.03); border: 1px solid rgba(16,185,129,.2); }
+    .tier-card-restricted{ background: rgba(139,92,246,.04); border: 1px solid rgba(139,92,246,.2); }
+    .tier-card-role      { background: rgba(59,130,246,.04); border: 1px solid rgba(59,130,246,.2); }
+    .tier-badge { display: inline-block; font-size: .67rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: .22rem .65rem; border-radius: 999px; margin-bottom: .75rem; }
+    .tb-public     { background: rgba(16,185,129,.15); color: #10b981; }
+    .tb-restricted { background: rgba(139,92,246,.15); color: #a78bfa; }
+    .tb-role       { background: rgba(59,130,246,.15); color: #60a5fa; }
+    .tier-card h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: .25rem; }
+    .tier-card-sub { font-size: .78rem; color: var(--muted); margin-bottom: .9rem; padding-bottom: .75rem; border-bottom: 1px solid rgba(255,255,255,.06); line-height: 1.55; }
+    .tier-fields { list-style: none; display: flex; flex-direction: column; gap: .35rem; margin-bottom: 1rem; }
+    .tier-fields li { font-size: .82rem; color: var(--muted); display: flex; align-items: flex-start; gap: .4rem; line-height: 1.5; }
+    .tier-fields li::before { content: '→'; flex-shrink: 0; font-size: .7rem; margin-top: .18rem; }
+    .tf-highlight { color: var(--text) !important; font-weight: 500; }
+    .tier-note { font-size: .72rem; padding: .55rem .8rem; border-radius: 6px; line-height: 1.6; }
+    .tn-public     { background: rgba(16,185,129,.06); border: 1px solid rgba(16,185,129,.12); color: #6ee7b7; }
+    .tn-restricted { background: rgba(139,92,246,.06); border: 1px solid rgba(139,92,246,.12); color: #c4b5fd; }
+    .tn-role       { background: rgba(59,130,246,.06); border: 1px solid rgba(59,130,246,.12); color: #93c5fd; }
+
+    /* ── ORIGINATION AUDIT ── */
+    .audit-section { background: var(--bg); }
+    .audit-layout { display: grid; grid-template-columns: 1fr 1.15fr; gap: 3rem; align-items: start; margin-top: 3rem; }
+    .audit-copy ul { list-style: none; margin-top: 1.5rem; }
+    .audit-copy li { display: flex; align-items: flex-start; gap: .75rem; padding: .6rem 0; border-bottom: 1px solid rgba(255,255,255,.05); font-size: .9rem; color: var(--muted); }
+    .audit-copy li .chk { color: var(--blue); flex-shrink: 0; margin-top: 2px; }
+    .audit-copy li strong { color: var(--text); }
+    .attestation-card { background: #060e1c; border: 1px solid rgba(59,130,246,.2); border-radius: 12px; overflow: hidden; font-family: var(--mono); box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+    .att-header { background: #0d1727; padding: .65rem 1.1rem; border-bottom: 1px solid rgba(59,130,246,.1); display: flex; align-items: center; justify-content: space-between; }
+    .att-title { font-size: .68rem; color: #60a5fa; font-weight: 600; letter-spacing: .05em; }
+    .att-live-tag { font-size: .62rem; color: #10b981; background: rgba(16,185,129,.1); border: 1px solid rgba(16,185,129,.2); padding: .12rem .4rem; border-radius: 4px; }
+    .att-body { padding: 1.2rem 1.25rem; font-size: .73rem; line-height: 1.95; color: #94a3b8; }
+    .att-k { color: #60a5fa; }
+    .att-v { color: #86efac; }
+    .att-n { color: #fde68a; }
+    .att-hr { border: none; border-top: 1px solid rgba(59,130,246,.09); margin: .65rem 0; }
+    .att-footer { font-size: .68rem; color: #374151; line-height: 1.7; margin-top: .4rem; font-style: italic; }
+
+    /* ── PASSPORT LABEL COLOUR ── */
+    .label-passport { color: #a78bfa; }
+    .tag-passport { background: rgba(139,92,246,.15); color: #a78bfa; }
   </style>
 </head>
 <body>
@@ -894,9 +983,9 @@
     VoltLedger
   </a>
   <ul class="nav-links">
-    <li><a href="#how-it-works">How It Works</a></li>
-    <li><a href="#dashboard">Lender Dashboard</a></li>
-    <li><a href="#fleet-ops">Fleet Ops</a></li>
+    <li><a href="#how-it-works">Lender Flow</a></li>
+    <li><a href="#passport">Battery Passport</a></li>
+    <li><a href="#dashboard">Dashboard</a></li>
     <li><a href="#api">API</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
@@ -912,9 +1001,9 @@
 
 <!-- MOBILE MENU -->
 <div class="nav-mobile-menu" id="mobileMenu">
-  <a href="#how-it-works" class="mob-link">How It Works</a>
-  <a href="#dashboard" class="mob-link">Lender Dashboard</a>
-  <a href="#fleet-ops" class="mob-link">Fleet Ops</a>
+  <a href="#how-it-works" class="mob-link">Lender Flow</a>
+  <a href="#passport" class="mob-link">Battery Passport</a>
+  <a href="#dashboard" class="mob-link">Dashboard</a>
   <a href="#api" class="mob-link">API</a>
   <a href="#pricing" class="mob-link">Pricing</a>
   <a href="#roadmap" class="mob-link">Roadmap</a>
@@ -938,13 +1027,13 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-glow"></div>
-  <span class="hero-badge">⚡ Lender API — Now in Early Access</span>
+  <span class="hero-badge">⚡ EU Battery Passport Ready &nbsp;·&nbsp; Catena-X &nbsp;·&nbsp; GS1 &nbsp;·&nbsp; Direct OEM</span>
   <h1>
     Know the Battery.<br />
     <span class="accent">Before You Lend.</span>
   </h1>
   <p class="hero-sub">
-    VoltLedger gives lenders, insurers, and auto-finance teams financial-grade intelligence on EV battery health — before you approve a loan.
+    VoltLedger connects to the EU Battery Passport network and fuses verified passport data with live telemetry — giving lenders a single, compliance-ready risk score at origination.
   </p>
   <div class="hero-actions">
     <a href="#early-access" class="btn-primary">Request API Access</a>
@@ -1066,6 +1155,10 @@
     <div class="stat-value">60m</div>
     <div class="stat-label">Residual Value Forecast</div>
   </div>
+  <div class="stat-item">
+    <div class="stat-value" style="color:#a78bfa">3</div>
+    <div class="stat-label">Passport Data Tiers · Public · Restricted · Confidential</div>
+  </div>
 </div>
 
 <!-- PROBLEM -->
@@ -1096,37 +1189,308 @@
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
+<!-- LENDER WORKFLOW -->
 <section id="how-it-works" style="background:var(--bg2)">
   <div class="container">
-    <p class="section-label">How It Works</p>
-    <h2 class="section-title">From Serial Number to Credit Decision</h2>
-    <p class="section-sub">Four steps. No new hardware. No lengthy integrations. One REST API call.</p>
-    <div class="steps">
+    <p class="section-label">Lender Workflow</p>
+    <h2 class="section-title">From Serial Number to Compliant Credit Decision</h2>
+    <p class="section-sub">Six steps. No new hardware. Passport data fused automatically when available — telemetry-only when not.</p>
+    <div class="steps steps-6">
+
       <div class="step">
         <div class="step-number">1</div>
-        <div class="step-icon">🔑</div>
-        <h3>Authenticate</h3>
-        <p>Add your API key to any request header. VoltLedger issues keys after a 20-minute onboarding call. No SDK required.</p>
+        <div class="step-icon">🔋</div>
+        <h3>Identify</h3>
+        <p>Submit a battery serial number or VIN. VoltLedger resolves it against our cross-OEM database — model, chemistry, capacity, ownership history.</p>
+        <span class="step-source">batteries.resolve</span>
       </div>
+
       <div class="step">
         <div class="step-number">2</div>
-        <div class="step-icon">🔋</div>
-        <h3>Identify the Battery</h3>
-        <p>Send the battery serial number or VIN. VoltLedger resolves it against our cross-OEM database of models, telemetry, and certifications.</p>
+        <div class="step-icon">🛂</div>
+        <h3>Resolve Passport</h3>
+        <p>The resolver factory auto-detects the right data source — Catena-X, GS1, Direct OEM, or built-in — and fetches the EU Battery Passport. Public or Restricted tier, whichever is accessible.</p>
+        <span class="step-source">passport.resolve</span>
       </div>
+
       <div class="step">
         <div class="step-number">3</div>
-        <div class="step-icon">🎯</div>
-        <h3>Score &amp; Value</h3>
-        <p>Our engine fuses SoH telemetry, thermal history, charge cycles, and market comps to produce a 0–1000 risk score and 60-month residual value forecast.</p>
+        <div class="step-icon">🔗</div>
+        <h3>Verify Identity Chain</h3>
+        <p>VoltLedger checks passport fields against the battery record: serial match, VIN linkage, model consistency, cell-to-pack provenance. Returns a confidence score and any discrepancies.</p>
+        <span class="step-source">passport.verify</span>
       </div>
+
       <div class="step">
         <div class="step-number">4</div>
-        <div class="step-icon">📋</div>
-        <h3>Underwrite</h3>
-        <p>Get LTV recommendations, risk-adjusted rate premiums in basis points, and second-life pathway estimates — all in a single JSON response.</p>
+        <div class="step-icon">⚖️</div>
+        <h3>Reconcile SoH</h3>
+        <p>Passport SoH and telemetry SoH are blended into a single authoritative value. Verified passport: 65/35 weighting. A large discrepancy between sources is itself flagged as a risk signal.</p>
+        <span class="step-source">scoring.reconcileSoH</span>
       </div>
+
+      <div class="step">
+        <div class="step-number">5</div>
+        <div class="step-icon">🎯</div>
+        <h3>Score &amp; Price</h3>
+        <p>The intelligence engine produces a 0–1000 risk score, an A–F grade, LTV recommendation, risk premium in basis points, 60-month residual value, and second-life pathway — passport signals applied on top of the telemetry model.</p>
+        <span class="step-source">scoring.engine</span>
+      </div>
+
+      <div class="step">
+        <div class="step-number">6</div>
+        <div class="step-icon">📋</div>
+        <h3>Attest &amp; Audit</h3>
+        <p>At origination, VoltLedger freezes a complete evidence snapshot — passport tier accessed, SoH source, score, grade — and generates a lender-facing attestation text. Locked, stored, retrievable via API.</p>
+        <span class="step-source">origination.attest</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM ARCHITECTURE -->
+<section id="architecture" class="arch-section">
+  <div class="container">
+    <p class="section-label">Platform Architecture</p>
+    <h2 class="section-title">How the Platform Is Structured</h2>
+    <p class="section-sub">Four layers — consumers, intelligence, data, and external sources. The passport layer sits alongside the scoring engine, not in front of it.</p>
+
+    <div class="arch-diagram">
+
+      <!-- Tier 1: Consumers -->
+      <div class="arch-tier" style="background:rgba(255,255,255,.02);border:1px solid var(--border);">
+        <div class="arch-tier-label" style="color:var(--muted);">🏦 &nbsp;Lenders &amp; Operators</div>
+        <div class="arch-tier-boxes" style="grid-template-columns:1fr 1fr;">
+          <div class="arch-box">
+            <h4>Lender Portal</h4>
+            <p>Browser dashboard · Next.js 14 · Clerk auth · Stripe billing · Fleet overview · Battery detail · Origination audit log</p>
+          </div>
+          <div class="arch-box">
+            <h4>API Clients &amp; LOS Integrations</h4>
+            <p>REST API · x-api-key auth · Webhooks · Loan origination system plug-ins · Bulk scoring</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-arrow">↓</div>
+
+      <!-- Tier 2: Platform -->
+      <div class="arch-tier" style="background:rgba(59,130,246,.03);border:1px solid rgba(59,130,246,.18);">
+        <div class="arch-tier-label" style="color:var(--blue);">⚡ &nbsp;VoltLedger Platform</div>
+        <div class="arch-tier-boxes" style="grid-template-columns:1fr 1fr;">
+          <div class="arch-box" style="border-color:rgba(59,130,246,.22);">
+            <h4>Intelligence Engine</h4>
+            <p>Risk score · Residual value · LTV recommendation · Second-life assessment · Degradation forecast · 5 sub-scores</p>
+          </div>
+          <div class="arch-box" style="border-color:rgba(139,92,246,.3);">
+            <h4>Battery Passport Layer</h4>
+            <p>Resolver factory · Catena-X connector · GS1 Digital Link · Direct OEM · Aggregator · Identity chain verification · Origination audit</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-arrow">↓</div>
+
+      <!-- Tier 3: Data -->
+      <div class="arch-tier" style="background:rgba(139,92,246,.03);border:1px solid rgba(139,92,246,.15);">
+        <div class="arch-tier-label" style="color:#a78bfa;">🗄️ &nbsp;Data &amp; Intelligence Layer</div>
+        <div class="arch-tier-boxes" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="arch-box">
+            <h4>PostgreSQL 16</h4>
+            <p>Battery profiles · Risk scores · Passport records · Verification history · Origination audits · Lender tenants</p>
+          </div>
+          <div class="arch-box">
+            <h4>Ingestion Pipeline</h4>
+            <p>BullMQ workers · Redis queue · NDJSON stream processor · Telemetry normalisation · Score triggers</p>
+          </div>
+          <div class="arch-box">
+            <h4>Response Cache</h4>
+            <p>Redis · Sub-200ms API responses · Score freshness tracking · Passport sync timestamps</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-arrow">↓</div>
+
+      <!-- Tier 4: External -->
+      <div class="arch-tier" style="background:rgba(16,185,129,.02);border:1px solid rgba(16,185,129,.12);">
+        <div class="arch-tier-label" style="color:var(--green);">🌐 &nbsp;External Data Sources</div>
+        <div class="arch-tier-boxes" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="arch-box">
+            <h4>OEM Telematics</h4>
+            <p>MQTT feeds · REST webhooks · Charge records · BMS data · Live SoH updates</p>
+          </div>
+          <div class="arch-box">
+            <h4>EU Battery Registry</h4>
+            <p>Digital Product Passports · ISO/IEC 15459 identifiers · Public + Restricted tier fields · Post-2027 mandate</p>
+          </div>
+          <div class="arch-box">
+            <h4>Market Data</h4>
+            <p>EV residual value benchmarks · Chemistry market comps · Second-life pricing indices</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DATA PIPELINE -->
+<section id="passport" class="pipeline-section">
+  <div class="container">
+    <p class="section-label label-passport">Battery Passport Layer</p>
+    <h2 class="section-title">One Interface. Any Data Source.</h2>
+    <p class="section-sub">VoltLedger's resolver factory routes passport requests to the right data network automatically — swap connectors as market access opens, with no changes to the scoring model.</p>
+
+    <div class="pipeline-layout">
+
+      <!-- Left: Data Sources -->
+      <div class="pipeline-sources">
+        <p style="font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem;">Data Sources</p>
+
+        <div class="connector-item">
+          <div class="connector-name">Catena-X Network</div>
+          <div class="connector-desc">OEM digital product passports via BPN registration and Eclipse Dataspace Connector protocol. Backed by BMW, Mercedes, VW, Stellantis.</div>
+          <span class="connector-status cs-q3">Connector built · Activating Q3 2026</span>
+        </div>
+
+        <div class="connector-item">
+          <div class="connector-name">GS1 Digital Link</div>
+          <div class="connector-desc">ISO/IEC 18975 QR-resolvable passports. Preferred path for Asian OEMs — CATL, BYD, Samsung SDI — publishing via GS1 infrastructure.</div>
+          <span class="connector-status cs-q3">Connector built · Activating Q3 2026</span>
+        </div>
+
+        <div class="connector-item">
+          <div class="connector-name">Direct OEM API</div>
+          <div class="connector-desc">Proprietary REST endpoints for manufacturers offering direct data-sharing agreements. Highest-fidelity restricted-tier data.</div>
+          <span class="connector-status cs-agree">Connector built · Per OEM agreement</span>
+        </div>
+
+        <div class="connector-item">
+          <div class="connector-name">Third-Party Aggregator</div>
+          <div class="connector-desc">Aggregators such as Minviro, Circulor, and Battery Pass Consortium normalise passport data across multiple OEMs into a single API.</div>
+          <span class="connector-status cs-agree">Connector built · Configurable via env</span>
+        </div>
+
+        <div class="connector-item">
+          <div class="connector-name">OEM Telematics</div>
+          <div class="connector-desc">Live MQTT and REST feeds from vehicle telematics units — SoH, SoC, thermal history, charge events. Primary signal for pre-2027 fleet.</div>
+          <span class="connector-status cs-live">● Live</span>
+        </div>
+
+        <div class="connector-item">
+          <div class="connector-name">Built-in Resolver</div>
+          <div class="connector-desc">Active for every battery in the system today. Generates EU Regulation-compliant passport fields from battery specs and telemetry history.</div>
+          <span class="connector-status cs-live">● Live</span>
+        </div>
+      </div>
+
+      <!-- Centre: Factory -->
+      <div class="pipeline-center">
+        <div class="factory-arrow">→</div>
+        <div class="factory-box">
+          <div class="factory-title">Resolver Factory</div>
+          <div class="factory-sub">Auto-detects source<br/>from identifier format<br/><br/>PASSPORT_RESOLVER<br/>env override<br/><br/>One unified result:<br/>tierAccess<br/>passportData<br/>latencyMs</div>
+        </div>
+        <div class="factory-arrow">→</div>
+      </div>
+
+      <!-- Right: Output -->
+      <div class="pipeline-outputs">
+        <p style="font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.25rem;">What You Get</p>
+
+        <div class="output-group">
+          <div class="output-tier-label out-public">Public Tier</div>
+          <div class="output-fields">
+            Carbon footprint — kg CO₂e / kWh<br/>
+            Intensity class — A to G rating<br/>
+            Material composition — Li · Co · Ni · Mn<br/>
+            Recycled content percentage<br/>
+            Performance specs · EoL guidance
+          </div>
+        </div>
+
+        <div class="output-group">
+          <div class="output-tier-label out-restricted">Restricted Tier</div>
+          <div class="output-fields">
+            <span class="out-highlight">State of Health % — the underwriting signal</span><br/>
+            Charge cycle count — cumulative full-equivalent<br/>
+            Lifetime temperature history — min · max · avg<br/>
+            <span class="out-highlight">Battery status — GOOD · DEGRADED · FAULTY</span><br/>
+            Negative events — faults · thermal · discharge
+          </div>
+        </div>
+
+        <div class="output-group">
+          <div class="output-tier-label out-scoring">Scoring Output</div>
+          <div class="output-fields">
+            <span class="out-highlight">Reconciled SoH — BLENDED · PASSPORT · TELEMETRY</span><br/>
+            Risk score 0–1000 with passport ±30pt adjustment<br/>
+            Confidence level boosted by verified passport<br/>
+            Origination attestation — locked evidence snapshot
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LEGITIMATE INTEREST -->
+<section class="legit-section">
+  <div class="container">
+    <p class="section-label label-passport">Access Tiers</p>
+    <h2 class="section-title">Legitimate Interest — Your Access Rights, Handled</h2>
+    <p class="section-sub">The EU Battery Passport is not a single open dataset. Access is split by law. VoltLedger is designed to operate at any tier from day one — restricted fields are null when access isn't granted, scoring degrades gracefully.</p>
+
+    <div class="tier-grid">
+
+      <div class="tier-card tier-card-public">
+        <span class="tier-badge tb-public">Public Tier</span>
+        <h3>Available to All</h3>
+        <p class="tier-card-sub">Anyone scanning the QR code. No credentials required. Mandatory for all EU-market batteries from February 2027.</p>
+        <ul class="tier-fields">
+          <li>Carbon footprint — kg CO₂e per kWh (lifecycle)</li>
+          <li>Intensity class — A to G rating</li>
+          <li>Material composition — lithium, cobalt, nickel, manganese %</li>
+          <li>Recycled content percentage</li>
+          <li>Performance specs — rated capacity, energy density, cycle life</li>
+          <li>End-of-life handling guidance</li>
+        </ul>
+        <div class="tier-note tn-public">VoltLedger ingests public tier automatically for every EU-market battery. Useful for ESG reporting and sustainability scoring — but not sufficient for loan underwriting alone.</div>
+      </div>
+
+      <div class="tier-card tier-card-restricted">
+        <span class="tier-badge tb-restricted">Restricted Tier</span>
+        <h3>Legitimate Interest Parties</h3>
+        <p class="tier-card-sub">EU Regulation 2023/1542, Art. 13. Recyclers, repairers, second-life operators — and, pending Commission implementation acts, lenders at origination.</p>
+        <ul class="tier-fields">
+          <li class="tf-highlight">State of Health % — the direct underwriting signal</li>
+          <li>Charge cycle count — cumulative full-equivalent cycles</li>
+          <li>Lifetime temperature history — min · max · weighted average</li>
+          <li class="tf-highlight">Battery status — GOOD · DEGRADED · FAULTY · REPURPOSED</li>
+          <li>Negative events log — faults, thermal incidents, deep discharge episodes</li>
+          <li>Current SoC % and measured capacity</li>
+        </ul>
+        <div class="tier-note tn-restricted">The Commission is finalising who qualifies as a "legitimate interest" party for lending. VoltLedger is designed to hold restricted-tier access on the lender's behalf the moment that access right is defined.</div>
+      </div>
+
+      <div class="tier-card tier-card-role">
+        <span class="tier-badge tb-role">VoltLedger's Role</span>
+        <h3>Acting as Lender's Agent</h3>
+        <p class="tier-card-sub">VoltLedger fetches, verifies, and freezes passport data at origination — on the lender's behalf, not in place of them.</p>
+        <ul class="tier-fields">
+          <li>Lender holds the access right — VoltLedger facilitates the fetch</li>
+          <li>Identity chain check: passport ↔ serial ↔ VIN ↔ pack</li>
+          <li>Restricted fields null-gated when access not granted — no gaps in scoring</li>
+          <li>Scoring blends passport + telemetry with confidence weighting</li>
+          <li class="tf-highlight">Origination attestation issued — what was checked, when, and what it said</li>
+          <li>Audit trail stored and retrievable via API at any time</li>
+        </ul>
+        <div class="tier-note tn-role">VoltLedger's claim is precise: we verified passport data at origination and recorded it. We do not assume regulatory compliance obligations for the lender — that scope distinction matters legally.</div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1416,6 +1780,27 @@
             <div class="endpoint-desc">Trigger re-score with latest telemetry</div>
           </div>
         </div>
+        <div class="endpoint-btn" onclick="showEndpoint(6, this)" style="border-color:rgba(139,92,246,.2)">
+          <span class="method-badge method-post" style="background:rgba(139,92,246,.15);color:#c4b5fd">POST</span>
+          <div>
+            <div class="endpoint-path">/v1/passport/resolve</div>
+            <div class="endpoint-desc">Fetch EU Battery Passport — any data source</div>
+          </div>
+        </div>
+        <div class="endpoint-btn" onclick="showEndpoint(7, this)" style="border-color:rgba(139,92,246,.2)">
+          <span class="method-badge method-post" style="background:rgba(139,92,246,.15);color:#c4b5fd">POST</span>
+          <div>
+            <div class="endpoint-path">/v1/passport/verify/{batteryId}</div>
+            <div class="endpoint-desc">Identity chain verification — serial · VIN · pack</div>
+          </div>
+        </div>
+        <div class="endpoint-btn" onclick="showEndpoint(8, this)" style="border-color:rgba(139,92,246,.2)">
+          <span class="method-badge method-post" style="background:rgba(139,92,246,.15);color:#c4b5fd">POST</span>
+          <div>
+            <div class="endpoint-path">/v1/origination/attest</div>
+            <div class="endpoint-desc">Freeze evidence snapshot + lender attestation</div>
+          </div>
+        </div>
       </div>
 
       <div class="api-response">
@@ -1431,6 +1816,51 @@
           </div>
         </div>
         <div class="response-body" id="api-body"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORIGINATION AUDIT TRAIL -->
+<section id="audit" class="audit-section">
+  <div class="container">
+    <p class="section-label">Compliance</p>
+    <h2 class="section-title">Origination Audit Trail</h2>
+    <p class="section-sub">Every lending decision leaves a verifiable, immutable record. What passport tier was accessed, what SoH was used, what score was produced — frozen at the moment of approval.</p>
+
+    <div class="audit-layout">
+      <div class="audit-copy">
+        <ul>
+          <li><span class="chk">✓</span><span><strong>Evidence snapshot</strong> — full copy of battery state, passport fields, and scores frozen at origination. Not a summary — the actual values used in the decision.</span></li>
+          <li><span class="chk">✓</span><span><strong>SoH source tagged</strong> — every audit records whether SoH came from PASSPORT, TELEMETRY, or BLENDED, and the confidence level at the time.</span></li>
+          <li><span class="chk">✓</span><span><strong>Passport tier logged</strong> — PUBLIC or RESTRICTED access, verification status, identity chain outcome, and any discrepancies flagged.</span></li>
+          <li><span class="chk">✓</span><span><strong>Lender-facing attestation</strong> — human-readable text the lender can attach to the loan file or store in their LOS.</span></li>
+          <li><span class="chk">✓</span><span><strong>Retrievable via API</strong> — <code style="font-family:var(--mono);font-size:.82rem;color:#93c5fd">GET /v1/origination/battery/:serial</code> returns full audit history for any battery in your portfolio.</span></li>
+          <li><span class="chk">✓</span><span><strong>Immutable once created</strong> — audit records are append-only. No edits, no deletions. What was true at origination stays on record exactly as it was.</span></li>
+        </ul>
+      </div>
+
+      <div class="attestation-card">
+        <div class="att-header">
+          <span class="att-title">ORIGINATION AUDIT · v1.0</span>
+          <span class="att-live-tag">LIVE</span>
+        </div>
+        <div class="att-body">
+<span class="att-k">Battery</span>   <span class="att-v">SKO-EU-23-00012</span>  ·  <span class="att-v">NMC</span>  ·  <span class="att-v">120 kWh</span>
+<span class="att-k">VIN</span>       <span class="att-v">WDD2132031A123456</span>
+<hr class="att-hr">
+<span class="att-k">Passport</span>  <span class="att-v">PUBLIC tier</span>  ·  Identity <span class="att-v">verified</span>  ·  Chain <span class="att-v">valid</span>
+<span class="att-k">Passport ID</span>  <span class="att-n">30PPID/SKO-EU-23-00012-EU2027</span>
+<span class="att-k">Carbon</span>    <span class="att-n">95.1</span> kg CO₂e/kWh  ·  Class <span class="att-n">C</span>
+<hr class="att-hr">
+<span class="att-k">SoH source</span>  <span class="att-v">TELEMETRY</span>  ·  Confidence <span class="att-n">0.91</span>
+<span class="att-k">Risk score</span>  <span class="att-n">782</span>/1000  ·  Grade <span class="att-v">B</span>
+<hr class="att-hr">
+<span class="att-k">Residual value</span>  <span class="att-n">$14,200</span>  ·  <span class="att-n">47%</span> of vehicle
+<span class="att-k">Recommended LTV</span>  <span class="att-n">71.5%</span>  ·  Risk premium <span class="att-n">+82bps</span>
+<hr class="att-hr">
+<div class="att-footer">EU Battery Passport (PUBLIC tier, identity verified) checked at origination. VoltLedger verifies passport data on behalf of the lender and does not assume regulatory compliance obligations. Generated: 2026-06-05T09:14:22Z</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1662,20 +2092,20 @@
         </ul>
       </div>
 
-      <div class="phase-card">
-        <span class="phase-tag tag-q3">Phase 2 — Q3 2026</span>
-        <h3>EU Regulation Ready</h3>
-        <p class="phase-sub">EU Battery Regulation (2023/1542) mandates a digital Battery Passport for every EV battery from Feb 2027. VoltLedger becomes the bridge between that passport and your underwriting flow.</p>
+      <div class="phase-card active" style="border-color:rgba(139,92,246,.35);background:rgba(139,92,246,.04);">
+        <span class="phase-tag tag-passport">⚡ Phase 2 — Live</span>
+        <h3>EU Battery Passport</h3>
+        <p class="phase-sub">EU Battery Regulation 2023/1542 mandates a digital passport for every EV battery from Feb 2027. VoltLedger is the compliance bridge between that passport and your underwriting flow — built now, not when the mandate hits.</p>
         <ul class="phase-items">
-          <li>Ingest EU-compliant passport data as a scoring input</li>
-          <li>Passport-verified risk scores for EU lenders</li>
-          <li>Lenders get compliance coverage — no regulation work required</li>
-          <li>SoH, carbon footprint &amp; recycled content fields included</li>
-          <li>Supply chain provenance (cell → pack → vehicle)</li>
-          <li>Works alongside — not replacing — existing telemetry inputs</li>
+          <li>Public + Restricted tier passport ingestion with field-level confidence scoring</li>
+          <li>Passport SoH blended with telemetry — 65/35 weighting when verified</li>
+          <li>Catena-X, GS1, Direct OEM, and Aggregator connectors built</li>
+          <li>Identity chain verification — serial · VIN · pack provenance</li>
+          <li>Origination audit trail — frozen evidence snapshot at loan approval</li>
+          <li>Graceful fallback to telemetry-only when passport unavailable</li>
         </ul>
-        <div style="margin-top:1rem;padding:.65rem .85rem;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.15);border-radius:8px;font-size:.78rem;color:#94a3b8;line-height:1.6">
-          <strong style="color:#93c5fd">Who benefits:</strong> EU-market lenders, fleet operators, and insurers who need to verify passport data at loan origination — without building their own compliance layer.
+        <div style="margin-top:1rem;padding:.65rem .85rem;background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.15);border-radius:8px;font-size:.78rem;color:#94a3b8;line-height:1.6">
+          <strong style="color:#c4b5fd">Next:</strong> Legitimate-interest access workflow — activating Catena-X and GS1 connectors with real OEM credentials for restricted-tier data access at origination.
         </div>
       </div>
 
@@ -1846,18 +2276,75 @@
       statusClass: 'status-created',
       time: '312ms',
       body: `{
-  <span class="key">"serial"</span>:          <span class="str">"PACK-FL-CA-001"</span>,
-  <span class="key">"message"</span>:         <span class="str">"Scoring complete"</span>,
-  <span class="key">"compositeScore"</span>:  <span class="num">847</span>,
-  <span class="key">"grade"</span>:           <span class="grade-a">"A"</span>,
-  <span class="key">"subScores"</span>: {
-    <span class="key">"degradation"</span>:    <span class="num">880</span>,
-    <span class="key">"thermal"</span>:        <span class="num">910</span>,
-    <span class="key">"usagePattern"</span>:   <span class="num">795</span>,
-    <span class="key">"capacityRetention"</span>: <span class="num">862</span>,
-    <span class="key">"ageAdjusted"</span>:    <span class="num">788</span>
+  <span class="key">"serial"</span>:            <span class="str">"PACK-FL-CA-001"</span>,
+  <span class="key">"message"</span>:           <span class="str">"Scoring complete with RESTRICTED passport (BLENDED SoH)"</span>,
+  <span class="key">"compositeScore"</span>:    <span class="num">861</span>,
+  <span class="key">"grade"</span>:             <span class="grade-a">"A"</span>,
+  <span class="key">"sohSource"</span>:         <span class="str">"BLENDED"</span>,
+  <span class="key">"passportVerified"</span>:  <span class="num">true</span>,
+  <span class="key">"passportUsed"</span>:      <span class="num">true</span>,
+  <span class="key">"scoredAt"</span>:          <span class="str">"2026-06-05T09:14:22Z"</span>
+}`
+    },
+    {
+      status: '201 Created',
+      statusClass: 'status-created',
+      time: '188ms',
+      body: `{
+  <span class="key">"hasPassport"</span>:     <span class="num">true</span>,
+  <span class="key">"passportId"</span>:      <span class="str">"clxr9f2ab0001..."</span>,
+  <span class="key">"tierAccess"</span>:      <span class="str">"RESTRICTED"</span>,
+  <span class="key">"resolverUsed"</span>:    <span class="str">"MOCK"</span>,
+  <span class="key">"passportUniqueId"</span>: <span class="str">"30PPID/PACK-FL-CA-001-EU2027"</span>,
+  <span class="key">"public"</span>: {
+    <span class="key">"carbonFootprintKgCo2e"</span>:  <span class="num">68.4</span>,
+    <span class="key">"carbonIntensityClass"</span>:   <span class="str">"B"</span>,
+    <span class="key">"recycledContentPct"</span>:     <span class="num">18.7</span>,
+    <span class="key">"expectedLifetimeCycles"</span>:  <span class="num">3000</span>
   },
-  <span class="key">"scoredAt"</span>:        <span class="str">"2026-03-24T10:41:22Z"</span>
+  <span class="key">"restricted"</span>: {
+    <span class="key">"unitSoH"</span>:           <span class="num">92.4</span>,
+    <span class="key">"chargeCycleCount"</span>:  <span class="num">312</span>,
+    <span class="key">"tempHistoryMax"</span>:    <span class="num">48.2</span>,
+    <span class="key">"batteryStatusCode"</span>: <span class="str">"GOOD"</span>,
+    <span class="key">"negativeEvents"</span>:   []
+  },
+  <span class="key">"latencyMs"</span>:  <span class="num">44</span>
+}`
+    },
+    {
+      status: '201 Created',
+      statusClass: 'status-created',
+      time: '97ms',
+      body: `{
+  <span class="key">"verificationId"</span>:       <span class="str">"clxr9f2ab0002..."</span>,
+  <span class="key">"identityChainValid"</span>:   <span class="num">true</span>,
+  <span class="key">"confidenceScore"</span>:      <span class="num">0.95</span>,
+  <span class="key">"passportMatchesSerial"</span>: <span class="num">true</span>,
+  <span class="key">"passportMatchesVin"</span>:    <span class="num">true</span>,
+  <span class="key">"passportMatchesModel"</span>:  <span class="num">true</span>,
+  <span class="key">"cellPackChainValid"</span>:    <span class="num">true</span>,
+  <span class="key">"packVehicleChainValid"</span>: <span class="num">true</span>,
+  <span class="key">"discrepancies"</span>:        [],
+  <span class="key">"verifiedAt"</span>:           <span class="str">"2026-06-05T09:13:55Z"</span>
+}`
+    },
+    {
+      status: '201 Created',
+      statusClass: 'status-created',
+      time: '142ms',
+      body: `{
+  <span class="key">"auditId"</span>:          <span class="str">"clxr9f2ab0003..."</span>,
+  <span class="key">"batterySerial"</span>:    <span class="str">"PACK-FL-CA-001"</span>,
+  <span class="key">"passportPresent"</span>:  <span class="num">true</span>,
+  <span class="key">"passportTier"</span>:     <span class="str">"RESTRICTED"</span>,
+  <span class="key">"passportVerified"</span>: <span class="num">true</span>,
+  <span class="key">"sohSource"</span>:        <span class="str">"BLENDED"</span>,
+  <span class="key">"sohUsedPct"</span>:       <span class="num">92.1</span>,
+  <span class="key">"compositeScore"</span>:   <span class="num">861</span>,
+  <span class="key">"riskGrade"</span>:        <span class="grade-a">"A"</span>,
+  <span class="key">"attestationText"</span>:  <span class="str">"VoltLedger Origination Attestation\nBattery: PACK-FL-CA-001 | LFP | 82 kWh\nEU Battery Passport (RESTRICTED tier, identity verified)..."</span>,
+  <span class="key">"checkedAt"</span>:        <span class="str">"2026-06-05T09:14:22Z"</span>
 }`
     }
   ];

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "catl-lfp-60",
+    "modelName": "LFP-60 Standard Range",
+    "manufacturer": "CATL",
+    "chemistry": "LFP",
+    "capacityKwh": 60,
+    "nominalVoltageV": 355,
+    "weightKg": 385,
+    "ratedCycleLife": 3000,
+    "calendarLifeYears": 15,
+    "warrantyYears": 8,
+    "vehicleSegment": "Passenger / Compact"
+  },
+  {
+    "id": "catl-lfp-80",
+    "modelName": "LFP-80 Long Range",
+    "manufacturer": "CATL",
+    "chemistry": "LFP",
+    "capacityKwh": 80,
+    "nominalVoltageV": 370,
+    "weightKg": 490,
+    "ratedCycleLife": 3000,
+    "calendarLifeYears": 15,
+    "warrantyYears": 8,
+    "vehicleSegment": "Passenger / Mid-size"
+  },
+  {
+    "id": "lg-nmc-75",
+    "modelName": "Chem NCMA 75",
+    "manufacturer": "LG Energy Solution",
+    "chemistry": "NMC",
+    "capacityKwh": 75,
+    "nominalVoltageV": 400,
+    "weightKg": 455,
+    "ratedCycleLife": 1500,
+    "calendarLifeYears": 10,
+    "warrantyYears": 8,
+    "vehicleSegment": "Passenger / Mid-size"
+  },
+  {
+    "id": "panasonic-nca-100",
+    "modelName": "2170 NCA 100",
+    "manufacturer": "Panasonic",
+    "chemistry": "NCA",
+    "capacityKwh": 100,
+    "nominalVoltageV": 400,
+    "weightKg": 540,
+    "ratedCycleLife": 1200,
+    "calendarLifeYears": 10,
+    "warrantyYears": 8,
+    "vehicleSegment": "Passenger / Premium"
+  },
+  {
+    "id": "byd-lfp-50",
+    "modelName": "Blade LFP 50",
+    "manufacturer": "BYD",
+    "chemistry": "LFP",
+    "capacityKwh": 50,
+    "nominalVoltageV": 320,
+    "weightKg": 310,
+    "ratedCycleLife": 3500,
+    "calendarLifeYears": 15,
+    "warrantyYears": 8,
+    "vehicleSegment": "Passenger / Compact"
+  },
+  {
+    "id": "sk-nmc-commercial",
+    "modelName": "NMC-Commercial 120",
+    "manufacturer": "SK On",
+    "chemistry": "NMC",
+    "capacityKwh": 120,
+    "nominalVoltageV": 800,
+    "weightKg": 660,
+    "ratedCycleLife": 2000,
+    "calendarLifeYears": 12,
+    "warrantyYears": 8,
+    "vehicleSegment": "Commercial / Fleet"
+  }
+]

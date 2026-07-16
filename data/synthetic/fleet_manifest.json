@@ -1,0 +1,222 @@
+[
+  {
+    "id": "569a12ab-10b2-4d23-9a4b-2e7aba60199c",
+    "serialNumber": "PANA-CA-23-00001",
+    "vin": "2T1LP84F1UF7T2RY3",
+    "modelId": "panasonic-nca-100",
+    "modelName": "2170 NCA 100",
+    "manufacturer": "Panasonic",
+    "chemistry": "NCA",
+    "usageProfile": "WEEKEND_DRIVER",
+    "manufacturedAt": "2025-08-12T19:58:04.558Z",
+    "ageWeeks": 32,
+    "summary": {
+      "currentSoH": 98.2,
+      "currentCycles": 10,
+      "currentOdometerKm": 4498,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": false,
+        "thermalAnomaly": false
+      }
+    }
+  },
+  {
+    "id": "b3a9995a-5dc2-47b3-98c5-097745eb4d27",
+    "serialNumber": "SKO-CA-25-00002",
+    "vin": "1HGM33MNTD5BUF130",
+    "modelId": "sk-nmc-commercial",
+    "modelName": "NMC-Commercial 120",
+    "manufacturer": "SK On",
+    "chemistry": "NMC",
+    "usageProfile": "DAILY_COMMUTER",
+    "manufacturedAt": "2025-10-07T19:58:04.558Z",
+    "ageWeeks": 24,
+    "summary": {
+      "currentSoH": 99,
+      "currentCycles": 40,
+      "currentOdometerKm": 8415,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": false,
+        "thermalAnomaly": false
+      }
+    }
+  },
+  {
+    "id": "6e67c3e5-698c-4f6b-a620-da177fc1d9f5",
+    "serialNumber": "PANA-EU-25-00003",
+    "vin": "2T1YV7HXJ7VD86KNJ",
+    "modelId": "panasonic-nca-100",
+    "modelName": "2170 NCA 100",
+    "manufacturer": "Panasonic",
+    "chemistry": "NCA",
+    "usageProfile": "COMMERCIAL_DELIVERY",
+    "manufacturedAt": "2025-06-03T19:58:04.558Z",
+    "ageWeeks": 42,
+    "summary": {
+      "currentSoH": 89,
+      "currentCycles": 472,
+      "currentOdometerKm": 52941,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": true,
+        "thermalAnomaly": false
+      }
+    }
+  },
+  {
+    "id": "6bcaee2c-cd57-49fc-b6a3-3a649836cc8f",
+    "serialNumber": "CATL-IN-24-00004",
+    "vin": "5YJ0T5WYGU5V50GHW",
+    "modelId": "catl-lfp-80",
+    "modelName": "LFP-80 Long Range",
+    "manufacturer": "CATL",
+    "chemistry": "LFP",
+    "usageProfile": "COMMERCIAL_DELIVERY",
+    "manufacturedAt": "2025-05-20T19:58:04.558Z",
+    "ageWeeks": 44,
+    "summary": {
+      "currentSoH": 96.3,
+      "currentCycles": 494,
+      "currentOdometerKm": 55434,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": true,
+        "thermalAnomaly": false
+      }
+    }
+  },
+  {
+    "id": "c278cced-733f-41e1-b1c0-fd11c54113dc",
+    "serialNumber": "PANA-US-24-00005",
+    "vin": "SCA877CBF40J5CRXH",
+    "modelId": "panasonic-nca-100",
+    "modelName": "2170 NCA 100",
+    "manufacturer": "Panasonic",
+    "chemistry": "NCA",
+    "usageProfile": "RIDESHARE_FLEET",
+    "manufacturedAt": "2025-06-10T19:58:04.558Z",
+    "ageWeeks": 41,
+    "summary": {
+      "currentSoH": 86.3,
+      "currentCycles": 612,
+      "currentOdometerKm": 71742,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": true,
+        "thermalAnomaly": false
+      }
+    }
+  },
+  {
+    "id": "5823b6dd-3983-4466-839b-e60c775dcc28",
+    "serialNumber": "CATL-IN-25-00006",
+    "vin": "JN189DUCV4C7C323G",
+    "modelId": "catl-lfp-60",
+    "modelName": "LFP-60 Standard Range",
+    "manufacturer": "CATL",
+    "chemistry": "LFP",
+    "usageProfile": "WEEKEND_DRIVER",
+    "manufacturedAt": "2025-06-03T19:58:04.558Z",
+    "ageWeeks": 42,
+    "summary": {
+      "currentSoH": 99.1,
+      "currentCycles": 13,
+      "currentOdometerKm": 5885,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": false,
+        "thermalAnomaly": false
+      }
+    }
+  },
+  {
+    "id": "be37ab3e-4fa8-4fbb-a9f5-d523cdf01d45",
+    "serialNumber": "PANA-EU-23-00007",
+    "vin": "JN1ZALSLLUD9KGLBE",
+    "modelId": "panasonic-nca-100",
+    "modelName": "2170 NCA 100",
+    "manufacturer": "Panasonic",
+    "chemistry": "NCA",
+    "usageProfile": "DAILY_COMMUTER",
+    "manufacturedAt": "2025-07-08T19:58:04.558Z",
+    "ageWeeks": 37,
+    "summary": {
+      "currentSoH": 97.9,
+      "currentCycles": 62,
+      "currentOdometerKm": 12933,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": false,
+        "thermalAnomaly": false
+      }
+    }
+  },
+  {
+    "id": "3259de16-dc8d-4446-8c86-05089b7ff1a4",
+    "serialNumber": "LGE-EU-25-00008",
+    "vin": "JN1G9SRRN2JY16JC9",
+    "modelId": "lg-nmc-75",
+    "modelName": "Chem NCMA 75",
+    "manufacturer": "LG Energy Solution",
+    "chemistry": "NMC",
+    "usageProfile": "RIDESHARE_FLEET",
+    "manufacturedAt": "2025-09-30T19:58:04.558Z",
+    "ageWeeks": 25,
+    "summary": {
+      "currentSoH": 93.2,
+      "currentCycles": 373,
+      "currentOdometerKm": 43760,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": true,
+        "thermalAnomaly": true
+      }
+    }
+  },
+  {
+    "id": "6e8bbdce-b7bf-4fc2-a70e-952a276c9cfc",
+    "serialNumber": "CATL-CA-24-00009",
+    "vin": "1HGD8U7GT6FR0F602",
+    "modelId": "catl-lfp-80",
+    "modelName": "LFP-80 Long Range",
+    "manufacturer": "CATL",
+    "chemistry": "LFP",
+    "usageProfile": "RIDESHARE_FLEET",
+    "manufacturedAt": "2025-12-30T19:58:04.558Z",
+    "ageWeeks": 12,
+    "summary": {
+      "currentSoH": 98.9,
+      "currentCycles": 179,
+      "currentOdometerKm": 20977,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": true,
+        "thermalAnomaly": false
+      }
+    }
+  },
+  {
+    "id": "ff95d156-937f-49b7-9c1f-e0b18e72c86a",
+    "serialNumber": "CATL-US-23-00010",
+    "vin": "1HGR03P9UG97KAK1H",
+    "modelId": "catl-lfp-80",
+    "modelName": "LFP-80 Long Range",
+    "manufacturer": "CATL",
+    "chemistry": "LFP",
+    "usageProfile": "DAILY_COMMUTER",
+    "manufacturedAt": "2025-06-24T19:58:04.558Z",
+    "ageWeeks": 39,
+    "summary": {
+      "currentSoH": 99.1,
+      "currentCycles": 66,
+      "currentOdometerKm": 13694,
+      "riskIndicators": {
+        "abnormalDegradation": false,
+        "highDcfc": false,
+        "thermalAnomaly": false
+      }
+    }
+  }
+]

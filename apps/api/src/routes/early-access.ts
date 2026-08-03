@@ -8,6 +8,7 @@ const bodySchema = z.object({
   email:     z.string().email(),
   company:   z.string().min(1).max(120),
   role:      z.string().min(1).max(80),
+  _gotcha:   z.string().optional(),
 });
 
 export async function getResend() {
@@ -161,6 +162,15 @@ export const earlyAccessRoutes: FastifyPluginAsync = async (app) => {
     const result = bodySchema.safeParse(req.body);
     if (!result.success) {
       return reply.status(400).send({ error: 'Invalid request', details: result.error.flatten() });
+    }
+
+    // Honeypot: real users never see or fill this field, so any value means a bot.
+    // Return success without writing to the DB or sending email.
+    if (result.data._gotcha) {
+      return reply.status(201).send({
+        id:      'skipped',
+        message: "Request received. We'll be in touch within 48 hours.",
+      });
     }
 
     const { firstName, lastName, email, company, role } = result.data;

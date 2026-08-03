@@ -2149,6 +2149,10 @@
         <option>Other</option>
       </select>
     </div>
+    <div style="position:absolute;left:-9999px;top:-9999px;height:0;width:0;overflow:hidden;" aria-hidden="true">
+      <label for="f-gotcha">Leave this field empty</label>
+      <input type="text" id="f-gotcha" tabindex="-1" autocomplete="off" />
+    </div>
     <div id="form-error" style="color:#f87171;font-size:.82rem;text-align:center;margin-top:.5rem;display:none"></div>
     <div class="cta-submit-row">
       <button type="submit" class="btn-primary" id="submit-btn">Request Access →</button>
@@ -2389,11 +2393,8 @@
       email:     document.getElementById('f-email').value.trim(),
       company:   document.getElementById('f-company').value.trim(),
       role:      document.getElementById('f-role').value,
+      _gotcha:   document.getElementById('f-gotcha').value,
     };
-
-    btn.textContent = 'Sending…';
-    btn.disabled = true;
-    errEl.style.display = 'none';
 
     function onSuccess() {
       btn.textContent = '✓ You\'re on the list! Check your inbox.';
@@ -2406,6 +2407,17 @@
       errEl.textContent = 'Something went wrong — please email us at hello@voltledger.io';
       errEl.style.display = 'block';
     }
+
+    // Honeypot: real users never see or fill this field. If it's filled, this
+    // is a bot — pretend success without sending the submission anywhere.
+    if (payload._gotcha) {
+      onSuccess();
+      return;
+    }
+
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    errEl.style.display = 'none';
 
     try {
       // Primary: Fastify API

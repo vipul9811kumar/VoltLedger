@@ -27,7 +27,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
   }
 
-  const { firstName, lastName, email, company, role } = body as Record<string, string>;
+  const { firstName, lastName, email, company, role, _gotcha } = body as Record<string, string>;
+
+  // Honeypot: real users never see or fill this field, so any value means a bot.
+  // Return success without writing to the DB or sending email.
+  if (_gotcha) {
+    return NextResponse.json(
+      { id: 'skipped', message: "Request received. We'll be in touch within 48 hours." },
+      { status: 201, headers: { 'Access-Control-Allow-Origin': '*' } }
+    );
+  }
 
   if (!firstName || !lastName || !email || !company || !role) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });

@@ -258,6 +258,28 @@ importers:
 
   packages/types: {}
 
+  packages/validation:
+    dependencies:
+      '@voltledger/calibration':
+        specifier: workspace:*
+        version: link:../calibration
+      '@voltledger/scoring':
+        specifier: workspace:*
+        version: link:../scoring
+      '@voltledger/synthetic-generator':
+        specifier: workspace:*
+        version: link:../../tools/synthetic-generator
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.37
+      tsx:
+        specifier: ^4.11.0
+        version: 4.21.0
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   tools/bulk-score:
     dependencies:
       '@voltledger/db':

@@ -11,6 +11,7 @@
     "packages/types",
     "packages/db",
     "packages/calibration",
+    "packages/validation",
     "tools/synthetic-generator",
     "tools/bulk-score",
     "tools/generate-key"
@@ -36,6 +37,7 @@
     "generate:synthetic:seed": "dotenv -e .env --override -- tsx tools/synthetic-generator/src/index.ts --batteries 50 --weeks 260 --seed-db",
     "bulk-score": "dotenv -e .env --override -- tsx tools/bulk-score/src/index.ts",
     "calibrate": "tsx packages/calibration/src/run.ts",
+    "validate": "tsx packages/validation/src/run.ts",
     "test": "turbo run test",
     "generate-key": "dotenv -e .env --override -- tsx tools/generate-key/src/index.ts",
     "api:dev": "dotenv -e .env --override -- tsx apps/api/src/index.ts",

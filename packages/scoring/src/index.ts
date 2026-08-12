@@ -18,3 +18,5 @@ export type { EngineInput, EngineResult } from './engine';
 
 export { reconcileSoH, computePassportAdjustment } from './passport';
 export type { PassportScoreAdjustment } from './passport';
+
+export { MODEL_VERSION, SUB_SCORE_WEIGHTS, GRADE_THRESHOLDS, EXPECTED_SOH_BY_CHEMISTRY } from './constants';

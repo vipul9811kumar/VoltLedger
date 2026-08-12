@@ -68,12 +68,21 @@ recovery data (none exists yet for this product). Never presented as a real lend
   calls (\`computeRiskScore\`, \`computeResidualValue\`) are the same production functions whose
   degradation assumptions are only validated against LCO cells (NASA/CALCE), not LFP/NMC/NCA
   directly — see \`packages/scoring/MODEL_CARD.md\`.
+- **Same seed is not bit-for-bit reproducible.** \`--seed\` deterministically fixes which
+  loans/chemistries/segments get generated and which default-timing rolls each arm sees
+  (verified: matched loans default in the same month across both arms). But
+  \`tools/synthetic-generator\`'s Gaussian sensor-noise functions use raw \`Math.random()\`, not
+  the seeded RNG — so each run's underlying battery trajectories carry fresh noise, and headline
+  numbers vary by a few percent run-to-run even with an unchanged seed. Confirmed directly: two
+  otherwise-identical n=300/seed=42 runs produced loss deltas of \\$1,229,998 and \\$1,255,869 —
+  close, not identical. Treat repeated runs as "the same regime," not "the same number."
 
 ## How to reproduce or vary a run
 
 \`tools/portfolio-sim\` takes \`--n <loans>\` and \`--seed <int>\`. Same seed + same
-\`methodology-params.json\` reproduces an identical portfolio and outcome. Vary the seed to see
-result sensitivity; vary the parameters to see policy sensitivity — both are expected uses of
-this tool, not "picking the run that looks best."
+\`methodology-params.json\` reproduces the same portfolio composition and matched default-timing
+rolls (see the noise caveat above for why headline numbers still drift slightly). Vary the seed
+to see result sensitivity; vary the parameters to see policy sensitivity — both are expected uses
+of this tool, not "picking the run that looks best."
 `;
 }

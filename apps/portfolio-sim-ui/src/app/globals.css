@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #0a0f1e;
+  --card: #111827;
+  --border: #1e2d40;
+  --accent: #3b82f6;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+pre, code { font-family: 'JetBrains Mono', monospace; }
+
+.badge-simulated { @apply bg-yellow-500/20 text-yellow-400 border border-yellow-500/30; }
+.arm-WITH { @apply bg-emerald-500/20 text-emerald-400 border border-emerald-500/30; }
+.arm-WITHOUT { @apply bg-red-500/20 text-red-400 border border-red-500/30; }
+
+.card { @apply bg-card border border-border rounded-lg p-5; }
+.label { @apply text-xs uppercase tracking-wide text-slate-500; }
+.input {
+  @apply w-full bg-navy border border-border rounded px-3 py-2 text-slate-100
+    focus:outline-none focus:border-accent;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }

@@ -11,3 +11,6 @@ apps/mock-los/.next/
 apps/mock-los/tsconfig.tsbuildinfo
 apps/mock-los/next-env.d.ts
 apps/mock-los/data/decisions.json
+apps/portfolio-sim-ui/.next/
+apps/portfolio-sim-ui/tsconfig.tsbuildinfo
+apps/portfolio-sim-ui/next-env.d.ts

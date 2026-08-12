@@ -20,6 +20,8 @@ export type {
   WebhookSubscription,
   WebhookDelivery,
   Loan,
+  PortfolioSimRun,
+  SimLoanOutcome,
 } from '@prisma/client';
 
 export type {

@@ -1,0 +1,9 @@
+{
+  "bands": {
+    "A": { "ltvCapPct": 85, "ratePremiumBps": 0, "decision": "ACCEPT" },
+    "B": { "ltvCapPct": 80, "ratePremiumBps": 15, "decision": "ACCEPT" },
+    "C": { "ltvCapPct": 70, "ratePremiumBps": 45, "decision": "REFER" },
+    "D": { "ltvCapPct": 55, "ratePremiumBps": 90, "decision": "REFER" },
+    "F": { "ltvCapPct": 0, "ratePremiumBps": 0, "decision": "DECLINE" }
+  }
+}

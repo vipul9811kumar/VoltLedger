@@ -7,6 +7,7 @@
     "apps/api",
     "apps/ingestion",
     "apps/dashboard",
+    "apps/mock-los",
     "packages/types",
     "packages/db",
     "packages/calibration",
@@ -38,7 +39,8 @@
     "test": "turbo run test",
     "generate-key": "dotenv -e .env --override -- tsx tools/generate-key/src/index.ts",
     "api:dev": "dotenv -e .env --override -- tsx apps/api/src/index.ts",
-    "dashboard:dev": "dotenv -e .env --override -- sh -c 'cd apps/dashboard && next dev -p 3002'"
+    "dashboard:dev": "dotenv -e .env --override -- sh -c 'cd apps/dashboard && next dev -p 3002'",
+    "mock-los:dev": "dotenv -e .env --override -- sh -c 'cd apps/mock-los && next dev -p 3003'"
   },
   "devDependencies": {
     "turbo": "^2.0.0",

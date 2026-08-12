@@ -26,3 +26,14 @@ builder = "DOCKERFILE"
 #   DATABASE_URL      — same Postgres plugin
 #   NODE_ENV          = production
 #   NEXT_TELEMETRY_DISABLED = 1
+
+# ── Mock LOS service (optional — demo/sales asset, WS-E) ────────────────────────
+# In Railway dashboard: create a third service → same repo →
+# "Dockerfile Path" = apps/mock-los/Dockerfile, "Build Context" = /
+# No database access — this app only calls the public API, like an external lender would.
+#
+# Required env vars for the mock-los service:
+#   VOLTLEDGER_API_URL — your deployed API service's URL
+#   VOLTLEDGER_API_KEY — from: pnpm generate-key --lender "Demo LOS" --label "mock-los" --env test
+#   NODE_ENV          = production
+#   NEXT_TELEMETRY_DISABLED = 1

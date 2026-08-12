@@ -10,7 +10,7 @@ import type {
 const REFERENCE_TEMP_C = 24; // NASA's "room temperature" batches
 
 /** Closed-form OLS: y = a + b*x. Returns slope, intercept, R^2. */
-function linearRegression(xs: number[], ys: number[]): { slope: number; intercept: number; rSquared: number } {
+export function linearRegression(xs: number[], ys: number[]): { slope: number; intercept: number; rSquared: number } {
   const n = xs.length;
   const xMean = xs.reduce((a, b) => a + b, 0) / n;
   const yMean = ys.reduce((a, b) => a + b, 0) / n;
@@ -67,7 +67,7 @@ function fitCellFadeRates(dataset: CapacityFadeDataset, cellIds: string[]): Cell
 // concentrates in NASA's own flagged batches (41-56, "capacity was very low
 // ... not fully analyzed" / "control software crashed") — that's the gate
 // corroborating NASA's caveat, not a threshold picked to fit a narrative.
-const MIN_CELL_FIT_R_SQUARED = 0.5;
+export const MIN_CELL_FIT_R_SQUARED = 0.5;
 
 function fitThermalSensitivity(cellRates: CellFadeRate[]): ThermalSensitivityFit {
   const reliable = cellRates.filter((r) => r.rSquared >= MIN_CELL_FIT_R_SQUARED);

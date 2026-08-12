@@ -1,6 +1,6 @@
 # Data Card — NASA PCoE Battery Data Set (calibration anchor)
 
-Generated: 2026-08-12T19:18:49.527Z
+Generated: 2026-08-12T20:08:01.235Z
 Model version: 0.1.0-nasa-pcoe
 
 ## Source

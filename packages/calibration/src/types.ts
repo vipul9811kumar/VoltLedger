@@ -75,3 +75,52 @@ export interface NasaPcoeCalibration {
   holdoutValidation: HoldoutValidation;
   perCellFadeRates: CellFadeRate[];
 }
+
+// ── CALCE (second, independent cross-check source — see convert_calce_xlsx.py) ──
+
+export interface CalcePoint {
+  cellId: string;
+  family: 'CS2' | 'CX2';
+  protocol: string;
+  cycleIndex: number;
+  elapsedDays: number;
+  capacityAhr: number;
+  initialCapacityAhr: number;
+  sohPct: number;
+}
+
+export interface CalceCellMeta {
+  cellId: string;
+  family: 'CS2' | 'CX2';
+  protocol: string;
+  ratedCapacityAh: number;
+  nCycles: number;
+  nDroppedCycles: number;
+  nSourceFiles: number;
+  initialCapacityAhr: number;
+  finalCapacityAhr: number;
+  finalSohPct: number;
+  totalElapsedDays: number;
+}
+
+export interface CalceDataset {
+  source: string;
+  sourceUrl: string;
+  citation: string;
+  chemistry: string;
+  ambientTempNote: string;
+  cells: CalceCellMeta[];
+  points: CalcePoint[];
+}
+
+/** Cross-check of the NASA-derived room-temp reference rate against CALCE's independent cells. */
+export interface CrossCheckResult {
+  generatedAt: string;
+  nasaReferenceLossPctPer100Cycles: number;
+  nasaReferenceTempC: number;
+  calceCellRates: CellFadeRate[]; // ambientTempC is a NaN sentinel here — CALCE temp is undocumented
+  calceMedianLossPctPer100Cycles: number;
+  calceMeanLossPctPer100Cycles: number;
+  nCalceCellsUsed: number;
+  ratioCalceToNasa: number;
+}

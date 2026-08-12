@@ -1,0 +1,243 @@
+{
+  "modelVersion": "0.1.0-nasa-pcoe",
+  "generatedAt": "2026-08-12T19:18:49.527Z",
+  "fit": {
+    "referenceLossPctPer100Cycles": 22.06496425357175,
+    "referenceTempC": 24,
+    "thermalSlopePctPer100CyclesPerDegC": -0.11995441415273156,
+    "rSquared": 0.05561234593052411,
+    "nCellsUsed": 14
+  },
+  "holdoutValidation": {
+    "nHoldoutCells": 4,
+    "nHoldoutCellsExcludedLowRSquared": 4,
+    "maeLossPctPer100Cycles": 8.321058626178909,
+    "rmseLossPctPer100Cycles": 9.812450517419409
+  },
+  "perCellFadeRates": [
+    {
+      "cellId": "B0005",
+      "ambientTempC": 24,
+      "lossPctPer100Cycles": 21.067453811734097,
+      "nPoints": 168,
+      "rSquared": 0.9756281932097008
+    },
+    {
+      "cellId": "B0006",
+      "ambientTempC": 24,
+      "lossPctPer100Cycles": 25.264729045712453,
+      "nPoints": 168,
+      "rSquared": 0.9636968911921374
+    },
+    {
+      "cellId": "B0007",
+      "ambientTempC": 24,
+      "lossPctPer100Cycles": 17.384723313305752,
+      "nPoints": 168,
+      "rSquared": 0.9763120030761347
+    },
+    {
+      "cellId": "B0018",
+      "ambientTempC": 24,
+      "lossPctPer100Cycles": 21.342360750940497,
+      "nPoints": 132,
+      "rSquared": 0.9400700980597692
+    },
+    {
+      "cellId": "B0025",
+      "ambientTempC": 24,
+      "lossPctPer100Cycles": 13.7603886152162,
+      "nPoints": 28,
+      "rSquared": 0.8798177425340028
+    },
+    {
+      "cellId": "B0026",
+      "ambientTempC": 24,
+      "lossPctPer100Cycles": 0,
+      "nPoints": 28,
+      "rSquared": 0.0014643124337763158
+    },
+    {
+      "cellId": "B0027",
+      "ambientTempC": 24,
+      "lossPctPer100Cycles": 6.057361795292828,
+      "nPoints": 28,
+      "rSquared": 0.48946033735383443
+    },
+    {
+      "cellId": "B0028",
+      "ambientTempC": 24,
+      "lossPctPer100Cycles": 14.731286261631091,
+      "nPoints": 28,
+      "rSquared": 0.8874919673154517
+    },
+    {
+      "cellId": "B0029",
+      "ambientTempC": 43,
+      "lossPctPer100Cycles": 28.06179924953094,
+      "nPoints": 40,
+      "rSquared": 0.8648230731962196
+    },
+    {
+      "cellId": "B0030",
+      "ambientTempC": 43,
+      "lossPctPer100Cycles": 27.89998592870544,
+      "nPoints": 40,
+      "rSquared": 0.8790433783956142
+    },
+    {
+      "cellId": "B0031",
+      "ambientTempC": 43,
+      "lossPctPer100Cycles": 17.559434333958727,
+      "nPoints": 40,
+      "rSquared": 0.6754357795186143
+    },
+    {
+      "cellId": "B0032",
+      "ambientTempC": 43,
+      "lossPctPer100Cycles": 28.606314258911823,
+      "nPoints": 40,
+      "rSquared": 0.8269288425394867
+    },
+    {
+      "cellId": "B0033",
+      "ambientTempC": 24,
+      "lossPctPer100Cycles": 11.747325387154568,
+      "nPoints": 188,
+      "rSquared": 0.32864681373105187
+    },
+    {
+      "cellId": "B0034",
+      "ambientTempC": 24,
+      "lossPctPer100Cycles": 6.540414504518924,
+      "nPoints": 197,
+      "rSquared": 0.34182749486096053
+    },
+    {
+      "cellId": "B0036",
+      "ambientTempC": 24,
+      "lossPctPer100Cycles": 5.152885662802269,
+      "nPoints": 197,
+      "rSquared": 0.29674319362763213
+    },
+    {
+      "cellId": "B0038",
+      "ambientTempC": 24,
+      "lossPctPer100Cycles": 0,
+      "nPoints": 47,
+      "rSquared": 0.47026878997443566
+    },
+    {
+      "cellId": "B0040",
+      "ambientTempC": 24,
+      "lossPctPer100Cycles": 0,
+      "nPoints": 46,
+      "rSquared": 0.3628276339800357
+    },
+    {
+      "cellId": "B0042",
+      "ambientTempC": 22,
+      "lossPctPer100Cycles": 16.86351330666465,
+      "nPoints": 65,
+      "rSquared": 0.95254510935184
+    },
+    {
+      "cellId": "B0043",
+      "ambientTempC": 22,
+      "lossPctPer100Cycles": 14.098652426598232,
+      "nPoints": 65,
+      "rSquared": 0.7609510231948278
+    },
+    {
+      "cellId": "B0044",
+      "ambientTempC": 22,
+      "lossPctPer100Cycles": 14.68099026341611,
+      "nPoints": 65,
+      "rSquared": 0.7684962322253086
+    },
+    {
+      "cellId": "B0045",
+      "ambientTempC": 4,
+      "lossPctPer100Cycles": 40.17023209628773,
+      "nPoints": 70,
+      "rSquared": 0.7740119226501802
+    },
+    {
+      "cellId": "B0046",
+      "ambientTempC": 4,
+      "lossPctPer100Cycles": 36.12462775103332,
+      "nPoints": 69,
+      "rSquared": 0.8163123664497247
+    },
+    {
+      "cellId": "B0047",
+      "ambientTempC": 4,
+      "lossPctPer100Cycles": 33.28571968948606,
+      "nPoints": 69,
+      "rSquared": 0.7355598106129437
+    },
+    {
+      "cellId": "B0048",
+      "ambientTempC": 4,
+      "lossPctPer100Cycles": 26.16722365453419,
+      "nPoints": 69,
+      "rSquared": 0.6774610672375121
+    },
+    {
+      "cellId": "B0049",
+      "ambientTempC": 4,
+      "lossPctPer100Cycles": 226.08239740259734,
+      "nPoints": 24,
+      "rSquared": 0.3973401473371506
+    },
+    {
+      "cellId": "B0050",
+      "ambientTempC": 4,
+      "lossPctPer100Cycles": 158.4060433422699,
+      "nPoints": 13,
+      "rSquared": 0.13312131680932038
+    },
+    {
+      "cellId": "B0051",
+      "ambientTempC": 4,
+      "lossPctPer100Cycles": 203.44026493506493,
+      "nPoints": 24,
+      "rSquared": 0.2912023193332868
+    },
+    {
+      "cellId": "B0052",
+      "ambientTempC": 4,
+      "lossPctPer100Cycles": 0,
+      "nPoints": 4,
+      "rSquared": 0.4958392354993726
+    },
+    {
+      "cellId": "B0053",
+      "ambientTempC": 4,
+      "lossPctPer100Cycles": 12.511172438672444,
+      "nPoints": 55,
+      "rSquared": 0.3071139139536493
+    },
+    {
+      "cellId": "B0054",
+      "ambientTempC": 4,
+      "lossPctPer100Cycles": 18.378616575535332,
+      "nPoints": 102,
+      "rSquared": 0.6732874322324006
+    },
+    {
+      "cellId": "B0055",
+      "ambientTempC": 4,
+      "lossPctPer100Cycles": 12.952760798638401,
+      "nPoints": 102,
+      "rSquared": 0.4712966646958453
+    },
+    {
+      "cellId": "B0056",
+      "ambientTempC": 4,
+      "lossPctPer100Cycles": 7.698852310702225,
+      "nPoints": 102,
+      "rSquared": 0.19890625145355012
+    }
+  ]
+}

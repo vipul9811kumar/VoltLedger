@@ -121,6 +121,10 @@ export interface ChemistryParams {
   socMax: number;
 }
 
+// PROVENANCE: hand-set, not fit to any dataset. First real-data comparison
+// point (not yet a calibration — chemistry mismatch, see caveats) lives in
+// packages/calibration/data/nasa-pcoe/{DATA_CARD,GENERATOR_COMPARISON}.md —
+// run `pnpm --filter @voltledger/calibration compare` to regenerate it.
 export const CHEMISTRY_PARAMS: Record<Chemistry, ChemistryParams> = {
   LFP: {
     calendarLossPctPerYear: 0.8,

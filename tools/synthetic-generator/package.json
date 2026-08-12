@@ -2,6 +2,8 @@
   "name": "@voltledger/synthetic-generator",
   "version": "0.1.0",
   "private": true,
+  "main": "./src/models.ts",
+  "types": "./src/models.ts",
   "description": "Realistic EV battery telemetry data generator for VoltLedger dev/testing",
   "scripts": {
     "generate": "dotenv -e ../../.env --override -- tsx src/index.ts",

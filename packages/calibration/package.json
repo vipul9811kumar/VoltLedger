@@ -1,0 +1,21 @@
+{
+  "name": "@voltledger/calibration",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --require tsx/cjs src/*.test.ts",
+    "calibrate": "tsx src/run.ts",
+    "compare": "tsx src/compare-to-generator.ts"
+  },
+  "dependencies": {
+    "@voltledger/synthetic-generator": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0",
+    "tsx": "^4.11.0"
+  }
+}

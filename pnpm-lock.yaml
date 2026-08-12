@@ -321,6 +321,28 @@ importers:
         specifier: ^5.4.0
         version: 5.9.3
 
+  tools/portfolio-sim:
+    dependencies:
+      '@voltledger/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@voltledger/scoring':
+        specifier: workspace:*
+        version: link:../../packages/scoring
+      '@voltledger/synthetic-generator':
+        specifier: workspace:*
+        version: link:../synthetic-generator
+    devDependencies:
+      '@types/node':
+        specifier: ^20.0.0
+        version: 20.19.37
+      tsx:
+        specifier: ^4.11.0
+        version: 4.21.0
+      typescript:
+        specifier: ^5.4.0
+        version: 5.9.3
+
   tools/synthetic-generator:
     dependencies:
       '@voltledger/db':

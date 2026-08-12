@@ -1,0 +1,21 @@
+{
+  "name": "@voltledger/portfolio-sim",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WS-D portfolio loss simulator — counterfactual with/without VoltLedger signal (SIMULATED_CALIBRATED)",
+  "main": "./src/index.ts",
+  "scripts": {
+    "start": "tsx src/run.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@voltledger/db": "workspace:*",
+    "@voltledger/scoring": "workspace:*",
+    "@voltledger/synthetic-generator": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.11.0",
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  }
+}

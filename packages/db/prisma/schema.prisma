@@ -587,6 +587,7 @@ model Loan {
   updatedAt       DateTime  @updatedAt
 
   originationAudits OriginationAudit[]
+  simLoanOutcomes   SimLoanOutcome[]
 
   @@index([batteryId])
   @@map("loans")
@@ -758,4 +759,49 @@ model OriginationAudit {
   @@index([batteryId])
   @@index([lenderId])
   @@map("origination_audits")
+}
+
+// ─────────────────────────────────────────────
+// WS-D — PORTFOLIO LOSS SIMULATOR (counterfactual, SIMULATED_CALIBRATED)
+// ─────────────────────────────────────────────
+
+model PortfolioSimRun {
+  id                 String   @id @default(cuid())
+  runAt              DateTime @default(now())
+  methodologyVersion String
+  nLoans             Int
+  seed               Int
+  provenance         String   @default("SIMULATED_CALIBRATED")
+
+  withNetLossUsd    Float
+  withoutNetLossUsd Float
+  lossDeltaUsd      Float
+  withLgdPct        Float
+  withoutLgdPct     Float
+
+  outcomes SimLoanOutcome[]
+
+  @@map("portfolio_sim_runs")
+}
+
+model SimLoanOutcome {
+  id     String          @id @default(cuid())
+  runId  String
+  run    PortfolioSimRun @relation(fields: [runId], references: [id])
+  loanId String? // optional link to a real Loan row; null for a pure simulation run
+  loan   Loan?           @relation(fields: [loanId], references: [id])
+
+  chemistry String
+  segment   String // USAGE_PROFILES name, used as a segment proxy
+  arm       String // WITH | WITHOUT
+
+  originatedLtvPct    Float
+  loanAmountUsd       Float
+  defaulted           Boolean
+  defaultMonth        Int?
+  realizedRecoveryUsd Float?
+  netLossUsd          Float
+
+  @@index([runId])
+  @@map("sim_loan_outcomes")
 }

@@ -1,0 +1,21 @@
+{
+  "_note": "Illustrative starting assumptions, NOT fitted to real default/recovery data — nothing exists yet to calibrate this against. Gate D sign-off (2026-08-12): parametric multiplier hazard model, flat-LTV baseline for the WITHOUT arm, existing packages/scoring residual-value logic for recovery. Edit freely; every output stays labeled SIMULATED_CALIBRATED regardless of these values.",
+  "baselineAnnualDefaultProbability": 0.03,
+  "ltvBandMultipliers": {
+    "under60": 0.8,
+    "60to75": 1.0,
+    "75to85": 1.4,
+    "over85": 2.0
+  },
+  "gradeMultipliers": {
+    "A": 0.5,
+    "B": 0.8,
+    "C": 1.2,
+    "D": 2.0,
+    "F": 3.5
+  },
+  "withoutPolicyFlatLtvPct": 70,
+  "withoutPolicyFlatRateBps": 650,
+  "repossessionLiquidationDiscountPct": 20,
+  "loanTermMonths": 48
+}

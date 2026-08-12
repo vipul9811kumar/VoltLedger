@@ -14,7 +14,8 @@
     "packages/validation",
     "tools/synthetic-generator",
     "tools/bulk-score",
-    "tools/generate-key"
+    "tools/generate-key",
+    "tools/portfolio-sim"
   ],
   "scripts": {
     "dev": "turbo run dev",
@@ -36,6 +37,7 @@
     "generate:synthetic:fleet": "dotenv -e .env --override -- tsx tools/synthetic-generator/src/index.ts --batteries 100 --weeks 260",
     "generate:synthetic:seed": "dotenv -e .env --override -- tsx tools/synthetic-generator/src/index.ts --batteries 50 --weeks 260 --seed-db",
     "bulk-score": "dotenv -e .env --override -- tsx tools/bulk-score/src/index.ts",
+    "portfolio-sim": "dotenv -e .env --override -- tsx tools/portfolio-sim/src/run.ts",
     "calibrate": "tsx packages/calibration/src/run.ts",
     "validate": "tsx packages/validation/src/run.ts",
     "test": "turbo run test",

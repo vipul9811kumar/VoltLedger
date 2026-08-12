@@ -20,6 +20,8 @@ export interface DecisionRecord {
     attest?: ApiTrace<AttestResponse>;
   };
   underwriting: UnderwritingResult;
+  /** Always present — the real attestationText for ACCEPT, a generated narrative otherwise. See lib/narrative.ts. */
+  narrativeText: string;
 }
 
 function ensureLogFile(): void {

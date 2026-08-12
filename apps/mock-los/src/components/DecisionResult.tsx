@@ -66,29 +66,49 @@ export function DecisionResult({ record }: { record: DecisionRecord }) {
         </div>
       </div>
 
-      {traces.attest ? (
-        <div className="card">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="font-medium text-slate-100">Origination attestation</h3>
-            <span className="text-xs px-2 py-0.5 rounded font-mono bg-emerald-500/20 text-emerald-400">
+      <div className="card">
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="font-medium text-slate-100">
+            {traces.attest?.ok ? 'Origination attestation' : 'Decision narrative'}
+          </h3>
+          {traces.attest ? (
+            <span
+              className={`text-xs px-2 py-0.5 rounded font-mono ${
+                traces.attest.ok ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'
+              }`}
+            >
               POST → {traces.attest.response.status}
             </span>
-          </div>
-          {traces.attest.ok ? (
-            <>
-              <p className="label mb-1">Audit ID</p>
-              <p className="font-mono text-sm text-slate-100 mb-3">{traces.attest.response.body.auditId}</p>
-              <pre className="text-sm bg-navy border border-border rounded p-3 whitespace-pre-wrap">
-                {traces.attest.response.body.attestationText}
-              </pre>
-            </>
           ) : (
+            <span className="text-xs px-2 py-0.5 rounded font-mono bg-slate-500/20 text-slate-400">
+              not an origination record
+            </span>
+          )}
+        </div>
+
+        {traces.attest?.ok ? (
+          <>
+            <p className="label mb-1">Audit ID</p>
+            <p className="font-mono text-sm text-slate-100 mb-3">{traces.attest.response.body.auditId}</p>
+          </>
+        ) : null}
+
+        <pre className="text-sm bg-navy border border-border rounded p-3 whitespace-pre-wrap">
+          {record.narrativeText}
+        </pre>
+
+        {traces.attest && !traces.attest.ok ? (
+          <>
+            <p className="text-xs text-yellow-400 mt-3 mb-1">
+              Attestation call failed even though the decision was ACCEPT — showing a generated narrative instead
+              of a real audit record. Raw error:
+            </p>
             <pre className="text-xs bg-navy border border-border rounded p-3 overflow-x-auto">
               {JSON.stringify(traces.attest.response.body, null, 2)}
             </pre>
-          )}
-        </div>
-      ) : null}
+          </>
+        ) : null}
+      </div>
     </div>
   );
 }

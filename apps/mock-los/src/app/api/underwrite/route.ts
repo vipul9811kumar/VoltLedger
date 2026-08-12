@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { attestOrigination, getLtv, getResidualValue, getRisk } from '@/lib/voltledger-client';
 import { applyPolicy, readPolicy } from '@/lib/policy';
 import { appendDecision } from '@/lib/decisions-log';
+import { generateDecisionNarrative } from '@/lib/narrative';
 
 interface UnderwriteRequestBody {
   applicantName: string;
@@ -52,6 +53,24 @@ export async function POST(req: NextRequest) {
       ? await attestOrigination({ batterySerial, vehicleValueUsd })
       : undefined;
 
+  // Every decision gets an explanation, not just approvals. ACCEPT uses the
+  // real, evidence-locked attestationText (when the attest call succeeded);
+  // REFER/DECLINE — and ACCEPT if attest unexpectedly failed — get a
+  // locally-generated narrative instead (never a fabricated audit record).
+  const narrativeText =
+    attest?.ok
+      ? attest.response.body.attestationText
+      : generateDecisionNarrative({
+          applicantName,
+          batterySerial,
+          requestedLoanAmountUsd,
+          vehicleValueUsd,
+          risk: risk.response.body,
+          ltv: ltv.response.body,
+          residualValue: residualValue.response.body,
+          underwriting,
+        });
+
   const record = appendDecision({
     applicant: { name: applicantName },
     batterySerial,
@@ -59,6 +78,7 @@ export async function POST(req: NextRequest) {
     vehicleValueUsd,
     traces: { risk, ltv, residualValue, attest },
     underwriting,
+    narrativeText,
   });
 
   return NextResponse.json(record, { status: 200 });

@@ -39,6 +39,12 @@ export function generateDecisionNarrative(params: {
     lines.push('This risk grade falls outside the lender policy\'s acceptable range for financing at this time.');
   }
 
+  if (risk.provenance === 'SIMULATED_CALIBRATED') {
+    lines.push('Data provenance: SIMULATED_CALIBRATED. This is demonstration data; no design-partner performance claim is being made.');
+  } else {
+    lines.push(`Data provenance: ${risk.provenance}.`);
+  }
+
   if (risk.flags.abnormalDegradation || risk.flags.thermalAnomalyDetected || risk.flags.highDcfcUsage || risk.flags.deepDischargeHistory) {
     const activeFlags = Object.entries(risk.flags)
       .filter(([, v]) => v)

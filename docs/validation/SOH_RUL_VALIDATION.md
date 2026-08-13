@@ -1,6 +1,6 @@
 # WS-B — SoH/RUL validation vs. real cells
 
-Generated: 2026-08-12T21:15:20.519Z
+Generated: 2026-08-13T02:02:44.711Z
 
 ## What this is and isn't
 

@@ -1,7 +1,7 @@
 # VoltLedger Risk Scoring — Model Card
 
 Model version: 1.0
-Generated: 2026-08-12T21:15:20.519Z
+Generated: 2026-08-13T02:02:44.711Z
 
 ## What this model does
 

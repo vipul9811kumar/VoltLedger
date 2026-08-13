@@ -8,6 +8,7 @@
 
 import type { FastifyInstance } from 'fastify';
 import { prisma } from '@voltledger/db';
+import { deriveProvenance } from '@voltledger/scoring';
 import { notFound, serverError } from '../lib/errors';
 import type { OriginationEvidenceSnapshot } from '@voltledger/types';
 
@@ -48,6 +49,7 @@ export async function originationRoutes(app: FastifyInstance) {
       const riskScore = battery.riskScores[0];
       const rv        = battery.residualValues[0];
       const ltv       = battery.ltvRecommendations[0];
+      const provenance = deriveProvenance(battery.dataSource);
 
       // Determine SoH source for this origination
       let sohSource: string;
@@ -119,6 +121,7 @@ export async function originationRoutes(app: FastifyInstance) {
         scoreLine,
         rv ? `Residual value estimate: $${rv.batteryResidualValueUsd.toFixed(0)} USD (${Math.round(rv.batteryValuePctOfVehicle * 100)}% of vehicle value).` : '',
         ltv ? `Recommended LTV: ${ltv.recommendedLtvPct.toFixed(1)}% | Risk premium: ${ltv.riskPremiumBps}bps.` : '',
+        `Data provenance: ${provenance}.${provenance === 'SIMULATED_CALIBRATED' ? ' This is demonstration data; no design-partner performance claim is being made.' : ''}`,
         `This attestation captures the data state at the time of origination. VoltLedger verifies passport data on behalf of the lender but does not assume regulatory compliance obligations.`,
         `Generated: ${new Date().toISOString()}`,
       ].filter(Boolean).join('\n');
@@ -139,6 +142,7 @@ export async function originationRoutes(app: FastifyInstance) {
           evidenceSnapshot:           evidenceSnapshot as any,
           attestationText,
           attestationVersion:         '1.0',
+          provenance,
         },
       });
 
@@ -154,6 +158,7 @@ export async function originationRoutes(app: FastifyInstance) {
         compositeScore:   riskScore?.compositeScore ?? null,
         riskGrade:        riskScore?.grade ?? null,
         attestationText,
+        provenance,
         checkedAt:        audit.checkedAt,
       });
     } catch (err) {

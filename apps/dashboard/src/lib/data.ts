@@ -61,6 +61,8 @@ interface ResidualValueEstimate {
   dataLessBatteryResidualValueUsd?: number | null;
 }
 
+export type Provenance = 'REAL_ANCHORED' | 'SIMULATED_CALIBRATED' | 'ILLUSTRATIVE';
+
 interface Battery {
   id: string;
   serialNumber: string;
@@ -70,6 +72,7 @@ interface Battery {
   status: string;
   manufacturedAt?: string | null;
   lastTelemetryAt?: string | null;
+  provenance?: Provenance;
   batteryModel: BatteryModel;
   riskScores: RiskScore[];
 }
@@ -234,5 +237,99 @@ export async function getBatteryPassport(serial: string): Promise<PassportRespon
     return await apiFetch<PassportResponse>(`/v1/passport/battery/${serial}`);
   } catch {
     return { hasPassport: false, serial, message: 'Could not fetch passport data' };
+  }
+}
+
+// ── Validation section (WS-G) ───────────────────────────────────────────────────
+
+export interface ValidationDocumentSummary {
+  id: string;
+  title: string;
+  workstream: string;
+  summary: string;
+}
+
+export interface ValidationDocumentContent {
+  id: string;
+  title: string;
+  workstream: string;
+  content: string;
+}
+
+export interface PortfolioSimLatest {
+  id: string;
+  runAt: string;
+  methodologyVersion: string;
+  nLoans: number;
+  seed: number;
+  provenance: Provenance;
+  withNetLossUsd: number;
+  withoutNetLossUsd: number;
+  lossDeltaUsd: number;
+  withLgdPct: number;
+  withoutLgdPct: number;
+  portfolioSimUiUrl: string;
+}
+
+export interface ErrorStats {
+  n: number;
+  maeLossPctPer100Cycles: number;
+  rmseLossPctPer100Cycles: number;
+  maeRulCycles: number;
+  rmseRulCycles: number;
+}
+
+export interface SohRulChartData {
+  generatedAt: string;
+  overallByChemistry: Record<string, ErrorStats>;
+}
+
+export interface RvBacktestRow {
+  period: string;
+  releaseLabel: string;
+  modeledIndexLevel: number;
+  modeledPctChangeFromPrev: number | null;
+  realEvIndexPctYoY: number | null;
+  realEvIndexPctMoM: number | null;
+  directionAgreement: 'AGREE' | 'DISAGREE' | 'N/A';
+}
+
+export interface RvBacktestChartData {
+  rows: RvBacktestRow[];
+}
+
+export async function getValidationDocuments() {
+  return apiFetch<{ documents: ValidationDocumentSummary[] }>('/v1/validation/documents');
+}
+
+export async function getValidationDocumentContent(id: string) {
+  try {
+    return await apiFetch<ValidationDocumentContent>(`/v1/validation/documents/${id}`);
+  } catch {
+    return null;
+  }
+}
+
+export async function getPortfolioSimLatest() {
+  try {
+    return await apiFetch<PortfolioSimLatest>('/v1/validation/portfolio-sim-latest');
+  } catch {
+    return null;
+  }
+}
+
+export async function getSohRulChart() {
+  try {
+    return await apiFetch<SohRulChartData>('/v1/validation/charts/soh-rul');
+  } catch {
+    return null;
+  }
+}
+
+export async function getRvBacktestChart() {
+  try {
+    return await apiFetch<RvBacktestChartData>('/v1/validation/charts/rv-backtest');
+  } catch {
+    return null;
   }
 }

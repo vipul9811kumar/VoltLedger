@@ -12,6 +12,7 @@ type RunResult = {
   nLoans: number;
   seed: number;
   runAt: string;
+  provenance: string;
   outcomes: SimLoanOutcome[];
 };
 
@@ -226,6 +227,7 @@ export default function ParametersPage() {
             nLoans={result.nLoans}
             seed={result.seed}
             runAt={result.runAt}
+            provenance={result.provenance}
             withSummary={withSummary}
             withoutSummary={withoutSummary}
           />

@@ -43,6 +43,7 @@ export default async function LatestRunPage() {
         nLoans={run.nLoans}
         seed={run.seed}
         runAt={run.runAt.toISOString()}
+        provenance={run.provenance}
         withSummary={withSummary}
         withoutSummary={withoutSummary}
       />

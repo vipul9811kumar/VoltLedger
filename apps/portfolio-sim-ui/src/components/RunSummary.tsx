@@ -8,12 +8,14 @@ export function RunSummary({
   nLoans,
   seed,
   runAt,
+  provenance,
   withSummary,
   withoutSummary,
 }: {
   nLoans: number;
   seed: number;
   runAt: string;
+  provenance: string;
   withSummary: ArmSummary;
   withoutSummary: ArmSummary;
 }) {
@@ -21,8 +23,9 @@ export function RunSummary({
 
   return (
     <div className="space-y-4">
-      <div className="text-sm text-slate-500">
-        {new Date(runAt).toLocaleString()} · seed {seed} · {nLoans} loans
+      <div className="text-sm text-slate-500 flex items-center gap-2">
+        <span>{new Date(runAt).toLocaleString()} · seed {seed} · {nLoans} loans</span>
+        <span className="badge-simulated text-xs px-2 py-0.5 rounded font-mono">{provenance}</span>
       </div>
 
       <div className="grid md:grid-cols-3 gap-4">

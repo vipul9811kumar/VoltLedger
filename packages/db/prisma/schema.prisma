@@ -92,6 +92,14 @@ enum RiskGrade {
   F
 }
 
+// WS-G: build spec v2 §1.3's transparency guardrail — everything the Evidence Layer surfaces
+// states whether it's backed by a real battery/data source or synthetic demo data.
+enum Provenance {
+  REAL_ANCHORED
+  SIMULATED_CALIBRATED
+  ILLUSTRATIVE
+}
+
 enum SecondLifeUseCase {
   STATIONARY_STORAGE_GRID
   STATIONARY_STORAGE_COMMERCIAL
@@ -767,6 +775,9 @@ model OriginationAudit {
   // Lender-facing attestation
   attestationText    String
   attestationVersion String @default("1.0")
+
+  // WS-G: frozen at the time of underwriting, derived from battery.dataSource
+  provenance Provenance @default(SIMULATED_CALIBRATED)
 
   createdAt DateTime @default(now())
 

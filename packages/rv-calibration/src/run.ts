@@ -16,6 +16,9 @@ function main() {
   mkdirSync(docsDir, { recursive: true });
   writeFileSync(join(docsDir, 'RV_MARKET_BACKTEST.md'), renderBacktestReport(backtest));
 
+  // WS-G: small JSON sidecar for the dashboard's Validation page chart.
+  writeFileSync(join(docsDir, 'RV_MARKET_BACKTEST.json'), JSON.stringify(backtest, null, 2));
+
   console.log('Implied 3yr battery retention vs. Autovista whole-vehicle %RV band:');
   for (const r of calibration.impliedRetention) {
     const inBand =

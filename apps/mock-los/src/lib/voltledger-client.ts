@@ -66,11 +66,14 @@ export interface BatteryLookupResult {
   riskScores?: Array<{ compositeScore: number; grade: RiskGrade }>;
 }
 
+export type Provenance = 'REAL_ANCHORED' | 'SIMULATED_CALIBRATED' | 'ILLUSTRATIVE';
+
 export interface RiskResponse {
   batteryId: string;
   serialNumber: string;
   scoredAt: string;
   modelVersion: string;
+  provenance: Provenance;
   compositeScore: number;
   grade: RiskGrade;
   confidenceLevel: number;
@@ -93,6 +96,7 @@ export interface LtvResponse {
   batteryId: string;
   serialNumber: string;
   generatedAt: string;
+  provenance: Provenance;
   recommendation: {
     recommendedLtvPct: number;
     maxLtvPct: number;
@@ -114,6 +118,7 @@ export interface ResidualValueResponse {
   batteryId: string;
   serialNumber: string;
   estimatedAt: string;
+  provenance: Provenance;
   current: {
     vehicleMarketValueUsd: number;
     batteryResidualValueUsd: number;
@@ -136,6 +141,7 @@ export interface AttestResponse {
   compositeScore: number | null;
   riskGrade: RiskGrade | null;
   attestationText: string;
+  provenance: Provenance;
   checkedAt: string;
 }
 

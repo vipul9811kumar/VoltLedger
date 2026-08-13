@@ -5,13 +5,14 @@
 
 import type { FastifyInstance } from 'fastify';
 import { prisma } from '@voltledger/db';
+import { deriveProvenance } from '@voltledger/scoring';
 import { notFound } from '../lib/errors';
 
 export async function residualValueRoutes(app: FastifyInstance) {
   app.get<{ Params: { serial: string } }>('/:serial/residual-value', async (req, reply) => {
     const battery = await prisma.battery.findUnique({
       where: { serialNumber: req.params.serial },
-      select: { id: true },
+      select: { id: true, dataSource: true },
     });
 
     if (!battery) return notFound(reply, `Battery ${req.params.serial} not found`);
@@ -31,6 +32,7 @@ export async function residualValueRoutes(app: FastifyInstance) {
       batteryId:    battery.id,
       serialNumber: req.params.serial,
       estimatedAt:  estimate.estimatedAt,
+      provenance:   deriveProvenance(battery.dataSource),
 
       current: {
         vehicleMarketValueUsd:    estimate.vehicleMarketValueUsd,

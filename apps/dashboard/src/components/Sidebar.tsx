@@ -6,10 +6,11 @@ import { UserButton } from '@clerk/nextjs';
 import clsx from 'clsx';
 
 const NAV = [
-  { href: '/',       label: 'Overview', icon: '◈' },
-  { href: '/fleet',  label: 'Fleet',    icon: '⬡' },
-  { href: '/flagged',label: 'Flagged',  icon: '⚑' },
-  { href: '/account',label: 'Account',  icon: '⊙' },
+  { href: '/',           label: 'Overview',   icon: '◈' },
+  { href: '/fleet',      label: 'Fleet',      icon: '⬡' },
+  { href: '/flagged',    label: 'Flagged',    icon: '⚑' },
+  { href: '/validation', label: 'Validation', icon: '✓' },
+  { href: '/account',    label: 'Account',    icon: '⊙' },
 ];
 
 const ADMIN_NAV = { href: '/admin/requests', label: 'Requests', icon: '✉' };

@@ -10,6 +10,7 @@
 
 import type { FastifyInstance } from 'fastify';
 import { prisma } from '@voltledger/db';
+import { deriveProvenance } from '@voltledger/scoring';
 
 export async function fleetRoutes(app: FastifyInstance) {
   // ── Fleet overview stats ───────────────────────────────────────────────────
@@ -169,6 +170,6 @@ export async function fleetRoutes(app: FastifyInstance) {
       },
     });
     if (!battery) return reply.status(404).send({ error: 'Battery not found' });
-    return battery;
+    return { ...battery, provenance: deriveProvenance(battery.dataSource) };
   });
 }

@@ -27,3 +27,6 @@ export {
   MARKET_DEPRECIATION_RATE,
   BATTERY_VALUE_PCT,
 } from './constants';
+
+export { deriveProvenance } from './provenance';
+export type { Provenance } from '@voltledger/types';

@@ -28,6 +28,7 @@ export default async function RunDetailPage({ params }: { params: { id: string }
         nLoans={run.nLoans}
         seed={run.seed}
         runAt={run.runAt.toISOString()}
+        provenance={run.provenance}
         withSummary={withSummary}
         withoutSummary={withoutSummary}
       />

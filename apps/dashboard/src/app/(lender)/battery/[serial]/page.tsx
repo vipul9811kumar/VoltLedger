@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getBatteryDetail, getBatteryPassport } from '@/lib/data';
 import { GradeBadge } from '@/components/GradeBadge';
+import { ProvenanceBadge } from '@/components/ProvenanceBadge';
 import { ScoreBar } from '@/components/ScoreBar';
 import { SoHChart } from '@/components/SoHChart';
 import { PassportPanel } from '@/components/PassportPanel';
@@ -41,6 +42,7 @@ export default async function BatteryDetailPage({ params }: { params: { serial: 
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-bold text-white font-mono">{battery.serialNumber}</h1>
             {risk && <GradeBadge grade={risk.grade} size="lg" showLabel />}
+            {battery.provenance && <ProvenanceBadge provenance={battery.provenance} />}
           </div>
           <p className="text-slate-500 text-sm mt-1">
             {battery.batteryModel.manufacturer} · {battery.batteryModel.modelName} ·{' '}

@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-08-13T02:02:44.711Z",
+  "overallByChemistry": {
+    "LFP": {
+      "n": 31,
+      "maeLossPctPer100Cycles": 14.615010292222847,
+      "rmseLossPctPer100Cycles": 18.388622429716705,
+      "maeRulCycles": 3692.063444765011,
+      "rmseRulCycles": 3704.850665724864
+    },
+    "NMC": {
+      "n": 31,
+      "maeLossPctPer100Cycles": 14.115010292222847,
+      "rmseLossPctPer100Cycles": 17.993788499658912,
+      "maeRulCycles": 1692.0634447650123,
+      "rmseRulCycles": 1719.786229815184
+    },
+    "NCA": {
+      "n": 31,
+      "maeLossPctPer100Cycles": 13.915010292222844,
+      "rmseLossPctPer100Cycles": 17.837332212345213,
+      "maeRulCycles": 1358.7301114316786,
+      "rmseRulCycles": 1393.1021107094155
+    }
+  }
+}

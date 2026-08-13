@@ -11,6 +11,13 @@ function main() {
   mkdirSync(docsDir, { recursive: true });
   writeFileSync(join(docsDir, 'SOH_RUL_VALIDATION.md'), renderValidationReport(result));
 
+  // WS-G: small JSON sidecar for the dashboard's Validation page chart — trimmed to just
+  // what a chart needs (overallByChemistry), not the full per-cell rows.
+  writeFileSync(
+    join(docsDir, 'SOH_RUL_VALIDATION.json'),
+    JSON.stringify({ generatedAt: result.generatedAt, overallByChemistry: result.overallByChemistry }, null, 2),
+  );
+
   const scoringDir = join(__dirname, '..', '..', 'scoring');
   writeFileSync(join(scoringDir, 'MODEL_CARD.md'), renderModelCard(result));
 

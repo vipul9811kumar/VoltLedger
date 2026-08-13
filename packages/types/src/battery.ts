@@ -6,6 +6,15 @@ export type BatteryChemistry = 'LFP' | 'NMC' | 'NCA' | 'LTO' | 'UNKNOWN';
 export type BatteryStatus = 'ACTIVE' | 'FLAGGED' | 'DECOMMISSIONED' | 'SECOND_LIFE';
 export type DataSourceType = 'OEM_API' | 'MQTT_TELEMATICS' | 'MANUAL_UPLOAD' | 'AUCTION_SCAN';
 
+/**
+ * Build spec v2 §1.3's transparency guardrail: everything the Evidence Layer surfaces states
+ * whether it's REAL_ANCHORED (real battery, real data source), SIMULATED_CALIBRATED (synthetic
+ * demo data, calibrated model), or ILLUSTRATIVE (not tied to any real-or-synthetic battery at
+ * all — no current producer, reserved for future ad-hoc scenarios). See
+ * packages/scoring/src/provenance.ts for how this is derived from a battery's DataSource.
+ */
+export type Provenance = 'REAL_ANCHORED' | 'SIMULATED_CALIBRATED' | 'ILLUSTRATIVE';
+
 export interface Battery {
   id: string;
   vin: string;

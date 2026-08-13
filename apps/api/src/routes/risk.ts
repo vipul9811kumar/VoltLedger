@@ -5,13 +5,14 @@
 
 import type { FastifyInstance } from 'fastify';
 import { prisma } from '@voltledger/db';
+import { deriveProvenance } from '@voltledger/scoring';
 import { notFound } from '../lib/errors';
 
 export async function riskRoutes(app: FastifyInstance) {
   app.get<{ Params: { serial: string } }>('/:serial/risk', async (req, reply) => {
     const battery = await prisma.battery.findUnique({
       where: { serialNumber: req.params.serial },
-      select: { id: true },
+      select: { id: true, dataSource: true },
     });
 
     if (!battery) return notFound(reply, `Battery ${req.params.serial} not found`);
@@ -32,6 +33,7 @@ export async function riskRoutes(app: FastifyInstance) {
       serialNumber:   req.params.serial,
       scoredAt:       score.scoredAt,
       modelVersion:   score.modelVersion,
+      provenance:     deriveProvenance(battery.dataSource),
 
       // Composite
       compositeScore: score.compositeScore,

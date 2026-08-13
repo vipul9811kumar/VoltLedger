@@ -48,6 +48,19 @@ interface BatteryModel {
   warrantyYears?: number;
 }
 
+interface ResidualValueEstimate {
+  batteryResidualValueUsd: number;
+  vehicleMarketValueUsd: number;
+  batteryValuePctOfVehicle: number;
+  residualAt12MonthsUsd: number;
+  residualAt24MonthsUsd: number;
+  residualAt36MonthsUsd: number;
+  residualAt60MonthsUsd: number;
+  sohSourceUsed?: string;              // PASSPORT | TELEMETRY | BLENDED | NONE | PROXY
+  verificationUpliftUsd?: number | null;
+  dataLessBatteryResidualValueUsd?: number | null;
+}
+
 interface Battery {
   id: string;
   serialNumber: string;
@@ -90,7 +103,7 @@ export async function getBatteryList(page = 1, pageSize = 20, grade?: string) {
 export async function getBatteryDetail(serialNumber: string) {
   try {
     return await apiFetch<Battery & {
-      residualValues: any[];
+      residualValues: ResidualValueEstimate[];
       ltvRecommendations: any[];
       secondLifeAssessments: any[];
       degradationForecasts: any[];

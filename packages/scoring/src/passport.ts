@@ -6,6 +6,7 @@
  */
 
 import type { PassportContext, ReconciledSoH, SoHSource } from '@voltledger/types';
+import { DATALESS_SOH_ASSUMPTION } from './constants';
 
 // ── SoH reconciliation ────────────────────────────────────────────────────────
 
@@ -29,7 +30,7 @@ export function reconcileSoH(
 
   // No data at all
   if (!hasTelemetry && !hasPassportSoH) {
-    return { value: 85, source: 'NONE', confidence: 0.1 };
+    return { value: DATALESS_SOH_ASSUMPTION, source: 'NONE', confidence: 0.1 };
   }
 
   // Telemetry only

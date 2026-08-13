@@ -1,0 +1,42 @@
+[
+  {
+    "period": "2026-05",
+    "releaseLabel": "May 2026",
+    "evIndexPctYoY": 11.9,
+    "evIndexPctMoM": 3.5,
+    "nonEvIndexPctYoY": 3.0,
+    "nonEvIndexPctMoM": 0.0,
+    "overallMuvviLevel": null,
+    "sourceUrl": "https://www.coxautoinc.com/insights/manheim-used-vehicle-value-index-may-2026-trends/",
+    "sourceTitle": "Manheim Used Vehicle Value Index: May 2026 Trends",
+    "retrievedAt": "2026-08-13",
+    "notes": "First month Cox Automotive published a separate EV vs non-EV index split."
+  },
+  {
+    "period": "2026-06-mid",
+    "releaseLabel": "Mid-June 2026",
+    "evIndexPctYoY": 13.7,
+    "evIndexPctMoM": null,
+    "nonEvIndexPctYoY": null,
+    "nonEvIndexPctMoM": null,
+    "overallMuvviPctMoM": 2.6,
+    "overallMuvviLevel": null,
+    "sourceUrl": "https://autobodynews.com/news/ev-wholesale-values-climb-13-7-as-manheim-index-rises-2-6-in-mid-june",
+    "sourceTitle": "EV Wholesale Values Climb 13.7% as Manheim Index Rises 2.6% in Mid-June",
+    "retrievedAt": "2026-08-13",
+    "notes": "Mid-month release; overall MUVVI %MoM given, EV-specific %MoM not stated in this source."
+  },
+  {
+    "period": "2026-07-mid",
+    "releaseLabel": "Mid-July 2026",
+    "evIndexPctYoY": 12.4,
+    "evIndexPctMoM": -0.4,
+    "nonEvIndexPctYoY": 1.1,
+    "nonEvIndexPctMoM": -0.5,
+    "overallMuvviLevel": 211.5,
+    "sourceUrl": "https://www.coxautoinc.com/insights/manheim-used-vehicle-value-index-mid-july-2026-trends/",
+    "sourceTitle": "Manheim Used Vehicle Value Index: Mid-July 2026 Trends",
+    "retrievedAt": "2026-08-13",
+    "notes": null
+  }
+]

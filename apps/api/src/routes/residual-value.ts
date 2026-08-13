@@ -38,6 +38,9 @@ export async function residualValueRoutes(app: FastifyInstance) {
         batteryValuePctOfVehicle: Math.round(estimate.batteryValuePctOfVehicle * 1000) / 10,
         confidenceLow:            estimate.confidenceLowUsd,
         confidenceHigh:           estimate.confidenceHighUsd,
+        sohSourceUsed:            estimate.sohSourceUsed,
+        verificationUpliftUsd:    estimate.verificationUpliftUsd,
+        dataLessBatteryResidualValueUsd: estimate.dataLessBatteryResidualValueUsd,
       },
 
       forecast: {

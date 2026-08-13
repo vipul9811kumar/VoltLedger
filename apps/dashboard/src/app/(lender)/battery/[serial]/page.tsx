@@ -155,6 +155,17 @@ export default async function BatteryDetailPage({ params }: { params: { serial: 
                   <ForecastPoint label="60m" value={usd(rv.residualAt60MonthsUsd)} />
                 </div>
               </div>
+              {!!rv.verificationUpliftUsd && (
+                <div className="mt-4 pt-3 border-t border-[#1e2d40] flex items-center justify-between text-xs">
+                  <span className="text-slate-500">Verification uplift</span>
+                  <span className="text-emerald-400 font-mono font-semibold">+{usd(rv.verificationUpliftUsd)}</span>
+                </div>
+              )}
+              {rv.sohSourceUsed && (
+                <div className="mt-2">
+                  <SoHSourceBadge source={rv.sohSourceUsed} />
+                </div>
+              )}
             </>
           ) : <p className="text-sm text-slate-500">No estimate available</p>}
         </div>
@@ -285,12 +296,14 @@ function SoHSourceBadge({ source }: { source: string }) {
     PASSPORT:  'text-blue-400   bg-blue-500/10   border-blue-500/30',
     TELEMETRY: 'text-slate-400  bg-slate-500/10  border-slate-500/30',
     NONE:      'text-slate-600  bg-slate-700/10  border-slate-700/30',
+    PROXY:     'text-amber-400  bg-amber-500/10  border-amber-500/30',
   };
   const labels: Record<string, string> = {
     BLENDED:   'SoH: Blended',
     PASSPORT:  'SoH: Passport',
     TELEMETRY: 'SoH: Telemetry',
     NONE:      'SoH: No data',
+    PROXY:     'SoH: Estimated (unverified)',
   };
   return (
     <span className={`inline-block text-[10px] font-mono px-1.5 py-0.5 rounded border ${styles[source] ?? styles.TELEMETRY}`}>

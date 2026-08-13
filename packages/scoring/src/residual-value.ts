@@ -5,10 +5,12 @@
 
 import type { RiskScoreResult } from './risk';
 import type { BatteryContext } from './risk';
+import type { ReconciledSoH } from '@voltledger/types';
 import {
   BATTERY_VALUE_PCT,
   MARKET_DEPRECIATION_RATE,
   EXPECTED_SOH_BY_CHEMISTRY,
+  DATALESS_SOH_ASSUMPTION,
 } from './constants';
 
 export interface ResidualValueResult {
@@ -22,6 +24,10 @@ export interface ResidualValueResult {
   forecast60m:          number;
   monthlyForecast:      Array<{ month: number; valueUsd: number; sohEstimate: number }>;
   methodology:          string;
+  sohUsed:              number;               // actual SoH fed into computeValueAtAge
+  sohSourceUsed:        string;                // ReconciledSoH['source'] | 'PROXY'
+  dataLessBatteryValueUsd: number;             // counterfactual RV at DATALESS_SOH_ASSUMPTION
+  verificationUpliftUsd:   number;             // currentBatteryValueUsd - dataLessBatteryValueUsd (0 unless verified)
 }
 
 /** Expected SoH at a future year (simplified linear interpolation) */
@@ -67,17 +73,31 @@ export function computeResidualValue(
   battery: BatteryContext,
   riskScore: RiskScoreResult,
   vehicleValueUsd: number,
+  reconciledSoH?: ReconciledSoH,
 ): ResidualValueResult {
   const chemistry = battery.chemistry || 'NMC';
   const ageYears = battery.manufacturedAt
     ? (Date.now() - new Date(battery.manufacturedAt).getTime()) / (365.25 * 24 * 3600 * 1000)
     : 2;
 
-  // Use the capacity retention score as a proxy for current SoH
-  // (capacityRetentionScore: 100 → SoH=100, 50 → SoH=80, 0 → SoH=60)
-  const currentSoH = riskScore.capacityRetentionScore * 0.4 + 60;
+  // Prefer the reconciled (passport/telemetry) SoH directly when available. Falling
+  // back to a capacityRetentionScore-derived proxy otherwise — that proxy is a lossy
+  // re-inversion of an already-clamped [0,100] sub-score (capacityRetentionScore: 100 →
+  // SoH=100, 50 → SoH=80, 0 → SoH=60), so it silently floors at SoH=60 and overstates
+  // value for genuinely degraded batteries below that. Real SoH data removes the floor.
+  const sohSourceUsed = reconciledSoH?.source ?? 'PROXY';
+  const currentSoH = reconciledSoH
+    ? reconciledSoH.value
+    : riskScore.capacityRetentionScore * 0.4 + 60;
 
   const currentValue = computeValueAtAge(vehicleValueUsd, chemistry, currentSoH, ageYears);
+
+  // Verification uplift: $ value of actually-observed SoH data vs. a complete guess.
+  // Uses the same DATALESS_SOH_ASSUMPTION that reconcileSoH()'s 'NONE' fallback uses,
+  // so the two "no data" baselines can't drift apart.
+  const dataLessValue = computeValueAtAge(vehicleValueUsd, chemistry, DATALESS_SOH_ASSUMPTION, ageYears);
+  const isVerifiedSource = sohSourceUsed === 'PASSPORT' || sohSourceUsed === 'TELEMETRY' || sohSourceUsed === 'BLENDED';
+  const verificationUpliftUsd = isVerifiedSource ? Math.round((currentValue - dataLessValue) * 100) / 100 : 0;
 
   const batteryPct =
     (BATTERY_VALUE_PCT as Record<string, number>)[chemistry] ?? BATTERY_VALUE_PCT['NMC'];
@@ -114,6 +134,10 @@ export function computeResidualValue(
     forecast36m,
     forecast60m,
     monthlyForecast,
-    methodology:            'soh-market-v1',
+    methodology:            'soh-market-v2',
+    sohUsed:                currentSoH,
+    sohSourceUsed,
+    dataLessBatteryValueUsd: dataLessValue,
+    verificationUpliftUsd,
   };
 }

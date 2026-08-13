@@ -52,7 +52,7 @@ export async function runIntelligenceEngine(
 
   // 1. Run all scoring models (pass passport context for enriched risk)
   const riskScore      = computeRiskScore(battery, recentPoints, passportContext, reconciledSoH);
-  const residualValue  = computeResidualValue(battery, riskScore, vehicleValueUsd);
+  const residualValue  = computeResidualValue(battery, riskScore, vehicleValueUsd, reconciledSoH);
   const ltvResult      = computeLtv(battery, riskScore, residualValue, baseRateBps);
   const secondLife     = assessSecondLife(battery, riskScore);
   const forecast       = computeDegradationForecast(battery, recentPoints);
@@ -99,6 +99,12 @@ export async function runIntelligenceEngine(
         residualAt60MonthsUsd:    residualValue.forecast60m,
         confidenceLowUsd:         Math.max(0, residualValue.currentBatteryValueUsd - confidenceBand),
         confidenceHighUsd:        residualValue.currentBatteryValueUsd + confidenceBand,
+        baseMarketDataSource:     'manheim_muvvi_ev_index_primary+autovista_secondary_v1',
+        modelVersion:             residualValue.methodology,
+        sohUsedPct:               residualValue.sohUsed,
+        sohSourceUsed:            residualValue.sohSourceUsed,
+        dataLessBatteryResidualValueUsd: residualValue.dataLessBatteryValueUsd,
+        verificationUpliftUsd:    residualValue.verificationUpliftUsd,
         estimatedAt:              scoredAt,
       },
     });

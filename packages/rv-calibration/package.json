@@ -1,0 +1,20 @@
+{
+  "name": "@voltledger/rv-calibration",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --require tsx/cjs src/*.test.ts",
+    "rv-calibrate": "tsx src/run.ts"
+  },
+  "dependencies": {
+    "@voltledger/scoring": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0",
+    "tsx": "^4.11.0"
+  }
+}

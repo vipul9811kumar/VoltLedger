@@ -1,0 +1,32 @@
+[
+  {
+    "market": "Austria",
+    "ageYears": 3,
+    "mileageKm": 60000,
+    "pctRetention": 45.1,
+    "sourceUrl": "https://autovista24.autovistagroup.com/news/mmu-bev-residual-values-suffer-across-europe-in-april/",
+    "sourceTitle": "BEV residual values suffer across Europe in April",
+    "observedPeriod": "2026-04",
+    "retrievedAt": "2026-08-13"
+  },
+  {
+    "market": "Germany",
+    "ageYears": 3,
+    "mileageKm": 60000,
+    "pctRetention": 40.1,
+    "sourceUrl": "https://autovista24.autovistagroup.com/news/mmu-bev-residual-values-suffer-across-europe-in-april/",
+    "sourceTitle": "BEV residual values suffer across Europe in April",
+    "observedPeriod": "2026-04",
+    "retrievedAt": "2026-08-13"
+  },
+  {
+    "market": "Italy",
+    "ageYears": 3,
+    "mileageKm": 60000,
+    "pctRetention": 35.9,
+    "sourceUrl": "https://autovista24.autovistagroup.com/news/mmu-bev-residual-values-suffer-across-europe-in-april/",
+    "sourceTitle": "BEV residual values suffer across Europe in April",
+    "observedPeriod": "2026-04",
+    "retrievedAt": "2026-08-13"
+  }
+]

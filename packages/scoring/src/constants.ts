@@ -66,6 +66,11 @@ export const MARKET_DEPRECIATION_RATE = {
   LTO: 0.05,
 };
 
+// SoH assumed when no passport/telemetry data is available at all (reconcileSoH's
+// 'NONE' fallback). Shared with residual-value.ts's verification-uplift baseline
+// so the two "no data" assumptions can't drift apart.
+export const DATALESS_SOH_ASSUMPTION = 85;
+
 // ── LTV parameters ────────────────────────────────────────────────────────────
 export const LTV_BASE = 0.75;          // 75% starting LTV
 export const LTV_MAX  = 0.85;          // Never exceed 85% for EV batteries

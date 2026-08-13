@@ -346,6 +346,13 @@ model ResidualValueEstimate {
   baseMarketDataSource         String   @default("synthetic_model")
   modelVersion                 String   @default("1.0")
 
+  // WS-C: real SoH used (vs. the legacy capacityRetentionScore proxy) + the
+  // resulting verification-uplift ("value of verified vs. data-less" line item)
+  sohUsedPct                       Float?
+  sohSourceUsed                    String  @default("PROXY")
+  dataLessBatteryResidualValueUsd  Float?
+  verificationUpliftUsd            Float?
+
   @@index([batteryId, estimatedAt(sort: Desc)])
   @@map("residual_value_estimates")
 }

@@ -22,6 +22,7 @@ import type {
   PassportResolveResult,
   ResolveOptions,
 } from '@voltledger/types';
+import { generatePassportForScenario } from '../scenario-generator';
 
 export class CatenaXPassportResolver implements PassportResolver {
   readonly framework = 'CATENA_X' as const;
@@ -39,6 +40,12 @@ export class CatenaXPassportResolver implements PassportResolver {
     identifier: string,
     _options?: ResolveOptions,
   ): Promise<PassportResolveResult> {
+    // WS-F: demo/test-only — a forced scenario produces a realistic, framework-tagged
+    // payload via the shared generator without real Catena-X integration existing.
+    if (_options?.forceScenario) {
+      return generatePassportForScenario(identifier, 'CATENA_X', _options);
+    }
+
     // STUB — not yet implemented
     // Real implementation steps:
     //   1. Look up OEM BPN for this battery identifier

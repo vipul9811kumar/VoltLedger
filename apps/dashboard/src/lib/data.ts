@@ -224,6 +224,8 @@ export interface PassportResponse {
   expiresAt?:             string | null;
   public?:                PassportPublicTier;
   restricted?:            PassportRestrictedTier | null;
+  restrictedAccessStatus?: 'GRANTED' | 'PENDING_LEGITIMATE_INTEREST' | null;
+  priorPassportId?:       string | null;
   verification?:          PassportVerification | null;
 }
 

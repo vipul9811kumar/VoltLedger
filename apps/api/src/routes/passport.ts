@@ -82,6 +82,8 @@ export async function passportRoutes(app: FastifyInstance) {
           tempHistoryAvg:         p.tempHistoryAvg ?? null,
           batteryStatusCode:      p.batteryStatusCode ?? null,
           negativeEvents:         p.negativeEvents as any ?? null,
+          restrictedAccessStatus: result.restrictedAccessStatus ?? 'GRANTED',
+          priorPassportId:        p.priorPassportId ?? null,
           lastSyncedAt:           result.resolvedAt,
           syncSucceeded:          true,
           syncErrorMessage:       null,
@@ -124,6 +126,8 @@ export async function passportRoutes(app: FastifyInstance) {
           tempHistoryAvg:         p.tempHistoryAvg ?? null,
           batteryStatusCode:      p.batteryStatusCode ?? null,
           negativeEvents:         p.negativeEvents as any ?? null,
+          restrictedAccessStatus: result.restrictedAccessStatus ?? 'GRANTED',
+          priorPassportId:        p.priorPassportId ?? null,
           issuedAt:               p.issuedAt ? new Date(p.issuedAt) : null,
           expiresAt:              p.expiresAt ? new Date(p.expiresAt) : null,
           lastSyncedAt:           result.resolvedAt,
@@ -334,8 +338,10 @@ function formatPassport(passport: any) {
       },
     },
 
-    // Restricted tier (null values if not authorized)
-    restricted: passport.tierAccess !== 'PUBLIC' ? {
+    // Restricted tier — null when the data doesn't exist (PUBLIC tier or unsynced), distinct
+    // from restrictedAccessStatus below, which distinguishes "no data" from "data exists but
+    // access not yet granted" (build spec v2 §8's transparency guardrail).
+    restricted: passport.tierAccess !== 'PUBLIC' && passport.unitSoH != null ? {
       unitSoH:              passport.unitSoH,
       unitSoC:              passport.unitSoC,
       chargeCycleCount:     passport.chargeCycleCount,
@@ -347,6 +353,8 @@ function formatPassport(passport: any) {
       batteryStatusCode:    passport.batteryStatusCode,
       negativeEvents:       passport.negativeEvents ?? [],
     } : null,
+    restrictedAccessStatus: passport.restrictedAccessStatus ?? null,
+    priorPassportId:        passport.priorPassportId ?? null,
 
     verification: passport.verification ? {
       identityChainValid:   passport.verification.identityChainValid,

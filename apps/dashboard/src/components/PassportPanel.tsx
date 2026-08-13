@@ -200,9 +200,17 @@ export function PassportPanel({ passport }: Props) {
               <SectionTitle>Live Battery State</SectionTitle>
               <div className="bg-slate-800/40 border border-slate-700/40 rounded p-3 space-y-1">
                 <p className="text-xs text-slate-500">Restricted-tier data not available.</p>
-                <p className="text-[11px] text-slate-600">
-                  SoH, cycle count, and temperature history require legitimate-interest access (EU Reg 2023/1542 Art. 13).
-                </p>
+                {passport.restrictedAccessStatus === 'PENDING_LEGITIMATE_INTEREST' ? (
+                  <p className="text-[11px] text-slate-600">
+                    SoH, cycle count, and temperature history exist for this battery but require
+                    legitimate-interest access, pending the EU Commission's implementing act (Reg
+                    2023/1542 Art. 13). Risk scoring falls back to telemetry-only in the meantime.
+                  </p>
+                ) : (
+                  <p className="text-[11px] text-slate-600">
+                    No restricted-tier data on record for this passport (public tier only).
+                  </p>
+                )}
               </div>
             </div>
           )}

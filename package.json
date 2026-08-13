@@ -42,6 +42,7 @@
     "calibrate": "tsx packages/calibration/src/run.ts",
     "validate": "tsx packages/validation/src/run.ts",
     "rv-calibrate": "tsx packages/rv-calibration/src/run.ts",
+    "coverage-matrix": "tsx apps/api/src/lib/passport/run-coverage-matrix.ts",
     "test": "turbo run test",
     "generate-key": "dotenv -e .env --override -- tsx tools/generate-key/src/index.ts",
     "api:dev": "dotenv -e .env --override -- tsx apps/api/src/index.ts",

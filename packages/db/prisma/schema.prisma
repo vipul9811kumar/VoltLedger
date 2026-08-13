@@ -683,6 +683,13 @@ model BatteryPassport {
   batteryStatusCode     String?   // GOOD | DEGRADED | FAULTY | REPURPOSED
   negativeEvents        Json?     // [{type, date, description}] faults/accidents
 
+  // WS-F: distinguishes "no restricted data" from "data exists, access not yet granted"
+  // (build spec v2 §8 transparency guardrail — Commission implementing act pending).
+  restrictedAccessStatus String?  @default("GRANTED") // GRANTED | PENDING_LEGITIMATE_INTEREST
+  // Links to the passport this one supersedes — set only for a reissued/repurposed-battery
+  // identity (build spec v2 §7 item 7).
+  priorPassportId         String?
+
   // ── Sync metadata ──────────────────────────────────────────────────────────
   issuedAt              DateTime?
   expiresAt             DateTime?

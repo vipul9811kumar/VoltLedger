@@ -27,6 +27,7 @@ import type {
   PassportResolveResult,
   ResolveOptions,
 } from '@voltledger/types';
+import { generatePassportForScenario } from '../scenario-generator';
 
 export class AggregatorPassportResolver implements PassportResolver {
   readonly framework = 'THIRD_PARTY_AGGREGATOR' as const;
@@ -48,6 +49,12 @@ export class AggregatorPassportResolver implements PassportResolver {
     identifier: string,
     _options?: ResolveOptions,
   ): Promise<PassportResolveResult> {
+    // WS-F: demo/test-only — a forced scenario produces a realistic, framework-tagged
+    // payload via the shared generator without a real aggregator integration existing.
+    if (_options?.forceScenario) {
+      return generatePassportForScenario(identifier, 'THIRD_PARTY_AGGREGATOR', _options);
+    }
+
     // STUB — not yet implemented
     // Real implementation:
     //   const res = await fetch(`${this.apiUrl}/v1/passports/${encodeURIComponent(identifier)}`, {

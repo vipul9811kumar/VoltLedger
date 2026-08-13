@@ -26,6 +26,7 @@ import type {
   PassportResolveResult,
   ResolveOptions,
 } from '@voltledger/types';
+import { generatePassportForScenario } from '../scenario-generator';
 
 const GS1_RESOLVER_BASE = 'https://id.gs1.org';
 
@@ -46,6 +47,12 @@ export class GS1PassportResolver implements PassportResolver {
     identifier: string,
     _options?: ResolveOptions,
   ): Promise<PassportResolveResult> {
+    // WS-F: demo/test-only — a forced scenario produces a realistic, framework-tagged
+    // payload via the shared generator without real GS1 integration existing.
+    if (_options?.forceScenario) {
+      return generatePassportForScenario(identifier, 'GS1', _options);
+    }
+
     // STUB — not yet implemented
     // Real implementation steps:
     //   1. Build GS1 Digital Link URL from identifier

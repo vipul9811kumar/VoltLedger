@@ -8,7 +8,8 @@
     "dev": "dotenv -e ../../.env --override -- tsx watch src/index.ts",
     "start": "node dist/index.js",
     "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --require tsx/cjs src/lib/passport/coverage-matrix.test.ts"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",

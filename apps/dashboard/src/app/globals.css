@@ -27,6 +27,18 @@ body {
 .grade-D { @apply bg-orange-500/20 text-orange-400 border border-orange-500/30; }
 .grade-F { @apply bg-red-500/20 text-red-400 border border-red-500/30; }
 
+/* Underwriting decision colors (Lender Portal) */
+.decision-ACCEPT { @apply bg-emerald-500/20 text-emerald-400 border border-emerald-500/30; }
+.decision-REFER { @apply bg-yellow-500/20 text-yellow-400 border border-yellow-500/30; }
+.decision-DECLINE { @apply bg-red-500/20 text-red-400 border border-red-500/30; }
+
+.card { @apply bg-card border border-border rounded-lg p-5; }
+.label { @apply text-xs uppercase tracking-wide text-slate-500; }
+.input {
+  @apply w-full bg-navy border border-border rounded px-3 py-2 text-slate-100
+    focus:outline-none focus:border-accent;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }

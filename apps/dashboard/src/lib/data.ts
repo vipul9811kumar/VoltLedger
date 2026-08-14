@@ -80,12 +80,16 @@ interface Battery {
 // ── Fleet overview ─────────────────────────────────────────────────────────────
 
 export async function getFleetStats() {
-  return apiFetch<{
-    total: number;
-    gradeCounts: Record<string, number>;
-    statusCounts: Record<string, number>;
-    recentlyScored: number;
-  }>('/v1/batteries/fleet/stats');
+  try {
+    return await apiFetch<{
+      total: number;
+      gradeCounts: Record<string, number>;
+      statusCounts: Record<string, number>;
+      recentlyScored: number;
+    }>('/v1/batteries/fleet/stats');
+  } catch {
+    return { total: 0, gradeCounts: {}, statusCounts: {}, recentlyScored: 0 };
+  }
 }
 
 // ── Battery list (with latest risk score) ─────────────────────────────────────
@@ -96,9 +100,13 @@ export async function getBatteryList(page = 1, pageSize = 20, grade?: string) {
     pageSize: String(pageSize),
     ...(grade ? { grade } : {}),
   });
-  return apiFetch<{ batteries: Battery[]; total: number; pages: number }>(
-    `/v1/batteries/fleet/batteries?${params}`
-  );
+  try {
+    return await apiFetch<{ batteries: Battery[]; total: number; pages: number }>(
+      `/v1/batteries/fleet/batteries?${params}`
+    );
+  } catch {
+    return { batteries: [], total: 0, pages: 0 };
+  }
 }
 
 // ── Single battery detail ─────────────────────────────────────────────────────
@@ -120,18 +128,26 @@ export async function getBatteryDetail(serialNumber: string) {
 
 export async function getBatterySoHHistory(batteryId: string, weeks = 12) {
   // batteryId here is actually serialNumber (called with b.serialNumber in pages)
-  return apiFetch<Array<{
-    recordedAt: string;
-    stateOfHealth: number;
-    cellTempMax: number;
-    stateOfCharge: number;
-  }>>(`/v1/batteries/${batteryId}/telemetry?weeks=${weeks}`);
+  try {
+    return await apiFetch<Array<{
+      recordedAt: string;
+      stateOfHealth: number;
+      cellTempMax: number;
+      stateOfCharge: number;
+    }>>(`/v1/batteries/${batteryId}/telemetry?weeks=${weeks}`);
+  } catch {
+    return [];
+  }
 }
 
 // ── Flagged batteries (need attention) ────────────────────────────────────────
 
 export async function getFlaggedBatteries() {
-  return apiFetch<Battery[]>('/v1/batteries/fleet/flagged');
+  try {
+    return await apiFetch<Battery[]>('/v1/batteries/fleet/flagged');
+  } catch {
+    return [];
+  }
 }
 
 // ── EU Battery Passport ────────────────────────────────────────────────────────
@@ -299,7 +315,11 @@ export interface RvBacktestChartData {
 }
 
 export async function getValidationDocuments() {
-  return apiFetch<{ documents: ValidationDocumentSummary[] }>('/v1/validation/documents');
+  try {
+    return await apiFetch<{ documents: ValidationDocumentSummary[] }>('/v1/validation/documents');
+  } catch {
+    return { documents: [] };
+  }
 }
 
 export async function getValidationDocumentContent(id: string) {

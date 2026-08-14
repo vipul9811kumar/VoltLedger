@@ -1,16 +1,18 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { UserButton } from '@clerk/nextjs';
 import clsx from 'clsx';
 
 const NAV = [
-  { href: '/',           label: 'Overview',   icon: '◈' },
-  { href: '/fleet',      label: 'Fleet',      icon: '⬡' },
-  { href: '/flagged',    label: 'Flagged',    icon: '⚑' },
-  { href: '/validation', label: 'Validation', icon: '✓' },
-  { href: '/account',    label: 'Account',    icon: '⊙' },
+  { href: '/',              label: 'Overview',      icon: '◈' },
+  { href: '/fleet',         label: 'Fleet',         icon: '⬡' },
+  { href: '/flagged',       label: 'Flagged',       icon: '⚑' },
+  { href: '/lender-portal', label: 'Lender Portal', icon: '⎘' },
+  { href: '/validation',    label: 'Validation',    icon: '✓' },
+  { href: '/account',       label: 'Account',       icon: '⊙' },
 ];
 
 const ADMIN_NAV = { href: '/admin/requests', label: 'Requests', icon: '✉' };
@@ -23,7 +25,7 @@ export function Sidebar({ isAdmin = false }: { isAdmin?: boolean }) {
       {/* Logo */}
       <div className="px-5 py-5 border-b border-[#1e2d40]">
         <div className="flex items-center gap-2">
-          <span className="text-blue-400 text-xl">⚡</span>
+          <Image src="/logo-icon.png" alt="VoltLedger" width={24} height={24} />
           <span className="font-semibold text-white text-sm tracking-wide">VoltLedger</span>
         </div>
         <p className="text-[10px] text-slate-500 mt-0.5 ml-7">Lender Portal</p>

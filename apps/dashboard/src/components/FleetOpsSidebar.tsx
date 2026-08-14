@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { UserButton } from '@clerk/nextjs';
 import clsx from 'clsx';
@@ -20,7 +21,7 @@ export function FleetOpsSidebar() {
       {/* Logo */}
       <div className="px-5 py-5 border-b border-[#1a2e1a]">
         <div className="flex items-center gap-2">
-          <span className="text-emerald-400 text-xl">⚡</span>
+          <Image src="/logo-icon.png" alt="VoltLedger" width={24} height={24} />
           <span className="font-semibold text-white text-sm tracking-wide">VoltLedger</span>
         </div>
         <p className="text-[10px] text-emerald-700 mt-0.5 ml-7">Fleet Ops</p>
